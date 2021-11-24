@@ -1,68 +1,87 @@
-import { Form, Input, Checkbox } from 'antd'
+import { Form, Input } from 'antd'
 
-const RegisterForm = () => {
+const RegisterForm = props => {
+    const {
+        onFirstNameChange,
+        onLastNameChange,
+        onPhoneNumberChange,
+        onUsernameChange,
+        onPasswordChange,
+        onRePasswordChange,
+        onAddressChange,
+        onEmailChange,
+    } = props
+
     return (
         <Form
-            name="basic"
+            name="register"
             labelCol={{ span: 6 }}
             wrapperCol={{ span: 16 }}
             initialValues={{ remember: true }}
             autoComplete="off"
         >
             <Form.Item
-                label="First name"
-                name="firstname"
-                rules={[{ required: true, message: 'Please input your first name!' }]}
+                label="Họ và đệm"
+                name="firstName"
+                rules={[{ required: true, message: 'Vui lòng nhập họ và đệm!' }]}
             >
-                <Input />
+                <Input onChange={onFirstNameChange} allowClear={true} />
             </Form.Item>
 
             <Form.Item
-                label="Last name"
-                name="lastname"
-                rules={[{ required: true, message: 'Please input your last name!' }]}
+                label="Tên"
+                name="lastName"
+                rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
             >
-                <Input />
+                <Input onChange={onLastNameChange} allowClear={true} />
             </Form.Item>
 
             <Form.Item
-                label="Phone number"
-                name="phone"
-                rules={[{ required: true, message: 'Please input your phone number!' }]}
+                label="Số điện thoại"
+                name="phoneNumber"
+                rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
             >
-                <Input />
+                <Input onChange={onPhoneNumberChange} allowClear={true} />
             </Form.Item>
 
             <Form.Item
-                label="username"
+                label="Tài khoản"
                 name="username"
-                rules={[{ required: true, message: 'Please input your phone username!' }]}
+                rules={[{ required: true, message: 'Vui lòng nhập tài khoản!' }]}
             >
-                <Input />
+                <Input onChange={onUsernameChange} allowClear={true} />
             </Form.Item>
 
             <Form.Item
-                label="Password"
+                label="Mật khẩu"
                 name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
+                rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
             >
-                <Input.Password />
+                <Input.Password onChange={onPasswordChange} allowClear={true} />
             </Form.Item>
 
             <Form.Item
-                label="Re assword"
+                label="Nhập lại"
                 name="re-password"
-                rules={[{ required: true, message: 'Please input your re password!' }]}
+                rules={[{ required: true, message: 'Nhập lại mât khẩu!' }]}
             >
-                <Input.Password />
+                <Input.Password onChange={onRePasswordChange} allowClear={true} />
             </Form.Item>
 
             <Form.Item
-                label="Re assword"
-                name="re-password"
-                rules={[{ required: true, message: 'Please input your re password!' }]}
+                label="Địa chỉ"
+                name="address"
+                // rules={[{ required: true, message: 'Nhập địa chỉ!' }]}
             >
-                <Input.Password />
+                <Input onChange={onAddressChange} allowClear={true} />
+            </Form.Item>
+
+            <Form.Item
+                label="Email"
+                name="email"
+                // rules={[{ required: true, message: 'Nhập email!' }]}
+            >
+                <Input onChange={onEmailChange} allowClear={true} />
             </Form.Item>
         </Form>
     )
