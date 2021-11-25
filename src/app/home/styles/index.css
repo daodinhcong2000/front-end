@@ -13,11 +13,31 @@
 .headerSearch {
   margin-top: 10px;
 }
-.btn_headerSearch {
+.ant-modal-title {
+  text-align: center;
+}
+#btn_forgot {
+  text-align: center;
+}
+#btn_login {
+  height: 60px;
+  width: 80%;
+  background: #5bb75b;
+  margin-top: 20px;
+}
+div.headerSearch {
+  margin-top: 20px ;
+}
+#btn_headerSearch {
   background-color: #006dcc;
   color: #fff;
   text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
 }
-.ant-modal-title {
+#inp_headerSearch, #btn_headerSearch {
+  height: 60px;
+}
+#btn_user {
+  height: 50px;
   text-align: center;
+  margin-top: 25px;
 }
