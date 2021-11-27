@@ -12,7 +12,7 @@ const logInitialState = {
 const logForm = (state = logInitialState, action) => {
     switch (action.type) {
         case 'CHANGE_FORM': {
-            const { firstName, lastName, phoneNumber, username, password, rePassword, address, email } = action
+            const { firstName, lastName, phoneNumber, username, password, rePassword, address, email } = action.payload
             return Object.assign(
                 state,
                 firstName ? { firstName } : {},
@@ -26,7 +26,7 @@ const logForm = (state = logInitialState, action) => {
             )
         }
 
-        case 'RESET': {
+        case 'CLEAR_FORM': {
             return {
                 firstName: '',
                 lastName: '',

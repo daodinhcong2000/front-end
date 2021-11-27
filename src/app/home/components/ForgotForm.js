@@ -1,6 +1,8 @@
 import { Form, Input } from 'antd'
+import { useDispatch } from 'react-redux'
 
 const ForgotForm = props => {
+    const dispatch = useDispatch()
     return (
         <Form
             name="forgot"
@@ -14,7 +16,14 @@ const ForgotForm = props => {
                 name="username"
                 rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}
             >
-                <Input />
+                <Input allowClear={true}
+                    onChange={e => dispatch({
+                        type: 'CHANGE_FORM',
+                        payload: {
+                            username: e.target.value.trim().toLowerCase()
+                        }
+                    })}
+                />
             </Form.Item>
         </Form>
     )
