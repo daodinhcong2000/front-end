@@ -4,8 +4,8 @@
 }
 #Header, .ant-layout-header {
   color: #000;
-  background-color: #3A3F44;
-  height: 100px;
+  background-color: #5FC090;
+  height: 120px;
 }
 .ant-image-img {
   align-items: center;
@@ -16,25 +16,36 @@
 .ant-modal-title {
   text-align: center;
 }
+.cart-container {
+  height: 100px;
+}
+.header-cart {
+  height: 60px;
+  margin-top: 25px
+}
 #btn_forgot {
   text-align: center;
 }
 #btn_login {
   height: 60px;
   width: 80%;
-  background: #5bb75b;
-  margin-top: 20px;
-}
-div.headerSearch {
-  margin-top: 20px ;
-}
-#btn_headerSearch {
-  background-color: #006dcc;
+  /* background: #ffff; */
   color: #fff;
-  text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
+  margin-top: 20px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: bold;
+  font-size: 130%
 }
-#inp_headerSearch, #btn_headerSearch {
-  height: 60px;
+#btn_login:hover {
+  color: red;
+  font-weight: bolder;
+  font-size: 160%;
+}
+#headerSearch{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  vertical-align: middle;
+  text-shadow: 0 -1px 0 rgb(0 0 0 / 25%);
 }
 #btn_user {
   height: 50px;

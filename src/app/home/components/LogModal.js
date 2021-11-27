@@ -10,66 +10,18 @@ import LoginForm from './LoginForm'
 import RegisterForm from './RegisterFrom'
 import ForgotForm from './ForgotForm'
 
-const regex = require('../../../helpers/validating/regex')
+const validateInput = require('../../../helpers/validating/validateInput')
 
 const USER_SERVICE = process.env.REACT_APP_API_USER_SERVICE || 'https://accommerce.cuongdm.tech/user-service/api'
 
+
 const LogModal = props => {
     const logForm = useSelector(state => state.logForm)
+    const dispatch = useDispatch()
 
     const [loading, setLoading] = useState(false)
     const [visible, setVisible] = useState(false)
     const [mode, setMode] = useState('login')
-    const dispatch = useDispatch()
-
-    const onFirstNameChange = e => {
-        dispatch({
-            type: 'CHANGE_FORM',
-            firstName: e.target.value.trim()
-        })
-    }
-    const onLastNameChange = e => {
-        dispatch({
-            type: 'CHANGE_FORM',
-            lastName: e.target.value.trim()
-        })
-    }
-    const onPhoneNumberChange = e => {
-        dispatch({
-            type: 'CHANGE_FORM',
-            phoneNumber: e.target.value.trim()
-        })
-    }
-    const onUsernameChange = e => {
-        dispatch({
-            type: 'CHANGE_FORM',
-            username: e.target.value.trim().toLowerCase()
-        })
-    }
-    const onPasswordChange = e => {
-        dispatch({
-            type: 'CHANGE_FORM',
-            password: e.target.value
-        })
-    }
-    const onRePasswordChange = e => {
-        dispatch({
-            type: 'CHANGE_FORM',
-            rePassword: e.target.value
-        })
-    }
-    const onAddressChange = e => {
-        dispatch({
-            type: 'CHANGE_FORM',
-            address: e.target.value.trim()
-        })
-    }
-    const onEmailChange = e => {
-        dispatch({
-            type: 'CHANGE_FORM',
-            email: e.target.value.trim().toLowerCase()
-        })
-    }
 
     const showModal = e => {
         setVisible(true)
@@ -78,16 +30,19 @@ const LogModal = props => {
         setVisible(false)
         setMode('login')
         dispatch({
-            type: 'RESET'
+            type: 'CLEAR_FORM'
         })
     }
     const changeModal = (e, mode) => {
         setMode(mode)
+        dispatch({
+            type: 'CLEAR_FORM'
+        })
     }
 
     const login = async (e) => {
-        setLoading(true)
         const { username, password } = logForm
+        setLoading(true)
         const response = await axios({
             method: 'post',
             url: `${USER_SERVICE}/users/jwt`,
@@ -99,47 +54,50 @@ const LogModal = props => {
         })
             .then(response => response.data)
             .catch(e => e.response.data)
-        setLoading(false)
 
         const { success, token, message } = response
         if (!success) {
+            setLoading(false)
             return Message.error(message.includes('Password or username is incorrect')
                 ? 'Tài khoản hoặc mật khẩu sai'
                 : message
             )
         }
 
-        localStorage.setItem('token', token)
+        const { data: userData } = await axios({
+            method: 'get',
+            url: `${USER_SERVICE}/users/self`,
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'text/plain'
+            }
+        })
+        const { data } = userData
+
+        const { firstName, lastName, roles } = data
+
+        dispatch({
+            type: 'LOG_IN',
+            payload: {
+                token,
+                username,
+                user: `${firstName} ${lastName}`,
+                roles
+            }
+        })
+
+        setLoading(false)
         setVisible(false)
-        window.location.reload()
     }
 
     const register = async (e) => {
         setLoading(true)
         const { firstName, lastName, phoneNumber, username, password, rePassword, address, email } = logForm
-        if (password !== rePassword) {
+        const { message: typeMessage } = validateInput(logForm)
+        
+        if (typeMessage) {
             setLoading(false)
-            return Message.error('Mật khẩu không khớp')
-        }
-
-        if (!regex.phoneNumber.exec(phoneNumber)) {
-            setLoading(false)
-            return Message.error('Số điện thoại sai')
-        }
-
-        if (!regex.username.exec(username)) {
-            setLoading(false)
-            return Message.error('Tài khoản từ 3-30 ký tự, bao gồm chữ và số')
-        }
-
-        if (!regex.password.exec(password)) {
-            setLoading(false)
-            return Message.error('Mật khẩu gồm ít nhất 8 ký tự')
-        }
-
-        if (email && !regex.email.exec(email)) {
-            setLoading(false)
-            return Message.error('Email sai')
+            return Message.error(typeMessage)
         }
 
         const data = Object.assign(
@@ -163,14 +121,22 @@ const LogModal = props => {
             .then(response => response.data)
             .catch(e => e.response.data)
 
-
         const { success, message } = response
         if (!success) {
             setLoading(false)
-            return Message.error(
-                message.includes(`User with username ${username} already exists`) ? 'Tài khoản đã tồn tại' :
-                    message.includes(`User with phone number ${phoneNumber} already exists`) ? 'Số điện thoại đã được sử dụng' : message
-            )
+            switch (message) {
+                case (message.includes(`User with username ${username} already exists`)): {
+                    return Message.error('Tài khoản đã tồn tại')
+                }
+
+                case (message.includes(`User with phone number ${phoneNumber} already exists`)): {
+                    return Message.error('Số điện thoại đã được sử dụng')
+                }
+
+                default: {
+                    return Message.error(message)
+                }
+            }
         }
         else {
             Message.success(`Người dùng ${firstName} ${lastName} đã đăng ký tài khoản ${username} thành công`)
@@ -179,6 +145,9 @@ const LogModal = props => {
         setTimeout(() => {
             setLoading(false)
             setMode('login')
+            dispatch({
+                type: 'RESET'
+            })
         }, 3000)
     }
 
@@ -188,8 +157,11 @@ const LogModal = props => {
 
     return (
         <div>
-            <Button type="primary" onClick={showModal} id="btn_login">
-                <strong>Đăng nhập / Đăng ký</strong>
+            <Button type="text" id="btn_login"
+                color='#2774f0'
+                onClick={showModal}
+            >
+                Đăng nhập
             </Button>
             <Modal
                 visible={visible}
@@ -197,6 +169,7 @@ const LogModal = props => {
                 onOk={mode === 'login' ? login : mode === 'register' ? register : forgot}
                 onCancel={closeModal}
                 confirmLoading={loading}
+                closeable={false}
                 footer={[
                     <Button key="back" onClick={e => changeModal(e, mode === 'login' ? 'register' : 'login')}>
                         {mode !== 'login' ? "Đăng nhập" : "Đăng ký"}
@@ -204,27 +177,14 @@ const LogModal = props => {
                     <Button key="submit" type="primary" loading={loading}
                         onClick={mode === 'login' ? login : mode === 'register' ? register : forgot}
                     >
-                        OK
+                        {mode === 'login' ? "Đăng nhập" : mode === 'register' ? "Đăng ký" : "Lấy mật khẩu"}
                     </Button>
                 ]}
             >
                 {
-                    mode === 'forgot' ? <ForgotForm onUsernameChange={onUsernameChange}></ForgotForm> : mode === 'login'
-                        ? <LoginForm
-                            onForgot={e => changeModal(e, 'forgot')}
-                            onUsernameChange={onUsernameChange}
-                            onPasswordChange={onPasswordChange}
-                        />
-                        : <RegisterForm
-                            onFirstNameChange={onFirstNameChange}
-                            onLastNameChange={onLastNameChange}
-                            onPhoneNumberChange={onPhoneNumberChange}
-                            onUsernameChange={onUsernameChange}
-                            onPasswordChange={onPasswordChange}
-                            onRePasswordChange={onRePasswordChange}
-                            onAddressChange={onAddressChange}
-                            onEmailChange={onEmailChange}
-                        />
+                    mode === 'forgot' ? <ForgotForm /> : mode === 'login'
+                        ? <LoginForm onForgot={e => changeModal(e, 'forgot')} onLogin={login} />
+                        : <RegisterForm onRegister={register} />
                 }
             </Modal>
         </div>

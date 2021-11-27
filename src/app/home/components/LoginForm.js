@@ -2,7 +2,8 @@ import { Form, Input, Checkbox, Button } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 
 const LoginForm = props => {
-    const { onForgot, onUsernameChange, onPasswordChange } = props
+    const dispatch = useDispatch()
+    const { onForgot, onLogin } = props
 
     return (
         <Form
@@ -18,7 +19,14 @@ const LoginForm = props => {
                 type="string"
                 rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}
             >
-                <Input onChange={onUsernameChange} allowClear={true} />
+                <Input allowClear={true} onPressEnter={onLogin}
+                    onChange={e => dispatch({
+                        type: 'CHANGE_FORM',
+                        payload: {
+                            username: e.target.value.trim().toLowerCase()
+                        }
+                    })}
+                />
             </Form.Item>
 
             <Form.Item
@@ -27,7 +35,14 @@ const LoginForm = props => {
                 type="string"
                 rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
             >
-                <Input.Password onChange={onPasswordChange} allowClear={true} />
+                <Input.Password allowClear={true} onPressEnter={onLogin}
+                    onChange={e => dispatch({
+                        type: 'CHANGE_FORM',
+                        payload: {
+                            password: e.target.value
+                        }
+                    })}
+                />
             </Form.Item>
 
             <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
