@@ -1,10 +1,33 @@
+import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { Button, Dropdown, Menu } from "antd"
+import { Button, Dropdown, Menu, message as Message } from "antd"
 import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled, CrownOutlined } from "@ant-design/icons"
 
+// import { _getUserInformation }
+
 const UserMenu = props => {
-    const { username, user, roles } = useSelector(state => state.user)
     const dispatch = useDispatch()
+    const { username, fullName, roles } = useSelector(state => state.user)
+
+    // useEffect(async (username) => {
+    //     if (!username) {
+    //         const info = await _getUserInformation().then(response => response.data).catch(e => e.response.data)
+    //         const { success, message } = info
+    //         if (!success) {
+    //             return Message.error(message)
+    //         }
+    //         const { data } = info
+    //         const { firstName, lastName, username, roles } = data
+    //         dispatch({
+    //             type: 'SET_USER',
+    //             payload: {
+    //                 username,
+    //                 fullName: `${firstName} ${lastName}`,
+    //                 roles
+    //             }
+    //         })
+    //     }
+    // }, [username])
 
     const handleMenuClick = e => {
         const { key } = e
@@ -37,7 +60,7 @@ const UserMenu = props => {
     const menu = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="self" icon={<UserOutlined />}>
-                {user}
+                {fullName}
             </Menu.Item>
             {roles.includes('admin') &&
                 <Menu.Item key="admin" icon={<CrownOutlined />}>
@@ -60,7 +83,7 @@ const UserMenu = props => {
 
     return (
         <Dropdown overlay={menu}>
-            <Button size="large" shape="round" shape="round" id="btn_user">
+            <Button size="large" shape="round" id="btn_user">
                 {username}
             </Button>
         </Dropdown>

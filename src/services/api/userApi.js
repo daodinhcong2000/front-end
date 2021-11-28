@@ -14,7 +14,7 @@ export const register = payload => {
 
 export const login = payload => {
     return apiRequest({
-        url: `${USER_SERVICE_API}/jwt`,
+        url: `${USER_SERVICE_API}/users/jwt`,
         method: 'POST',
         data: payload
     })
@@ -30,7 +30,7 @@ export const getOneProduct = id => {
 }
 
 export const searchProducts = query => {
-    const queryString = queryString(query)
+    const queryString = query2string(query)
     return apiRequest({
         url: `${COMMON_SERVICE_API}/products/?${queryString}}`,
         method: 'GET'
@@ -40,6 +40,6 @@ export const searchProducts = query => {
 export const searchStoreProducts = (store, query) => {
     const queryString = query2string(query)
     return apiRequest({
-        url: `${COMMON_SERVICE_API}/shops/`
+        url: `${COMMON_SERVICE_API}/shops/${queryString}`
     })
 }

@@ -6,14 +6,21 @@ import LogModal from './LogModal'
 import UserMenu from './UserMenu'
 import SearchItem from './SearchItem'
 
+import { isAuthenticated } from '../../../services/makeApiRequest'
+import { _setUser } from '../../../redux/actions/userActions'
+
 const { Header } = Layout
 
 const PageHeader = props => {
-    const user = useSelector(state => state.user)
-    const [cartSize, setCartSize] = useState('3em')
-    const cart = useSelector(state => state.cart)
+    const { error } = useSelector(state => state.user)
+    // const
+    // useEffect(async () => {
+    //     await _setUser()
+    // }, [])
 
-    const dispatch = useDispatch()
+    // useEffect(() => { console.log(error) })
+
+    const [cartSize, setCartSize] = useState('3em')
     const onSearch = () => { }
 
     return (
@@ -49,20 +56,20 @@ const PageHeader = props => {
 
                 {/* Search item */}
                 <Row>
-                    <Col span={3} >{SearchItem('/icon/phones.png', 'Điện thoại')}</Col>
-                    <Col span={3} >{SearchItem('/icon/electronices.png', 'Đồ điện tử')}</Col>
-                    <Col span={3} >{SearchItem('/icon/housewares.png', 'Đồ gia dụng')}</Col>
-                    <Col span={3} >{SearchItem('/icon/clothes.png', 'Quần áo')}</Col>
-                    <Col span={3} >{SearchItem('/icon/toys.png', 'Đồ chơi')}</Col>
-                    <Col span={3} >{SearchItem('/icon/books.png', 'Sách')}</Col>
-                    <Col span={3} >{SearchItem('/icon/sports.png', 'Thể thao')}</Col>
-                    <Col span={3} >{SearchItem('/icon/pets.png', 'Thú cưng')}</Col>
+                    <Col span={3} >{SearchItem('/icons/phones.png', 'Điện thoại')}</Col>
+                    <Col span={3} >{SearchItem('/icons/electronices.png', 'Đồ điện tử')}</Col>
+                    <Col span={3} >{SearchItem('/icons/housewares.png', 'Đồ gia dụng')}</Col>
+                    <Col span={3} >{SearchItem('/icons/clothes.png', 'Quần áo')}</Col>
+                    <Col span={3} >{SearchItem('/icons/toys.png', 'Đồ chơi')}</Col>
+                    <Col span={3} >{SearchItem('/icons/books.png', 'Sách')}</Col>
+                    <Col span={3} >{SearchItem('/icons/sports.png', 'Thể thao')}</Col>
+                    <Col span={3} >{SearchItem('/icons/pets.png', 'Thú cưng')}</Col>
                 </Row>
             </Col>
 
             {/* LOGIN - USER */}
             <Col span={3}>
-                {!localStorage.getItem('token') ? <LogModal /> : <UserMenu />}
+                {!isAuthenticated() ? <LogModal /> : <UserMenu />}
             </Col>
 
             {/* CART */}
@@ -70,7 +77,7 @@ const PageHeader = props => {
                 <div className='cart-container'>
                     <div className='header-cart'>
                         <a id="cart">
-                            <Badge count={cart.length}>
+                            <Badge count={0}>
                                 <svg id="icon-cart" width={cartSize} height={cartSize} fill="#fff" viewBox="0 0 1024 1024"
                                     onMouseOver={e => setCartSize('4em')}
                                     onMouseLeave={e => setCartSize('3em')}
