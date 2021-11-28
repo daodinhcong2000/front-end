@@ -1,14 +1,13 @@
 import { login } from "../../services/api/userApi"
 import { getUserInformation } from "../../services/api/customerApi"
 import { isAuthenticated, setToken } from "../../services/makeApiRequest"
-import sha256 from 'js-sha256'
-import md5 from 'md5'
+import hasPassword from '../../helpers/validating/hashPassword'
 
 export const _login = payload => {
     const { username, password } = payload
     return dispatch => login({
-        username,
-        password: sha256(md5(password))
+        username: username.toLowerCase(),
+        password: hasPassword(password)
     })
         .then(response => {
             const { token } = response.data

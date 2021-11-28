@@ -3,7 +3,6 @@ export const _showLogForm = () => {
         dispatch({
             type: 'SHOW_LOG_FORM'
         })
-    
 }
 
 export const _hideLogForm = () => {

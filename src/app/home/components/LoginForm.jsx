@@ -25,7 +25,7 @@ const LoginForm = props => {
     }, [user.auth, user.error])
 
     const handleValueChange = e => {
-        setPayload({ ...payload, [e.target.name]: e.target.value })
+        setPayload({ ...payload, [e.target.name]: e.target.value.trim() })
     }
     const handleRegister = e => dispatch(_changeLogForm('register'))
     const handleForgot = e => dispatch(_changeLogForm('forgot'))
