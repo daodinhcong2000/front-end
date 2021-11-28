@@ -1,4 +1,4 @@
-import './App.css'
+// import './App.css'
 
 import routes from './app/seller/routes'
 import { Router, Switch, Route } from 'react-router-dom'
