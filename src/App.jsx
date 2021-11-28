@@ -1,6 +1,3 @@
-import './App.css'
-
-import { useState } from 'react'
 import { Router, Switch, Route } from 'react-router-dom'
 
 import getHistory from './helpers/rounting/getHistory'
@@ -10,7 +7,7 @@ import SellerPage from './app/seller/components/SellerPage'
 import AdminPage from './app/admin/components/AdminPage'
 
 const App = () => {
-  const { location } = getHistory()
+  // const { location } = getHistory()
 
   return (
       <Router history={getHistory()}>

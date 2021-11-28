@@ -1,17 +1,19 @@
-import { combineReducers, createStore } from 'redux'
+import thunk from 'redux-thunk'
+import { combineReducers, createStore, applyMiddleware } from 'redux'
 
-import user from './reducers/user'
-import logForm from './reducers/logForm'
-import search from './reducers/search'
-import cart from './reducers/cart'
+import userReducer from './reducers/userReducer'
+import logFormReducer from './reducers/logFormReducer'
+import cartReducer from './reducers/cartReducer'
+import searchReducer from './reducers/searchReducer'
 
 const reducers = combineReducers({
-    user,
-    logForm,
-    cart
+    user: userReducer,
+    logForm: logFormReducer,
+    // cart: cartReducer,
+    // search: searchReducer,
 })
 
-const store = createStore(reducers)
+const store = createStore(reducers, applyMiddleware(thunk))
 store.subscribe(() => {
     console.log(JSON.stringify(store.getState()))
 })

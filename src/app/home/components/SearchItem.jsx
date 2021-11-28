@@ -19,7 +19,7 @@ const SearchItem = (image, title) => {
     }
 
     return (
-        <div onMouseOver={handleMouseOver} onMouseLeave={handleMouseOut}
+        <div onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}
             style={{ color: '#fff', textAlign: 'center', verticalAlign: 'baseline' }}
             onClick={handleClick}
         >

@@ -10,7 +10,7 @@ const isAuthenticated = () => !!getLocalData('accessToken')
 
 const makeAuthRequest = (auth = true) => {
     const options = {
-        baseUrl = configs.url
+        baseURL: configs.url
     }
     const instance = axios.create(options)
 
@@ -19,11 +19,11 @@ const makeAuthRequest = (auth = true) => {
             const additionOptions = {}
             if (auth) {
                 additionOptions['headers'] = {
-                    Authorization: `Bearer ${getToken()}`
+                    Authorization: `${getToken()}`
                 }
             }
 
-            const res = await instance({ ...additionOptions, ... args })
+            const res = await instance({ ...additionOptions, ...args })
             return res
         } catch (e) {
             throw e

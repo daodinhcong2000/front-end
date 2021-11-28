@@ -14,13 +14,13 @@ const validatePassword = password => passwordRegex.exec(password)
 const validateEmail = email => emailRegex.exec(email)
 
 module.exports = props => {
-    const { username, password, rePassword, phoneNumber, firstName, lastName, email } = props
+    const { username, password, rePassword, phoneNumber, email } = props
 
     if (!comparePassword(password, rePassword)) return { message: 'Mật khẩu không khớp!' }
     if (!validateUsername(username)) return { message: 'Tên đăng nhập từ 3 đến 30 ký tự, bao gồm chữ cái và chữ số!' }
     if (!validatePhoneNumber(phoneNumber)) return { message: 'Số điện thoại sai!' }
     if (!validatePassword(password)) return { message: 'Mật khẩu cần ít nhất 8 ký tự!' }
-    if (email !== '' && !validateEmail(email)) return { message: 'Email sai!' }
+    if (email && !validateEmail(email)) return { message: 'Email sai!' }
 
     return {}
 }

@@ -131,12 +131,11 @@ const RegisterForm = props => {
             // rules={[{ required: true, message: 'Nhập email!' }]}
             >
                 <Input allowClear={true} onPressEnter={onRegister}
-                    onChange={e => {
-                        dispatch({
+                    onChange={e => dispatch({
                             type: 'CHANGE_FORM',
                             payload: { email: e.target.value.trim() }
                         })
-                    }}
+                    }
                 />
             </Form.Item>
         </Form>
