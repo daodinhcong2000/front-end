@@ -3,7 +3,7 @@ import './styles/index.css'
 import { Layout } from 'antd'
 import PageHeader from './components/PageHeader'
 
-const HomePage = props => {
+const Home = props => {
 
     return (
         <Layout>
@@ -12,4 +12,4 @@ const HomePage = props => {
     )
 }
 
-export default HomePage
+export default Home

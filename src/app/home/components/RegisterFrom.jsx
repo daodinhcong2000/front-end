@@ -27,11 +27,9 @@ const RegisterForm = props => {
     const [loading, setLoading] = useState(false)
 
     const handleValueChange = e => {
-        setPayload({ ...payload, [e.target.name]: e.target.value.trim() })
-    }
-    const handleInputChange = e => {
         setStatus({...status, [e.target.name]: '' })
         setSuggest({...suggest, [e.target.name]: '' })
+        setPayload({ ...payload, [e.target.name]: e.target.value.trim() })
     }
     const handleLogin = e => {
         setPayload(initial)
@@ -112,6 +110,8 @@ const RegisterForm = props => {
                     dispatch(_changeLogForm('login'))
                 }, 3000)
             }
+        } else {
+            setLoading(false)
         }
     }
 
@@ -132,7 +132,7 @@ const RegisterForm = props => {
                 validateStatus={status.firstName}
                 help={suggest.firstName}
             >
-                <Input name='firstName' allowClear={true} onBlur={handleValueChange} onChange={handleInputChange} />
+                <Input name='firstName' allowClear={true} onChange={handleValueChange} />
             </Form.Item>
 
             {/* LAST NAME */}
@@ -143,7 +143,7 @@ const RegisterForm = props => {
                 validateStatus={status.lastName}
                 help={suggest.lastName}
             >
-                <Input name='lastName' allowClear={true} onBlur={handleValueChange} onChange={handleInputChange} />
+                <Input name='lastName' allowClear={true} onChange={handleValueChange} />
             </Form.Item>
 
             {/* PHONE NUMBER */}
@@ -154,7 +154,7 @@ const RegisterForm = props => {
                 validateStatus={status.phoneNumber}
                 help={suggest.phoneNumber}
             >
-                <Input name="phoneNumber" allowClear={true} onBlur={handleValueChange} onChange={handleInputChange} />
+                <Input name="phoneNumber" allowClear={true} onChange={handleValueChange} />
             </Form.Item>
 
             {/* USERNAME */}
@@ -165,7 +165,7 @@ const RegisterForm = props => {
                 validateStatus={status.username}
                 help={suggest.username}
             >
-                <Input name="username" allowClear={true} onBlur={handleValueChange} onChange={handleInputChange} />
+                <Input name="username" allowClear={true} onChange={handleValueChange} />
             </Form.Item>
 
             {/* PASSWORD */}
@@ -176,7 +176,7 @@ const RegisterForm = props => {
                 validateStatus={status.password}
                 help={suggest.password}
             >
-                <Input.Password name="password" allowClear={true} onBlur={handleValueChange} onChange={handleInputChange} />
+                <Input.Password name="password" allowClear={true} onChange={handleValueChange} />
             </Form.Item>
 
             {/* RE PASSWORD */}
@@ -187,7 +187,7 @@ const RegisterForm = props => {
                 validateStatus={status.rePassword}
                 help={suggest.rePassword}
             >
-                <Input.Password name="rePassword" allowClear={true} onBlur={handleValueChange} onChange={handleInputChange} />
+                <Input.Password name="rePassword" allowClear={true} onChange={handleValueChange} />
             </Form.Item>
 
             {/* ADDRESS */}
@@ -197,7 +197,7 @@ const RegisterForm = props => {
                 validateStatus={status.address}
                 help={suggest.address}
             >
-                <Input name="address" allowClear={true} onBlur={handleValueChange} onChange={handleInputChange} />
+                <Input name="address" allowClear={true} onChange={handleValueChange} />
             </Form.Item>
 
             {/* EMAIL */}
@@ -207,7 +207,7 @@ const RegisterForm = props => {
                 validateStatus={status.email}
                 help={suggest.email}
             >
-                <Input name="email" allowClear={true} onPressEnter={onRegister} onBlur={handleValueChange} onChange={handleInputChange} />
+                <Input name="email" allowClear={true} onPressEnter={onRegister} onChange={handleValueChange} />
             </Form.Item>
 
             <Row>
