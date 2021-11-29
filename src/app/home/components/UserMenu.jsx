@@ -1,33 +1,18 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { Button, Dropdown, Menu, message as Message } from "antd"
+import { Button, Dropdown, Menu } from "antd"
 import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled, CrownOutlined } from "@ant-design/icons"
 
-// import { _getUserInformation }
+import { _setUser, _logout } from '../../../redux/actions/userActions'
 
 const UserMenu = props => {
     const dispatch = useDispatch()
-    const { username, fullName, roles } = useSelector(state => state.user)
+    const { loading, username, fullName, roles } = useSelector(state => state.user)
+    const { logged } = useSelector(state => state.logForm)
+    
+    useEffect(() => {
 
-    // useEffect(async (username) => {
-    //     if (!username) {
-    //         const info = await _getUserInformation().then(response => response.data).catch(e => e.response.data)
-    //         const { success, message } = info
-    //         if (!success) {
-    //             return Message.error(message)
-    //         }
-    //         const { data } = info
-    //         const { firstName, lastName, username, roles } = data
-    //         dispatch({
-    //             type: 'SET_USER',
-    //             payload: {
-    //                 username,
-    //                 fullName: `${firstName} ${lastName}`,
-    //                 roles
-    //             }
-    //         })
-    //     }
-    // }, [username])
+    })
 
     const handleMenuClick = e => {
         const { key } = e
@@ -49,10 +34,7 @@ const UserMenu = props => {
             }
 
             case 'logout': {
-                dispatch({
-                    type: 'LOG_OUT'
-                })
-                break
+                dispatch(_logout)
             }
         }
     }
@@ -83,7 +65,7 @@ const UserMenu = props => {
 
     return (
         <Dropdown overlay={menu}>
-            <Button size="large" shape="round" id="btn_user">
+            <Button loading={loading} size="large" shape="round" id="btn_user">
                 {username}
             </Button>
         </Dropdown>

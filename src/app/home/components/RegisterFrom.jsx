@@ -25,6 +25,7 @@ const RegisterForm = props => {
     const [status, setStatus] = useState(initial)
     const [suggest, setSuggest] = useState(initial)
     const [loading, setLoading] = useState(false)
+
     const handleValueChange = e => {
         setPayload({ ...payload, [e.target.name]: e.target.value.trim() })
     }
@@ -32,7 +33,12 @@ const RegisterForm = props => {
         setStatus({...status, [e.target.name]: '' })
         setSuggest({...suggest, [e.target.name]: '' })
     }
-    const handleLogin = e => dispatch(_changeLogForm('login'))
+    const handleLogin = e => {
+        setPayload(initial)
+        setStatus(initial)
+        setSuggest(initial)
+        dispatch(_changeLogForm('login'))
+    }
 
     const register = async e => {
         setLoading(true)
@@ -65,7 +71,6 @@ const RegisterForm = props => {
         setStatus(newStatus)
         setSuggest(newSuggest)
 
-        console.log(errorCount)
         if (!errorCount) {
             const { firstName, lastName, phoneNumber, username, password, email, address } = payload
             const vPayload = Object.assign(

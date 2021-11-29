@@ -1,4 +1,5 @@
 const logFormInitialState = {
+    loading: false,
     visible: false,
     logged: false,
     mode: 'login'
@@ -11,11 +12,11 @@ const logFormReducer = (state = logFormInitialState, action) => {
         }
 
         case 'HIDE_LOG_FORM': {
-            return { ...state, visible: false, mode: 'login' }
+            return logFormInitialState
         }
 
         case 'LOG_IN_FORM': {
-            return { ...state, logged: true }
+            return { ...state, logged: true, visible: false }
         }
 
         case 'LOG_OUT': {
