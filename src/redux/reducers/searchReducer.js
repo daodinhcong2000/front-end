@@ -1,17 +1,29 @@
 const searchInitialState = {
+    searching: false,
     keyword: '',
     page: 1,
     limit: 20,
-    sort: 'price'
+    sort: '-views',
+    total: 1,
+    items: []
 }
 
 const searchReducer = (state = searchInitialState, action) => {
     switch (action.type) {
-        case 'INPUT_SEARCH':
-            return action.payload.content
+        case 'SEARCHING': {
+            const { keyword } = action.payload
+            return { ...state, searching: true, keyword }
+        }
 
-        case 'CLEAR_SEARCH':
-            return searchInitialState
+        case 'SEARCHED': {
+            const { items } = action.payload
+            return { ...state, searching: false, items }
+        }
+
+        case 'PAGINATION': {
+            const { page, limit } = action.payload
+            return { ...state, page, keyword }
+        }
 
         default:
             return state

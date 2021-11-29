@@ -57,7 +57,7 @@ const LoginForm = props => {
                 help={error}
                 rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}
             >
-                <Input allowClear={true} name='username' onChange={handleValueChange} />
+                <Input allowClear={true} name='username' onChange={handleValueChange} onPressEnter={login} />
             </Form.Item>
 
             {/* PASSWORD */}
@@ -70,7 +70,7 @@ const LoginForm = props => {
                 help={error}
                 rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
             >
-                <Input.Password allowClear={true} name='password' onChange={handleValueChange} />
+                <Input.Password allowClear={true} name='password' onChange={handleValueChange} onPressEnter={login} />
             </Form.Item>
 
             {/* REGISTER / FORGOT */}

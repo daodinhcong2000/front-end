@@ -20,8 +20,6 @@ export const login = payload => {
     })
 }
 
-export const getAllProducts = () => { }
-
 export const getOneProduct = id => {
     return apiRequest({
         url: `${COMMON_SERVICE_API}/shops/${id}`,
