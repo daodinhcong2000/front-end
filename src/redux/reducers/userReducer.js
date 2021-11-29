@@ -1,33 +1,31 @@
-import { isAuthenticated } from "../../services/makeApiRequest"
-
 const userInitialState = {
-    auth: isAuthenticated(),
+    loading: false,
+    status: '',
     username: '',
     fullName: '',
     roles: ['customer'],
-
     error: ''
 }
 
 const userReducer = (state = userInitialState, action) => {
     switch (action.type) {
         case 'LOG_IN': {
-            return { ...state, auth: true, error: '' }
-        }
-
-        case 'SET_USER': {
             const { username, fullName, roles } = action.payload
-            return { auth: true, username, fullName, roles, error: '' }
+            return { username, fullName, roles, error: ''}
         }
 
         case 'LOG_OUT': {
-            return { auth: false, username: '', fullName: '', roles: ['customer'], error: '' }
+            return userInitialState
         }
 
-        case 'LOG_ERROR': {
-            console.log(action)
-            const { error } = action.payload
-            return { ...state, error }
+        case 'LOG_STATUS': {
+            const { status, error } = action.payload
+            return { ...state, status, error }
+        }
+
+        case 'LOAD_USER': {
+            const { loading } = action.payload
+            return { ...state, loading }
         }
 
         default:

@@ -3,37 +3,38 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { _changeLogForm } from '../../../redux/actions/logFormActions'
-import { _login } from '../../../redux/actions/userActions'
+import { _login, _setStatus } from '../../../redux/actions/userActions'
 
 const LoginForm = props => {
     const dispatch = useDispatch()
 
-    const initialStatus = ''
-    const initialPayload = { username: '', password: '' }
+    const initial = { username: '', password: '' }
     const [loading, setLoading] = useState(false)
-    const [status, setStatus] = useState(initialStatus)
-    const [payload, setPayload] = useState(initialPayload)
-    const user = useSelector(state => state.user)
+    const [payload, setPayload] = useState(initial)
+    const { status, error } = useSelector(state => state.user)
 
     useEffect(() => {
-        if (!user.error) {
-            setStatus('')
-        } else {
-            setStatus('error')
+        if (status !== 'validating') {
+            setLoading(false)
         }
-        setLoading(false)
-    }, [user.auth, user.error])
+    }, [status])
+
 
     const handleValueChange = e => {
-        setPayload({ ...payload, [e.target.name]: e.target.value })
+        setPayload({ ...payload, [e.target.name]: e.target.value.trim() })
     }
-    const handleRegister = e => dispatch(_changeLogForm('register'))
-    const handleForgot = e => dispatch(_changeLogForm('forgot'))
+    const handleRegister = e => {
+        setPayload(initial)
+        dispatch(_changeLogForm('register'))
+    }
+    const handleForgot = e => {
+        setPayload(initial)
+        dispatch(_changeLogForm('forgot'))
+    }
 
     const login = e => {
-        setStatus('validating')
         setLoading(true)
-        dispatch(_login(payload))
+        dispatch(_login(payload.username, payload.password))
     }
 
     return (
@@ -52,9 +53,10 @@ const LoginForm = props => {
                 name="username"
                 type="string"
                 validateStatus={status}
+                help={error}
                 rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}
             >
-                <Input allowClear={true} name='username' onBlur={handleValueChange} />
+                <Input allowClear={true} name='username' onBlur={handleValueChange} onChange={e => dispatch(_setStatus('', ''))} />
             </Form.Item>
 
             {/* PASSWORD */}
@@ -64,9 +66,10 @@ const LoginForm = props => {
                 name="password"
                 type="string"
                 validateStatus={status}
+                help={error}
                 rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
             >
-                <Input.Password allowClear={true} name='password' onBlur={handleValueChange} />
+                <Input.Password allowClear={true} name='password' onBlur={handleValueChange} onChange={e => dispatch(_setStatus('', ''))} />
             </Form.Item>
 
             {/* REGISTER / FORGOT */}
@@ -86,8 +89,7 @@ const LoginForm = props => {
 
             {/* THIRD-PARTY */}
             <Form.Item wrapperCol={{ span: 24 }} style={{ marginBottom: '0px' }}><Row>
-                <Col span={3} />
-                <Col span={6} style={{ textAlign: 'center' }}>
+                <Col span={6} offset={3} style={{ textAlign: 'center' }}>
                     <Button shape='circle' type='primary' style={{ width: '4em', height: '4em' }} >
                         <Image src='/icons/Google.png' preview={false} width={'3em'} height={'3em'} style={{ marginTop: '2px', marginLeft: '1px' }} />
                     </Button>
@@ -102,7 +104,6 @@ const LoginForm = props => {
                         <Image src='/icons/Apple.png' preview={false} width={'3em'} height={'3em'} />
                     </Button>
                 </Col>
-                <Col span={3} />
             </Row></Form.Item>
             <hr />
         </Form>
