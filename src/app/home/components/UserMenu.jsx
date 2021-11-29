@@ -1,33 +1,16 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { Button, Dropdown, Menu, message as Message } from "antd"
+import { Button, Dropdown, Menu } from "antd"
 import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled, CrownOutlined } from "@ant-design/icons"
 
-// import { _getUserInformation }
+import { _setUser, _logout } from '../../../redux/actions/userActions'
+import { NavLink, Redirect } from "react-router-dom"
 
 const UserMenu = props => {
     const dispatch = useDispatch()
-    const { username, fullName, roles } = useSelector(state => state.user)
+    const { loading, username, fullName, roles } = useSelector(state => state.user)
 
-    // useEffect(async (username) => {
-    //     if (!username) {
-    //         const info = await _getUserInformation().then(response => response.data).catch(e => e.response.data)
-    //         const { success, message } = info
-    //         if (!success) {
-    //             return Message.error(message)
-    //         }
-    //         const { data } = info
-    //         const { firstName, lastName, username, roles } = data
-    //         dispatch({
-    //             type: 'SET_USER',
-    //             payload: {
-    //                 username,
-    //                 fullName: `${firstName} ${lastName}`,
-    //                 roles
-    //             }
-    //         })
-    //     }
-    // }, [username])
+    useEffect(() => dispatch(_setUser()), [])
 
     const handleMenuClick = e => {
         const { key } = e
@@ -37,7 +20,7 @@ const UserMenu = props => {
             }
 
             case 'admin': {
-                break
+                
             }
 
             case 'seller': {
@@ -49,10 +32,11 @@ const UserMenu = props => {
             }
 
             case 'logout': {
-                dispatch({
-                    type: 'LOG_OUT'
-                })
-                break
+                dispatch(_logout())
+            }
+
+            default: {
+
             }
         }
     }
@@ -64,12 +48,12 @@ const UserMenu = props => {
             </Menu.Item>
             {roles.includes('admin') &&
                 <Menu.Item key="admin" icon={<CrownOutlined />}>
-                    <a href="/admin">Quản trị</a>
+                    Quản trị
                 </Menu.Item>
             }
             {roles.includes('seller') &&
                 <Menu.Item key="seller" icon={<ShopFilled />}>
-                    <a href="/store">Cửa hàng</a>
+                    Cửa hàng
                 </Menu.Item>
             }
             <Menu.Item key="setting" icon={<SettingOutlined />}>
@@ -83,7 +67,7 @@ const UserMenu = props => {
 
     return (
         <Dropdown overlay={menu}>
-            <Button size="large" shape="round" id="btn_user">
+            <Button loading={loading} size="large" shape="round" id="btn_user">
                 {username}
             </Button>
         </Dropdown>
