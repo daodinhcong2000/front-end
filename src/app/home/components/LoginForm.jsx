@@ -1,4 +1,4 @@
-import { Form, Input, Button, Row, Col, Image, message as Message } from 'antd'
+import { Form, Input, Button, Row, Col, Image } from 'antd'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -19,6 +19,7 @@ const LoginForm = props => {
         }
     }, [status])
 
+
     const handleValueChange = e => {
         setPayload({ ...payload, [e.target.name]: e.target.value.trim() })
     }
@@ -33,7 +34,7 @@ const LoginForm = props => {
 
     const login = e => {
         setLoading(true)
-        dispatch(_login(payload.username, payload. password))
+        dispatch(_login(payload.username, payload.password))
     }
 
     return (

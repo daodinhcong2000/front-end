@@ -1,17 +1,25 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Row, Col, Layout, Image, Input } from 'antd'
 
 import LogModal from './LogModal'
 import UserMenu from './UserMenu'
 import SearchItem from './SearchItem'
 import CartModal from './CartModal'
-
+import { _setUser } from '../../../redux/actions/userActions'
 import { isAuthenticated } from '../../../services/makeApiRequest'
 
 const { Header } = Layout
 
 const PageHeader = props => {
+    const dispatch = useDispatch()
+    const { username } = useSelector(state => state.user)
     const onSearch = () => { }
+    useEffect(() => {
+        if (isAuthenticated() && !username) {
+            dispatch(_setUser())
+        }
+    }, [username])
 
     return (
         <Row id="Header" justify="start">

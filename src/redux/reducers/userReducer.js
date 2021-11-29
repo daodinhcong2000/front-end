@@ -1,4 +1,5 @@
 const userInitialState = {
+    loading: false,
     status: '',
     username: '',
     fullName: '',
@@ -20,6 +21,11 @@ const userReducer = (state = userInitialState, action) => {
         case 'LOG_STATUS': {
             const { status, error } = action.payload
             return { ...state, status, error }
+        }
+
+        case 'LOAD_USER': {
+            const { loading } = action.payload
+            return { ...state, loading }
         }
 
         default:

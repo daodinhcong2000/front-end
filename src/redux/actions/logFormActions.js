@@ -11,18 +11,6 @@ export const _hideLogForm = () => {
     })
 }
 
-export const _logInForm = () => {
-    return dispatch =>  dispatch({
-        type: 'LOG_IN_FORM'
-    })
-}
-
-export const _logOutForm = () => {
-    return dispatch => dispatch({
-        type: 'LOG_OUT_FORM'
-    })
-}
-
 export const _changeLogForm = mode => {
     return dispatch => {
         dispatch({

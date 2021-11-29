@@ -58,7 +58,7 @@ const RegisterForm = props => {
         const newSuggest = {}
         const keys = Object.keys(initial)
 
-        keys.map(key => {
+        keys.forEach(key => {
             if (validated[`${key}`]) {
                 newStatus[`${key}`] = 'error'
                 newSuggest[`${key}`] = validated[`${key}`]

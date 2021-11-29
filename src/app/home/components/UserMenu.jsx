@@ -4,15 +4,13 @@ import { Button, Dropdown, Menu } from "antd"
 import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled, CrownOutlined } from "@ant-design/icons"
 
 import { _setUser, _logout } from '../../../redux/actions/userActions'
+import { NavLink, Redirect } from "react-router-dom"
 
 const UserMenu = props => {
     const dispatch = useDispatch()
     const { loading, username, fullName, roles } = useSelector(state => state.user)
-    const { logged } = useSelector(state => state.logForm)
-    
-    useEffect(() => {
 
-    })
+    useEffect(() => dispatch(_setUser()), [])
 
     const handleMenuClick = e => {
         const { key } = e
@@ -22,7 +20,7 @@ const UserMenu = props => {
             }
 
             case 'admin': {
-                break
+                
             }
 
             case 'seller': {
@@ -34,7 +32,11 @@ const UserMenu = props => {
             }
 
             case 'logout': {
-                dispatch(_logout)
+                dispatch(_logout())
+            }
+
+            default: {
+
             }
         }
     }
@@ -46,12 +48,12 @@ const UserMenu = props => {
             </Menu.Item>
             {roles.includes('admin') &&
                 <Menu.Item key="admin" icon={<CrownOutlined />}>
-                    <a href="/admin">Quản trị</a>
+                    Quản trị
                 </Menu.Item>
             }
             {roles.includes('seller') &&
                 <Menu.Item key="seller" icon={<ShopFilled />}>
-                    <a href="/store">Cửa hàng</a>
+                    Cửa hàng
                 </Menu.Item>
             }
             <Menu.Item key="setting" icon={<SettingOutlined />}>

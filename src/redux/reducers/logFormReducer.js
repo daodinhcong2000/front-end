@@ -1,7 +1,7 @@
+import { isAuthenticated } from "../../services/makeApiRequest"
+
 const logFormInitialState = {
-    loading: false,
     visible: false,
-    logged: false,
     mode: 'login'
 }
 
@@ -12,14 +12,6 @@ const logFormReducer = (state = logFormInitialState, action) => {
         }
 
         case 'HIDE_LOG_FORM': {
-            return logFormInitialState
-        }
-
-        case 'LOG_IN_FORM': {
-            return { ...state, logged: true, visible: false }
-        }
-
-        case 'LOG_OUT': {
             return logFormInitialState
         }
 

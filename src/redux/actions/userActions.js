@@ -30,7 +30,7 @@ export const _login = (username, password) => {
                 })
 
                 dispatch({
-                    type: 'LOG_IN_FORM'
+                    type: 'HIDE_LOG_FORM'
                 })
             })
             .catch(e => {
@@ -45,21 +45,36 @@ export const _login = (username, password) => {
 export const _setUser = () => {
     if (!isAuthenticated()) { return }
 
-    return dispatch => getUserInformation()
-        .then(response => {
-            const { username, firstName, lastName, roles } = response.data.data
-            dispatch({
-                type: 'LOG_IN',
-                payload: { username, fullName: `${firstName} ${lastName}`, roles }
-            })
+    return dispatch => {
+        dispatch({
+            type: 'LOAD_USER',
+            payload: { loading: true }
         })
-        .catch(e => {
-            const { message } = e.response.data
-            dispatch({
-                type: 'LOG_STATUS',
-                payload: { status: 'error', error: message }
+
+        return getUserInformation()
+            .then(response => {
+                const { username, firstName, lastName, roles } = response.data.data
+                dispatch({
+                    type: 'LOAD_USER',
+                    payload: { loading: false }
+                })
+                dispatch({
+                    type: 'LOG_IN',
+                    payload: { username, fullName: `${firstName} ${lastName}`, roles }
+                })
             })
-        })
+            .catch(e => {
+                const { message } = e.response.data
+                dispatch({
+                    type: 'LOAD_USER',
+                    payload: { loading: false }
+                })
+                dispatch({
+                    type: 'LOG_STATUS',
+                    payload: { status: 'error', error: message }
+                })
+            })
+    }
 }
 
 export const _logout = () => {
