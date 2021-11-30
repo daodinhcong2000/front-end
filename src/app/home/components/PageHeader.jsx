@@ -8,19 +8,24 @@ import SearchItem from './SearchItem'
 import CartModal from './CartModal'
 import { _setUser } from '../../../redux/actions/userActions'
 import { isAuthenticated } from '../../../services/makeApiRequest'
+import { _search, _setKeyword } from '../../../redux/actions/searchActions'
 
 const { Header } = Layout
 
 const PageHeader = props => {
     const dispatch = useDispatch()
     const { username } = useSelector(state => state.user)
-    const onSearch = () => { }
+    const { searching, keyword, page, limit, sort } = useSelector(state => state.search)
     useEffect(() => {
         if (isAuthenticated() && !username) {
             dispatch(_setUser())
         }
     }, [username])
 
+    const onSearch = (value, event) => {dispatch(_search(keyword, page, limit, sort))}
+    const handleValueChange = e => {
+        dispatch(_setKeyword(e.target.value))
+    }
     return (
         <Row id="Header" justify="start">
             {/* LOGO */}
@@ -42,9 +47,11 @@ const PageHeader = props => {
                                 id='inp_headerSearch'
                                 placeholder='Nhập tên sản phẩm, thương hiệu muốn tìm ...'
                                 allowClear
-                                onSearch={onSearch}
                                 size='large'
-                                onPressEnter={onSearch}
+                                loading={searching}
+                                value={keyword}
+                                onSearch={onSearch}
+                                onChange={handleValueChange}
                             />
                         </div>
                     </Col>
