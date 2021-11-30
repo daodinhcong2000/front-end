@@ -22,6 +22,7 @@ const LoginForm = props => {
 
     const handleValueChange = e => {
         setPayload({ ...payload, [e.target.name]: e.target.value.trim() })
+        dispatch(_setStatus('', ''))
     }
     const handleRegister = e => {
         setPayload(initial)
@@ -56,7 +57,7 @@ const LoginForm = props => {
                 help={error}
                 rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}
             >
-                <Input allowClear={true} name='username' onBlur={handleValueChange} onChange={e => dispatch(_setStatus('', ''))} />
+                <Input allowClear={true} name='username' onChange={handleValueChange} />
             </Form.Item>
 
             {/* PASSWORD */}
@@ -69,7 +70,7 @@ const LoginForm = props => {
                 help={error}
                 rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
             >
-                <Input.Password allowClear={true} name='password' onBlur={handleValueChange} onChange={e => dispatch(_setStatus('', ''))} />
+                <Input.Password allowClear={true} name='password' onChange={handleValueChange} />
             </Form.Item>
 
             {/* REGISTER / FORGOT */}
