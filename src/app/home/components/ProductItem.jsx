@@ -1,53 +1,59 @@
-import { Col, Image } from "antd"
+import { Row, Col, Image, Rate, Button } from "antd"
+import { ShoppingCartOutlined } from "@ant-design/icons"
 
 const ProductItem = props => {
-    const { name, description, rating, images, price, sold, views } = {
-        "name": "Hoodie 3 (Updated)",
-        "shop": {
-            "_id": "61951d1bea3590a151186c25",
-            "seller": {
-                "_id": "618ffd3d330a4fead345adce",
-                "firstName": "Hứa Văn",
-                "lastName": "Cường",
-                "phoneNumber": "0323456789",
-                "roles": [
-                    "customer",
-                    "seller"
-                ],
-                "isActive": true,
-                "username": "cuonghv2",
-                "createdAt": "2021-11-13T18:00:29.591Z",
-                "updatedAt": "2021-11-17T15:17:15.193Z",
-                "__v": 1
-            },
-            "name": "Shop Hua Van Cuong 2",
-            "email": "cuonghv2@shop.com",
-            "address": "Hanoi, Vietnam",
-            "isActive": true,
-            "createdAt": "2021-11-17T15:17:47.474Z",
-            "updatedAt": "2021-11-18T03:12:27.977Z",
-            "__v": 0,
-            "approvalStatus": "approved"
-        },
-        "description": "Sample description",
-        "rating": 5,
-        "category": "clothes",
-        "images": [
-            "https://cf.shopee.vn/file/64cf907b10e5bb2bc1f2c0069b90e3e1",
-            "https://www.stedman.eu/out/pictures-2021/zoom/ST4100_model.jpg",
-            "https://www.hetgia.com/wp-content/uploads/2018/06/Shop-%C3%A1o-hoodie-nam-H%C3%A0-N%E1%BB%99i-6.jpg"
-        ],
-        "price": 12.36,
-        "createdAt": "2021-11-21T10:49:46.061Z",
-        "updatedAt": "2021-11-28T19:55:14.801Z",
-        "__v": 0,
-        "sold": 0,
-        "views": 15
+    console.log(props)
+    const { name, description, rating, images, price, sold = 0, views = 0, shop } = props
+
+    const showView = views => {
+        if (views > 1000000) {
+            return `${Math.floor(views / 100000) / 10}M`
+        }
+
+        if (views > 1000) {
+            return `${Math.floor(views / 100) / 10}K`
+        }
+
+        return views
     }
+
     return (
-        <Col span={6} className="gutter-row">
-            <Image src={images[0]} />
-        </Col>
+        <div className="product-item" style={{ textAlign: 'center', padding: '5px', background: 'mintcream' }}
+            onClick={e => { console.log(e.target) }}
+        >
+            <Row ><Col span={24} >
+                <h3 style={{ textAlign: 'center' }}>{name}</h3>
+            </Col></Row>
+            <Image src={images[0] || '/img/product.jpeg'} height='300px' preview={false} />
+            <Row>
+                <Col span={10}>
+                    <Rate span={24} allowHalf defaultValue={rating} disabled />
+                </Col>
+                <Col span={14}>
+                    <Button type="link" href="/seller" style={{ textDecoration: 'none' }}><b>{shop}</b></Button>
+                </Col>
+            </Row>
+            <Row>
+
+            </Row>
+            <Row>
+                <Col span={8} style={{ verticalAlign: 'text-bottom', fontSize: '90%', paddingTop: '10px' }} >
+                    <Row><Col span={24}><strong style={{ color: 'blue' }}>Lượt xem: </strong>{showView(views)}</Col></Row>
+                    <Row><Col span={24}><strong style={{ color: 'green' }}>Đã bán: </strong>{sold}</Col></Row>
+                </Col>
+                <Col span={8} style={{ verticalAlign: '', fontSize: '90%' }} >
+                    <Row><Col span={24}><h4 style={{ color: 'red' }}>${price}</h4></Col></Row>
+                    <Row><Col span={24}><h6 style={{ color: 'silver', textDecoration: 'line-through' }}>${price}</h6></Col></Row>
+
+
+                </Col>
+                <Col span={8} >
+                    <Button shape="circle" style={{width: '50px', height: '50px', backgroundColor: 'orange', color: 'white'}}>
+                        <ShoppingCartOutlined style={{fontSize: '200%'}} />
+                        </Button>
+                </Col>
+            </Row>
+        </div >
     )
 }
 

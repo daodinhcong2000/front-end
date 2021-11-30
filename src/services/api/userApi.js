@@ -30,7 +30,7 @@ export const getOneProduct = id => {
 export const searchProducts = query => {
     const queryString = query2string(query)
     return apiRequest({
-        url: `${COMMON_SERVICE_API}/products/?${queryString}}`,
+        url: `${COMMON_SERVICE_API}/products/?${queryString}`,
         method: 'GET'
     })
 }

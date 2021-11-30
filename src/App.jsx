@@ -17,9 +17,9 @@ const App = () => {
     <Router history={getHistory()}>
       <Switch>
         <Route exact path='/' component={Home} />
-        {homeRoutes.map(route => {
+        {homeRoutes.map((route, index) => {
           const { path, exact, component } = route
-          return <Route path={path} exact={exact} component={component} />
+          return <Route key={`home-${index}`} path={path} exact={exact} component={component} />
         })}
 
 

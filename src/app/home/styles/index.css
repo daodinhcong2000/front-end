@@ -23,6 +23,9 @@
   height: 60px;
   margin-top: 25px
 }
+.product-item:hover {
+  background-color: 'lightgrey'
+}
 #btn_forgot {
   text-align: center;
 }

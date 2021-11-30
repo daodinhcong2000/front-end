@@ -10,7 +10,6 @@ const Home = props => {
     return (
         <Layout>
             <PageHeader />
-            <CarouselHeader />
             <PageContent />
         </Layout>
     )

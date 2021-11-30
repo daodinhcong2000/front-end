@@ -9,16 +9,25 @@ export const _pagination = (page, limit) => {
     }
 }
 
-export const _search = (keyword, page, limit, sort = 'price') => {
+export const _setKeyword = keyword => {
     return dispatch => {
         dispatch({
-            type: 'SEARCHING',
+            type: 'SET_KEYWORD',
             payload: { keyword }
+        })
+    }
+}
+
+export const _search = (keyword, page = null, limit = null, sort = 'price') => {
+    return dispatch => {
+        dispatch({
+            type: 'SEARCHING'
         })
 
         return searchProducts({ search: keyword, page, limit, sort })
             .then(res => {
-                const { products } = res.data
+                console.log(res)
+                const { products } = res.data.data
                 dispatch({
                     type: 'SEARCHED',
                     payload: { items: products }
