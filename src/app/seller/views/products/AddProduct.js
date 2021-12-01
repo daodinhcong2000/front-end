@@ -37,7 +37,7 @@ const AddProduct = () => {
     getShops().then((response) => {
       setListShop(response.data.data);
     });
-  }, []);
+  }, [listShop]);
 
   //
   const uploadImage = (image) => {
@@ -72,7 +72,7 @@ const AddProduct = () => {
       .then((respone) => {
         if (respone.data.success == true) {
           success(respone.data.message)
-          setTimeout(setData(initData),3000);
+          window.location.reload(false);
         } else{
           error(respone.data.message);
         }

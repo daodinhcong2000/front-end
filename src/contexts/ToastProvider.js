@@ -37,7 +37,8 @@ export const ToastProvider = (props) => {
         info: info,
         success: success,
         hide: hide
-      }}>
+      }}
+      id ="alertSeller">
       {children}
       {message && (
         <Snackbar open={isOpen} autoHideDuration={3000} onClose={hide}>

@@ -32,13 +32,20 @@ const FormDetail = (recvData) => {
     delete data.sold;
     delete data.updatedAt;
     delete data.__v;
-    delete data.shop;
-    const idProduct = data.idProduct;
-    delete data.idProduct;
+    var idProduct;
+    var idShop;
+    
 
-    console.log(data);
-    console.log(idProduct);
-    updateProduct(recvData.data.shop._id, idProduct, data)
+    console.log(recvData);
+    if (data.idProduct != null){
+        idProduct = data.idProduct;
+        delete data.idProduct;
+    }
+    if (data.shop != null){
+        idShop = data.shop._id;
+        delete data.shop;
+    }
+    updateProduct(idShop, idProduct, data)
       .then((respone) => {
         if (respone.data.success == true) {
           window.location.reload();

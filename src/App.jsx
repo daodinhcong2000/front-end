@@ -3,7 +3,6 @@
 import homeRoutes from "./app/home/routes";
 import sellerRoutes from "./app/seller/routes";
 import { Router, Switch, Route } from "react-router-dom";
-import { useState } from "react";
 import getHistory from "./helpers/rounting/getHistory";
 
 import Home from "./app/home/";
@@ -12,7 +11,6 @@ import AdminPage from "./app/admin/components/AdminPage";
 import "./scss/style.scss";
 const App = () => {
   // const { location } = getHistory()
-  const [demo, setDemo] = useState(false);
 
   return (
     <Router history={getHistory()}>
