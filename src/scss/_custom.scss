@@ -1,8 +1,22 @@
 // Here you can add other styles
-input.form-check-input {
+// input.form-check-input {
+//     display: none;
+// }
+#changeProduct > input.form-check-input {
     display: none;
 }
 
 th.table-primary.fw-semibold {
     background-color: #ebedef;
+}
+label.form-label.col-auto.col-form-label {
+    display: none;
+}
+.row.my-2.mx-0 {
+    display: none;
+}
+
+#checkProduct{
+    position: absolute;
+    right: -20px;
 }

@@ -4,13 +4,13 @@ import AppFooter from './AppFooter'
 import AppHeader from './AppHeader'
 import AppHeaderDropdown from './header/AppHeaderDropdown'
 import AppSidebar from './AppSidebar'
-import Card from './Card'
+import FormDetail from './FormDetail'
 
 export {
   AppBreadcrumb,
   AppContent,
   AppFooter,
-  Card,
+  FormDetail,
   AppHeader,
   AppHeaderDropdown,
   AppSidebar,

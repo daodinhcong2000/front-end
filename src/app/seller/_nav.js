@@ -32,13 +32,19 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Số lượng shop',
-    to: '/theme/colors',
+    to: '/shops',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
+    name: 'Thêm cửa hàng',
+    to: '/register-shop',
+    icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
     name: 'Thống kê',
-    to: '/theme/typography',
+    to: '/seller',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   {
@@ -71,23 +77,23 @@ const _nav = [
   {
     component: CNavGroup,
     name: 'Sản phẩm còn trong kho',
-    to: '/buttons',
+    to: '/seller',
     icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
         name: 'Buttons',
-        to: '/buttons/buttons',
+        to: '/seller',
       },
       {
         component: CNavItem,
         name: 'Buttons groups',
-        to: '/buttons/button-groups',
+        to: '/seller',
       },
       {
         component: CNavItem,
         name: 'Dropdowns',
-        to: '/buttons/dropdowns',
+        to: '/seller',
       },
     ],
   },
@@ -99,49 +105,49 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Form Control',
-        to: '/forms/form-control',
+        to: '/seller',
       },
       {
         component: CNavItem,
         name: 'Select',
-        to: '/forms/select',
+        to: '/seller',
       },
       {
         component: CNavItem,
         name: 'Checks & Radios',
-        to: '/forms/checks-radios',
+        to: '/seller',
       },
       {
         component: CNavItem,
         name: 'Range',
-        to: '/forms/range',
+        to: '/seller',
       },
       {
         component: CNavItem,
         name: 'Input Group',
-        to: '/forms/input-group',
+        to: '/seller',
       },
       {
         component: CNavItem,
         name: 'Floating Labels',
-        to: '/forms/floating-labels',
+        to: '/seller',
       },
       {
         component: CNavItem,
         name: 'Layout',
-        to: '/forms/layout',
+        to: '/seller',
       },
       {
         component: CNavItem,
         name: 'Validation',
-        to: '/forms/validation',
+        to: '/seller',
       },
     ],
   },
   {
     component: CNavItem,
     name: 'Thống kê',
-    to: '/charts',
+    to: '/seller',
     icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
   },
   {
@@ -152,7 +158,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'CoreUI Free',
-        to: '/icons/coreui-icons',
+        to: '/seller',
         badge: {
           color: 'success',
           text: 'NEW',
