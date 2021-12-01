@@ -132,7 +132,7 @@ const RegisterForm = props => {
                 validateStatus={status.firstName}
                 help={suggest.firstName}
             >
-                <Input name='firstName' allowClear={true} onChange={handleValueChange} />
+                <Input name='firstName' allowClear={true} onChange={handleValueChange} onPressEnter={register} />
             </Form.Item>
 
             {/* LAST NAME */}
@@ -143,7 +143,7 @@ const RegisterForm = props => {
                 validateStatus={status.lastName}
                 help={suggest.lastName}
             >
-                <Input name='lastName' allowClear={true} onChange={handleValueChange} />
+                <Input name='lastName' allowClear={true} onChange={handleValueChange} onPressEnter={register} />
             </Form.Item>
 
             {/* PHONE NUMBER */}
@@ -154,7 +154,7 @@ const RegisterForm = props => {
                 validateStatus={status.phoneNumber}
                 help={suggest.phoneNumber}
             >
-                <Input name="phoneNumber" allowClear={true} onChange={handleValueChange} />
+                <Input name="phoneNumber" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
             </Form.Item>
 
             {/* USERNAME */}
@@ -165,7 +165,7 @@ const RegisterForm = props => {
                 validateStatus={status.username}
                 help={suggest.username}
             >
-                <Input name="username" allowClear={true} onChange={handleValueChange} />
+                <Input name="username" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
             </Form.Item>
 
             {/* PASSWORD */}
@@ -176,7 +176,7 @@ const RegisterForm = props => {
                 validateStatus={status.password}
                 help={suggest.password}
             >
-                <Input.Password name="password" allowClear={true} onChange={handleValueChange} />
+                <Input.Password name="password" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
             </Form.Item>
 
             {/* RE PASSWORD */}
@@ -187,7 +187,7 @@ const RegisterForm = props => {
                 validateStatus={status.rePassword}
                 help={suggest.rePassword}
             >
-                <Input.Password name="rePassword" allowClear={true} onChange={handleValueChange} />
+                <Input.Password name="rePassword" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
             </Form.Item>
 
             {/* ADDRESS */}
@@ -197,7 +197,7 @@ const RegisterForm = props => {
                 validateStatus={status.address}
                 help={suggest.address}
             >
-                <Input name="address" allowClear={true} onChange={handleValueChange} />
+                <Input name="address" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
             </Form.Item>
 
             {/* EMAIL */}
@@ -207,7 +207,7 @@ const RegisterForm = props => {
                 validateStatus={status.email}
                 help={suggest.email}
             >
-                <Input name="email" allowClear={true} onPressEnter={onRegister} onChange={handleValueChange} />
+                <Input name="email" allowClear={true} onPressEnter={onRegister} onChange={handleValueChange} onPressEnter={register} />
             </Form.Item>
 
             <Row>

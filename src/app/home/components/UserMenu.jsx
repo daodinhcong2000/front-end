@@ -10,7 +10,9 @@ const UserMenu = props => {
     const dispatch = useDispatch()
     const { loading, username, fullName, roles } = useSelector(state => state.user)
 
-    useEffect(() => dispatch(_setUser()), [])
+    useEffect(() => {
+        if (!loading) dispatch(_setUser())
+    }, [])
 
     const handleMenuClick = e => {
         const { key } = e
@@ -20,7 +22,7 @@ const UserMenu = props => {
             }
 
             case 'admin': {
-                
+
             }
 
             case 'seller': {
@@ -41,29 +43,27 @@ const UserMenu = props => {
         }
     }
 
-    const menu = (
-        <Menu onClick={handleMenuClick}>
-            <Menu.Item key="self" icon={<UserOutlined />}>
-                {fullName}
+    const menu = <Menu onClick={handleMenuClick}>
+        <Menu.Item key="self" icon={<UserOutlined />}>
+            {fullName}
+        </Menu.Item>
+        {roles.includes('admin') &&
+            <Menu.Item key="admin" icon={<CrownOutlined />}>
+                Quản trị
             </Menu.Item>
-            {roles.includes('admin') &&
-                <Menu.Item key="admin" icon={<CrownOutlined />}>
-                    Quản trị
-                </Menu.Item>
-            }
-            {roles.includes('seller') &&
-                <Menu.Item key="seller" icon={<ShopFilled />}>
-                    Cửa hàng
-                </Menu.Item>
-            }
-            <Menu.Item key="setting" icon={<SettingOutlined />}>
-                Cài đặt
+        }
+        {roles.includes('seller') &&
+            <Menu.Item key="seller" icon={<ShopFilled />}>
+                Cửa hàng
             </Menu.Item>
-            <Menu.Item key="logout" icon={<LogoutOutlined />}>
-                Đăng xuất
-            </Menu.Item>
-        </Menu>
-    )
+        }
+        <Menu.Item key="setting" icon={<SettingOutlined />}>
+            Cài đặt
+        </Menu.Item>
+        <Menu.Item key="logout" icon={<LogoutOutlined />}>
+            Đăng xuất
+        </Menu.Item>
+    </Menu>
 
     return (
         <Dropdown overlay={menu}>
