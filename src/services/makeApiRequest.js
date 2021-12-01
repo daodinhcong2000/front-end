@@ -27,6 +27,7 @@ const makeAuthRequest = (auth = true) => {
             return res
         } catch (e) {
             throw e
+            console.log(e);
         }
     }
 }

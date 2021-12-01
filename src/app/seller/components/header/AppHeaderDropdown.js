@@ -1,4 +1,5 @@
 import React from 'react'
+import { removeToken } from "../../../../services/makeApiRequest"
 import {
   CAvatar,
   CBadge,
@@ -22,13 +23,14 @@ import {
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
-// import avatar8 from './../../assets/images/avatars/8.jpg'
+import avatar8 from './../../assets/images/avatars/8.jpg'
 
 const AppHeaderDropdown = () => {
   return (
+    <div>
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-        {/* <CAvatar src={avatar8} size="md" /> */}
+        <CAvatar src={avatar8} size="md" />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
@@ -84,12 +86,13 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="#">
+        <CDropdownItem href="/" onClick ={removeToken}>
           <CIcon icon={cilLockLocked} className="me-2" />
           Lock Account
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>
+  </div>
   )
 }
 
