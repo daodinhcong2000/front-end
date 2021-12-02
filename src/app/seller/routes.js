@@ -14,7 +14,7 @@ const routes = [
   { path: '/add-product', name: 'Thêm sản phẩm', component: AddProduct },
   { path: '/change-product', name: 'Sửa sản phẩm', component: ChangeProduct },
   { path: '/delete-product', name: 'Xóa sản phẩm', component: DeleteProduct },
-  { path: '/shops', name: 'Các cửa hàng', component: TableShop },
+  { path: '/shops', name: 'Danh sách cửa hàng', component: TableShop },
   { path: '/register-shop', name: 'Thêm của hàng', component: AddShop },
 ]
 

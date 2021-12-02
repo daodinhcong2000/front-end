@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import {
   CSmartTable,
   CBadge,
@@ -6,6 +6,7 @@ import {
   CCollapse,
   CCardBody,
 } from "@coreui/react-pro";
+import ReactStars from "react-rating-stars-component";
 import FormDetail from "./FormDetail";
 import FormDetailDelete from "./FormDetailDelete";
 import { deleteProduct } from "../../../services/api/sellerApi";
@@ -48,20 +49,6 @@ const TableProduct = ({ columns, usersData, type }) => {
       });
     }
   };
-  const getBadge = (rate) => {
-    switch (rate) {
-      case "5":
-        return "success";
-      case "5":
-        return "secondary";
-      case "Pending":
-        return "warning";
-      case "Banned":
-        return "danger";
-      default:
-        return "primary";
-    }
-  };
   const toggleDetails = (index) => {
     const position = details.indexOf(index);
     let newDetails = details.slice();
@@ -85,6 +72,7 @@ const TableProduct = ({ columns, usersData, type }) => {
 
   return (
     <div>
+      <Suspense fallback={<h1>Loading posts...</h1>}>
       <CSmartTable
         activePage={3}
         cleaner
@@ -97,9 +85,9 @@ const TableProduct = ({ columns, usersData, type }) => {
         itemsPerPage={5}
         pagination
         scopedColumns={{
-          status: (item) => (
+          rating: (item) => (
             <td>
-              <CBadge color={getBadge(item.status)}>{item.status}</CBadge>
+              <ReactStars  size = '30' value= {item.rating} edit = {false} disable/>
             </td>
           ),
           show_details: (item) => {
@@ -156,7 +144,8 @@ const TableProduct = ({ columns, usersData, type }) => {
           hover: true,
         }}
       />
-      {type === "fix" ? "" : <CButton onClick={handleDelete}> xóa </CButton>}
+      {type === "fix" ? "" : <CButton onClick={handleDelete} color="danger"> Xóa </CButton>}
+      </Suspense>
     </div>
   );
 };

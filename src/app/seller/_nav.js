@@ -27,11 +27,11 @@ const _nav = [
   },
   {
     component: CNavTitle,
-    name: 'Quản lý shop',
+    name: 'Quản lý cửa hàng',
   },
   {
     component: CNavItem,
-    name: 'Số lượng shop',
+    name: 'Danh sách cửa hàng',
     to: '/shops',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
@@ -44,7 +44,7 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Thống kê',
-    to: '/seller',
+    to: '/seller-a',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   {
@@ -77,23 +77,23 @@ const _nav = [
   {
     component: CNavGroup,
     name: 'Sản phẩm còn trong kho',
-    to: '/seller',
+    to: '/seller-a',
     icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
         name: 'Buttons',
-        to: '/seller',
+        to: '/seller-a',
       },
       {
         component: CNavItem,
         name: 'Buttons groups',
-        to: '/seller',
+        to: '/seller-a',
       },
       {
         component: CNavItem,
         name: 'Dropdowns',
-        to: '/seller',
+        to: '/seller-a',
       },
     ],
   },
@@ -105,43 +105,8 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Form Control',
-        to: '/seller',
-      },
-      {
-        component: CNavItem,
-        name: 'Select',
-        to: '/seller',
-      },
-      {
-        component: CNavItem,
-        name: 'Checks & Radios',
-        to: '/seller',
-      },
-      {
-        component: CNavItem,
-        name: 'Range',
-        to: '/seller',
-      },
-      {
-        component: CNavItem,
-        name: 'Input Group',
-        to: '/seller',
-      },
-      {
-        component: CNavItem,
-        name: 'Floating Labels',
-        to: '/seller',
-      },
-      {
-        component: CNavItem,
-        name: 'Layout',
-        to: '/seller',
-      },
-      {
-        component: CNavItem,
-        name: 'Validation',
-        to: '/seller',
-      },
+        to: '/seller-a',
+      }
     ],
   },
   {
@@ -158,7 +123,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'CoreUI Free',
-        to: '/seller',
+        to: '/seller-a',
         badge: {
           color: 'success',
           text: 'NEW',

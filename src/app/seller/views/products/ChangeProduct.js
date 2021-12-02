@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,Suspense } from "react";
 import TableProduct from "../../components/TableProduct";
 import {
   getShops,
   postProduct,
   getProducts,
 } from "../../../../services/api/sellerApi";
-import { CFormSelect } from "@coreui/react";
+import { CFormSelect , CSpinner} from "@coreui/react";
 const ChangeProduct = () => {
   const [shopId, setShopId] = useState("");
   const [listShop, setListShop] = useState([]);
@@ -69,10 +69,9 @@ const ChangeProduct = () => {
           })}
         </CFormSelect>
       </div>
-
-      { console.log(dataProducts)}
-      {console.log(shopId)}
+      <Suspense fallback={<CSpinner color="primary" />}>
        {dataProducts.length != 0 ? <TableProduct columns={columns} usersData={dataProducts} type ="fix"/> : "Không có sản phẩm nào"}
+       </Suspense>
     </div>
   );
 };

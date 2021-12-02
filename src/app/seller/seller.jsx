@@ -8,8 +8,8 @@ import {
 import { ToastProvider } from "../../contexts/ToastProvider";
 const seller = () => {
   return (
-    <div>
-      <ToastProvider>
+    <ToastProvider>
+      <div>
         <AppSidebar />
         <div className="wrapper d-flex flex-column min-vh-100 bg-light">
           <AppHeader />
@@ -18,8 +18,8 @@ const seller = () => {
           </div>
           <AppFooter />
         </div>
-      </ToastProvider>
-    </div>
+      </div>
+    </ToastProvider>
   );
 };
 

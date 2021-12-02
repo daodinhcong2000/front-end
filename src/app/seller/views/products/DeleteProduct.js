@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import TableProduct from "../../components/TableProduct";
 import {
   getShops,
-  postProduct,
   getProducts,
 } from "../../../../services/api/sellerApi";
-import { CFormSelect } from "@coreui/react";
+import { CFormSelect, CSpinner } from "@coreui/react";
 const DeleteProduct = () => {
   const [shopId, setShopId] = useState("");
   const [listShop, setListShop] = useState([]);
@@ -17,10 +16,10 @@ const DeleteProduct = () => {
   }, []);
 
   useEffect(() => {
-    if (shopId != "" && shopId != 1 ) {
+    if (shopId != "" && shopId != 1) {
       getProducts(shopId).then((response) => {
         setDataProducts(response.data.data.products);
-        console.log(dataProducts)
+        console.log(dataProducts);
       });
     }
   }, [shopId]);
@@ -54,21 +53,27 @@ const DeleteProduct = () => {
     },
   ];
 
-
   return (
     <div>
-      <div className="mb-3">
-        <CFormSelect
-          aria-label="Default select example"
-          onChange={(e) => setShopId(e.target.value)}
-        >
-          <option value = "1">Chọn shop</option>
-          {listShop.map((shop) => {
-            return <option value={shop._id} key={shop._id}>{shop.name}</option>;
-          })}
-        </CFormSelect>
-      </div>
-      <TableProduct columns={columns} usersData={dataProducts} />
+      <Suspense fallback={<h1>Loading posts...</h1>}>
+        <div className="mb-3">
+          <CFormSelect
+            aria-label="Default select example"
+            onChange={(e) => setShopId(e.target.value)}
+          >
+            <option value="1">Chọn shop</option>
+            {listShop.map((shop) => {
+              return (
+                <option value={shop._id} key={shop._id}>
+                  {shop.name}
+                </option>
+              );
+            })}
+          </CFormSelect>
+        </div>
+
+        {dataProducts.length != 0 ?<TableProduct columns={columns} usersData={dataProducts} /> : "Không có sản phẩm nào"}
+      </Suspense>
     </div>
   );
 };

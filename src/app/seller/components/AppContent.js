@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { CContainer, CSpinner } from '@coreui/react'
 
 //routes config
@@ -27,7 +27,6 @@ const AppContent = () => {
               )
             )
           })}
-          {/* <Redirect from="/seller" to="/seller" /> */}
         </Switch>
       </Suspense>
     </CContainer>

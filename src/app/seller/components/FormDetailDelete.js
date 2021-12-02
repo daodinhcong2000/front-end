@@ -85,7 +85,7 @@ const FormDetailDelete = (recvData) => {
             );
           })}
         </CCol>
-        <CCol xs={12}>
+        <CCol xs={12} id = "imageShow">
           {imageUrls &&
             imageUrls.map((imageUrl , idx) => {
               return <CImage fluid src={imageUrl} width={150} height={150} key = {idx}/>;

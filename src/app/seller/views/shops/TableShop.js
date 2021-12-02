@@ -1,11 +1,8 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState ,useEffect, Suspense} from "react";
 import { getShops } from "../../../../services/api/sellerApi";
 import {
   CSmartTable,
-  CBadge,
-  CButton,
-  CCollapse,
-  CCardBody,
+  CBadge
 } from "@coreui/react-pro";
 
 const TableShop = () => {
@@ -36,8 +33,21 @@ const TableShop = () => {
     });
   }, []);
 
+  const getBadge = (approvalStatus) => {
+    switch (approvalStatus) {
+      case 'approved':
+        return 'success'
+      case 'pending':
+        return 'warning'
+      case 'Banned':
+        return 'danger'
+      default:
+        return 'primary'
+    }}
+
   return (
     <div>
+      <Suspense fallback={<h1>Loading posts...</h1>}>
       <CSmartTable
         activePage={3}
         cleaner
@@ -49,6 +59,13 @@ const TableShop = () => {
         itemsPerPageSelect
         itemsPerPage={5}
         pagination
+        copedColumns={{
+          approvalStatus: (item) => (
+            <td>
+              {/* <CBadge color={getBadge(item.approvalstatus)}>{item.approvalstatus}</CBadge> */}
+              <p>test</p>
+            </td>
+          )}}
         sorterValue={{ column: "name", state: "asc" }}
         tableFilter
         tableHeadProps={{
@@ -59,6 +76,7 @@ const TableShop = () => {
           hover: true,
         }}
       />
+      </Suspense>
     </div>
   );
 };
