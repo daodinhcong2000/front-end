@@ -132,6 +132,37 @@ const FormDetail = (recvData) => {
           />
         </div>
         <div className="mb-3">
+          <CRow>
+            <CCol xs>
+              <CFormLabel htmlFor="exampleFormControlInput1">
+                Loại sản phẩm
+              </CFormLabel>
+              <CFormInput
+                type="text"
+                id="exampleFormControlInput1"
+                name="category"
+                placeholder="Nhập loại mặt hàng mà bạn muốn đề xuất"
+                onChange={(e) => handleChange(e)}
+                value={data.category}
+              />
+            </CCol>
+            <CCol xs>
+              <CFormLabel htmlFor="exampleFormControlInput1">
+                Giá sản phẩm
+              </CFormLabel>
+              <CInputGroup>
+                <CFormInput
+                  aria-label="Amount (to the nearest dollar)"
+                  name="price"
+                  onChange={(e) => handleChange(e)}
+                  value={data.price}
+                />
+                <CInputGroupText>VNĐ</CInputGroupText>
+              </CInputGroup>
+            </CCol>
+          </CRow>
+        </div>
+        <div className="mb-3">
           <CFormLabel htmlFor="exampleFormControlTextarea1">
             Mô tả sản phẩm
           </CFormLabel>
@@ -140,24 +171,10 @@ const FormDetail = (recvData) => {
             rows="3"
             name="description"
             onChange={(e) => handleChange(e)}
-            value={data.description}
           ></CFormTextarea>
         </div>
-        <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput1">
-            Loại sản phẩm
-          </CFormLabel>
-          <CFormInput
-            type="text"
-            id="exampleFormControlInput1"
-            name="category"
-            placeholder="Nhập loại mặt hàng mà bạn muốn đề xuất"
-            onChange={(e) => handleChange(e)}
-            value={data.category}
-          />
-        </div>
         <CCol xs={12}>
-          <CFormLabel htmlFor="inputAddress">Kích thước</CFormLabel>
+          <CFormLabel htmlFor="inputAddress">Size</CFormLabel>
           {sizes.map((size, i) => {
             return (
               <div className="box" key={i} id="inputSize">
@@ -212,7 +229,7 @@ const FormDetail = (recvData) => {
             ref={inputFile}
             style={{ display: "none" }}
           />
-          <CButton onClick={onButtonClick}>Thêm ảnh</CButton>
+          <CButton onClick={onButtonClick} color="secondary" shape="rounded-pill">Thêm ảnh</CButton>
         </CCol>
         <CCol xs id="imageShow">
           {imageUrls &&
@@ -229,19 +246,9 @@ const FormDetail = (recvData) => {
               );
             })}
         </CCol>
-        <CInputGroup className="mb-3">
-          <CInputGroupText>$</CInputGroupText>
-          <CFormInput
-            aria-label="Amount (to the nearest dollar)"
-            name="price"
-            onChange={(e) => handleChange(e)}
-            value={data.price}
-          />
-          <CInputGroupText>VNĐ</CInputGroupText>
-        </CInputGroup>
         <CCol xs={12}>
           <CButton onClick={handleSubmit} type="submit">
-            Sửa sản phẩm
+            Lưu
           </CButton>
         </CCol>
       </CForm>

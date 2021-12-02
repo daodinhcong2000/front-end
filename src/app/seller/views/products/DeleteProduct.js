@@ -32,12 +32,12 @@ const DeleteProduct = () => {
       _props: { className: "fw-semibold" },
     },
     {
-      label: "Ngày bán",
-      key: "createdAt",
+      label: "Loại sản phẩm",
+      key: "category",
     },
     {
-      label: "Loại hàng",
-      key: "category",
+      label: "Giá sản phẩm",
+      key: "price",
       filter: true,
       sorter: false,
       _style: { width: "20%" },

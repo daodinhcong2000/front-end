@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import homeRoutes from "./app/home/routes";
 import sellerRoutes from "./app/seller/routes";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
@@ -12,7 +12,7 @@ import { roles } from "./services/checkRole";
 import PrivateRoute from "./helpers/PrivateRoute";
 const App = () => {
   // const { location } = getHistory()
-  const checkSeller = roles("seller");
+  const isSeller = roles("seller");
   return (
     <Router history={getHistory()}>
       <Switch>
@@ -28,18 +28,19 @@ const App = () => {
             />
           );
         })}
-        <PrivateRoute isAuthenticated={!checkSeller}>
-          {sellerRoutes.map((route, idx) => {
-            return (
-              <Route
-                key={idx}
+        {sellerRoutes.map((route, idx) => {
+          return (
+            <Route
+              // key={idx}
+              // path={route.path}
+              // exact={route.exact}
+              render={() => (isSeller ? <Route  key={idx}
                 path={route.path}
-                exact={route.exact}
-                component={seller}
-              />
-            );
-          })}
-        </PrivateRoute>
+                exact={route.exact} 
+                component={seller}/> : <Redirect to="/" />)}
+            />
+          );
+        })}
 
         <Route exact path="/admin" component={AdminPage} />
       </Switch>
