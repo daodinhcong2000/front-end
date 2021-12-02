@@ -37,7 +37,7 @@ const AddProduct = () => {
     getShops().then((response) => {
       setListShop(response.data.data);
     });
-  }, [listShop]);
+  }, [shopId]);
 
   //
   const uploadImage = (image) => {
