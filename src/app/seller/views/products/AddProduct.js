@@ -37,7 +37,7 @@ const AddProduct = () => {
     getShops().then((response) => {
       setListShop(response.data.data);
     });
-  }, []);
+  }, [listShop]);
 
   //
   const uploadImage = (image) => {
@@ -72,7 +72,7 @@ const AddProduct = () => {
       .then((respone) => {
         if (respone.data.success == true) {
           success(respone.data.message)
-          setTimeout(setData(initData),3000);
+          window.location.reload(false);
         } else{
           error(respone.data.message);
         }
@@ -102,15 +102,17 @@ const AddProduct = () => {
     setSizes(list);
     data.sizes.splice(index, 1);
   };
-  //console.log(data);
+
   // handle click event of the Add button
   const handleAddClick = () => {
-    setSizes([...sizes, { name: "", numberInStock: "" }]);
+    if(sizes[sizes.length -1].name == '' || sizes[sizes.length -1].name == ''){
+      warn("Vui lòng điền đủ thông tin về kích thước trước khi thêm mới")
+    }
+    else{
+      setSizes([...sizes, { name: "", numberInStock: "" }]);
+    }
+    
   };
-
-  // const handleAddImage = (e) => {
-  //     setImages((images) => [...images, e.target.files[i]]);
-  // };
 
   const onButtonClick = () => {
     inputFile.current.click();
@@ -174,7 +176,7 @@ const AddProduct = () => {
           <CFormLabel htmlFor="inputAddress">Kích thước</CFormLabel>
           {sizes.map((size, i) => {
             return (
-              <div className="box" key={i}>
+              <div className="box" key={i} id="inputSize">
                 <CRow>
                   <CCol xs>
                     <CFormInput
@@ -228,7 +230,7 @@ const AddProduct = () => {
           />
           <CButton onClick={onButtonClick}>Thêm ảnh</CButton>
         </CCol>
-        <CCol xs={12}>
+        <CCol xs={12} id="imageShow">
           {images &&
             images.map((image, index) => {
               return (

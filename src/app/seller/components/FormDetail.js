@@ -14,10 +14,10 @@ import {
   CImage,
   CRow,
 } from "@coreui/react";
-import { useToast} from "../../../contexts/toast"
+import { useToast } from "../../../contexts/toast";
 
 const FormDetail = (recvData) => {
-    const { error, warn, info, success } = useToast();
+  const { error, warn, info, success } = useToast();
   const inputFile = useRef(null);
   const [data, setData] = useState(recvData.data);
   const [sizes, setSizes] = useState(data.sizes);
@@ -32,18 +32,26 @@ const FormDetail = (recvData) => {
     delete data.sold;
     delete data.updatedAt;
     delete data.__v;
-    delete data.shop;
-    const idProduct = data.idProduct;
-    delete data.idProduct;
+    var idProduct;
+    var idShop;
+    data.images = imageUrls;
 
-    console.log(data);
-    console.log(idProduct);
-    updateProduct(recvData.data.shop._id, idProduct, data)
+    //console.log(data);
+    if (idProduct == null) {
+      idProduct = data.idProduct;
+      delete data.idProduct;
+    }
+    if (idShop == null) {
+      idShop = data.shop._id;
+      delete data.shop;
+    }
+    // console.log(data);
+    updateProduct(idShop, idProduct, data)
       .then((respone) => {
         if (respone.data.success == true) {
-          window.location.reload();
           success(respone.data.message);
-          setTimeout(setData(recvData.data), 3000);
+          //setTimeout(setData(recvData.data), 3000);
+          window.location.reload(false);
         } else {
           error(respone.data.message);
         }
@@ -90,7 +98,14 @@ const FormDetail = (recvData) => {
   //console.log(data);
   // handle click event of the Add button
   const handleAddClick = () => {
-    setSizes([...sizes, { name: "", numberInStock: "" }]);
+    if (
+      sizes[sizes.length - 1].name == "" ||
+      sizes[sizes.length - 1].name == ""
+    ) {
+      warn("Vui lòng điền đủ thông tin về kích thước trước khi thêm mới");
+    } else {
+      setSizes([...sizes, { name: "", numberInStock: "" }]);
+    }
   };
   const deleteFile = (e) => {
     const s = imageUrls.filter((image, index) => index !== e);
@@ -138,14 +153,14 @@ const FormDetail = (recvData) => {
             name="category"
             placeholder="Nhập loại mặt hàng mà bạn muốn đề xuất"
             onChange={(e) => handleChange(e)}
-            value={data.catagory}
+            value={data.category}
           />
         </div>
         <CCol xs={12}>
           <CFormLabel htmlFor="inputAddress">Kích thước</CFormLabel>
           {sizes.map((size, i) => {
             return (
-              <div className="box">
+              <div className="box" key={i} id="inputSize">
                 <CRow>
                   <CCol xs>
                     <CFormInput
@@ -199,7 +214,7 @@ const FormDetail = (recvData) => {
           />
           <CButton onClick={onButtonClick}>Thêm ảnh</CButton>
         </CCol>
-        <CCol xs={12}>
+        <CCol xs id="imageShow">
           {imageUrls &&
             imageUrls.map((imageUrl, index) => {
               return (
