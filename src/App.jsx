@@ -8,11 +8,22 @@ import Home from "./app/home/";
 import seller from "./app/seller/seller";
 import AdminPage from "./app/admin/components/AdminPage";
 import "./scss/style.scss";
-import { roles } from "./services/checkRole";
+import { getRoles } from "./services/getRoles";
 import PrivateRoute from "./helpers/PrivateRoute";
 const App = () => {
   // const { location } = getHistory()
-  const isSeller = roles("seller");
+
+  const [roles, setRoles] = useState(['seller', 'admin'])
+
+  useEffect(() => { 
+    const _setRoles = async () => {
+      const vRoles = await getRoles()
+      setRoles(vRoles)
+    }
+
+    _setRoles()
+  }, [])
+
   return (
     <Router history={getHistory()}>
       <Switch>
@@ -34,7 +45,7 @@ const App = () => {
               // key={idx}
               // path={route.path}
               // exact={route.exact}
-              render={() => (isSeller ? <Route  key={idx}
+              render={() => (roles.includes('seller') ? <Route  key={idx}
                 path={route.path}
                 exact={route.exact} 
                 component={seller}/> : <Redirect to="/" />)}
