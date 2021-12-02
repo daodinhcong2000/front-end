@@ -1,28 +1,29 @@
 import { useEffect, useState } from "react";
 import homeRoutes from "./app/home/routes";
 import sellerRoutes from "./app/seller/routes";
+import adminRoutes from "./app/admin/routes";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
 import getHistory from "./helpers/rounting/getHistory";
 
 import Home from "./app/home/";
 import seller from "./app/seller/seller";
-import AdminPage from "./app/admin/components/AdminPage";
+import admin from "./app/admin/admin"
 import "./scss/style.scss";
 import { getRoles } from "./services/getRoles";
 import PrivateRoute from "./helpers/PrivateRoute";
 const App = () => {
   // const { location } = getHistory()
 
-  const [roles, setRoles] = useState(['seller', 'admin'])
+  const [roles, setRoles] = useState(["seller", "admin"]);
 
-  useEffect(() => { 
+  useEffect(() => {
     const _setRoles = async () => {
-      const vRoles = await getRoles()
-      setRoles(vRoles)
-    }
+      const vRoles = await getRoles();
+      setRoles(vRoles);
+    };
 
-    _setRoles()
-  }, [])
+    _setRoles();
+  }, []);
 
   return (
     <Router history={getHistory()}>
@@ -41,19 +42,32 @@ const App = () => {
         })}
         {sellerRoutes.map((route, idx) => {
           return (
-            <Route
-              // key={idx}
-              // path={route.path}
-              // exact={route.exact}
-              render={() => (roles.includes('seller') ? <Route  key={idx}
-                path={route.path}
-                exact={route.exact} 
-                component={seller}/> : <Redirect to="/" />)}
-            />
+                roles.includes("seller") ? (
+                  <Route
+                    key={idx}
+                    path={route.path}
+                    exact={route.exact}
+                    component={seller}
+                  />
+                ) : (
+                  <Redirect to="/" />
+                )
           );
         })}
-
-        <Route exact path="/admin" component={AdminPage} />
+        {adminRoutes.map((route, idx) => {
+          return (
+            roles.includes("admin") ? (
+                  <Route
+                    key={idx}
+                    path={route.path}
+                    exact={route.exact}
+                    component={admin}
+                  />
+                ) : (
+                  <Redirect to="/" />
+                )
+          );
+        })}
       </Switch>
     </Router>
   );
