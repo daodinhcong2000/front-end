@@ -1,5 +1,3 @@
-import { isAuthenticated } from "../../services/makeApiRequest"
-
 const logFormInitialState = {
     visible: false,
     mode: 'login'

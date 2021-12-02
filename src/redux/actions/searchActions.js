@@ -26,7 +26,6 @@ export const _search = (keyword, page = null, limit = null, sort = 'price') => {
 
         return searchProducts({ search: keyword, page, limit, sort })
             .then(res => {
-                console.log(res)
                 const { products } = res.data.data
                 dispatch({
                     type: 'SEARCHED',
