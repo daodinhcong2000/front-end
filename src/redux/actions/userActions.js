@@ -34,9 +34,10 @@ export const _login = (username, password) => {
                 })
             })
             .catch(e => {
+                const { message } = e.response.data
                 dispatch({
                     type: 'LOG_STATUS',
-                    payload: { status: 'error', error: 'Tài khoản hoặc mật khẩu sai!' }
+                    payload: { status: 'error', error: message }
                 })
             })
     }

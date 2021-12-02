@@ -21,7 +21,6 @@ const searchReducer = (state = searchInitialState, action) => {
 
         case 'SEARCHED': {
             const { items } = action.payload
-            console.log(items)
             return { ...state, searching: false, items, total: items.length }
         }
 

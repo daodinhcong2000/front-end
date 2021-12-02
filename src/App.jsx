@@ -1,10 +1,12 @@
 import { useState } from "react";
-import homeRoutes from "./app/home/routes";
 import sellerRoutes from "./app/seller/routes";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
 import getHistory from "./helpers/rounting/getHistory";
 
-import Home from "./app/home/";
+import Home from "./app/home/Home";
+import Products from "./app/home/Products"
+import Shops from "./app/home/Shops"
+
 import seller from "./app/seller/seller";
 import AdminPage from "./app/admin/components/AdminPage";
 import "./scss/style.scss";
@@ -16,18 +18,10 @@ const App = () => {
   return (
     <Router history={getHistory()}>
       <Switch>
-        <Route exact path="/" component={Home} />
-        {homeRoutes.map((route, index) => {
-          const { path, exact, component } = route;
-          return (
-            <Route
-              key={`home-${index}`}
-              path={path}
-              exact={exact}
-              component={component}
-            />
-          );
-        })}
+        <Route exact path='/' component={Home} />
+        <Route exact path='/shops/:shopId' component={Shops} />
+        <Route exact path='/products/:productId' component={Products} />
+
         <PrivateRoute isAuthenticated={!checkSeller}>
           {sellerRoutes.map((route, idx) => {
             return (
