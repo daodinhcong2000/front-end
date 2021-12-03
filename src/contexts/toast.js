@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useContext } from 'react'
 
-export const ToastContext = React.createContext();
+export const ToastContext = React.createContext()
 
-export const useToast = () => useContext(ToastContext);
+export const useToast = () => useContext(ToastContext)

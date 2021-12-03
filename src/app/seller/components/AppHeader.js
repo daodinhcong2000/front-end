@@ -10,7 +10,7 @@ import {
   CHeaderToggler,
   CNavLink,
   CNavItem,
-  CImage,
+  CImage
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from '@coreui/icons'
@@ -26,14 +26,11 @@ const AppHeader = () => {
   return (
     <CHeader position="sticky" className="mb-4">
       <CContainer fluid>
-        <CHeaderToggler
-          className="ps-1"
-          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
-        >
+        <CHeaderToggler className="ps-1" onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}>
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
         <CHeaderBrand className="mx-auto d-md-none" to="/">
-          <CImage rounded  src={logos} width={100} height={60} />
+          <CImage rounded src={logos} width={100} height={60} />
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
@@ -42,11 +39,11 @@ const AppHeader = () => {
             </CNavLink>
           </CNavItem>
         </CHeaderNav>
-        
+
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
             <CNavLink to="/seller" component={NavLink} activeClassName="active">
-              <CImage rounded  src={logos} width={100} height={60} />
+              <CImage rounded src={logos} width={100} height={60} />
             </CNavLink>
           </CNavItem>
         </CHeaderNav>

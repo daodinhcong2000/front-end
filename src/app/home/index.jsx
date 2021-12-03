@@ -5,14 +5,13 @@ import PageHeader from './components/PageHeader'
 import CarouselHeader from './components/CarouselHeader'
 import PageContent from './components/PageContent'
 
-const Home = props => {
-
-    return (
-        <Layout>
-            <PageHeader />
-            <PageContent />
-        </Layout>
-    )
+const Home = (props) => {
+  return (
+    <Layout>
+      <PageHeader />
+      <PageContent />
+    </Layout>
+  )
 }
 
 export default Home

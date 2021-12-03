@@ -1,9 +1,8 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler ,CImage} from '@coreui/react'
+import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler, CImage } from '@coreui/react'
 import { AppSidebarNav } from './AppSidebarNav'
-
 
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
@@ -27,7 +26,7 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <CImage rounded  src={logos} width={70}  />
+        <CImage rounded src={logos} width={70} />
         <span>KÊNH BÁN HÀNG</span>
       </CSidebarBrand>
       <CSidebarNav>

@@ -10,7 +10,7 @@ import {
   CWidgetStatsB,
   CWidgetStatsC,
   CWidgetStatsE,
-  CWidgetStatsF,
+  CWidgetStatsF
 } from '@coreui/react'
 import { getStyle } from '@coreui/utils'
 import CIcon from '@coreui/icons-react'
@@ -26,7 +26,7 @@ import {
   cilSpeech,
   cilSpeedometer,
   cilUser,
-  cilUserFollow,
+  cilUserFollow
 } from '@coreui/icons'
 import { CChartBar, CChartLine } from '@coreui/react-chartjs'
 import { DocsExample } from 'src/components'
@@ -141,23 +141,7 @@ const Widgets = () => {
                     className="mx-auto"
                     style={{ height: '40px', width: '80px' }}
                     data={{
-                      labels: [
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                      ],
+                      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'],
                       datasets: [
                         {
                           backgroundColor: getStyle('--cui-danger'),
@@ -178,26 +162,26 @@ const Widgets = () => {
                             random(40, 100),
                             random(40, 100),
                             random(40, 100),
-                            random(40, 100),
-                          ],
-                        },
-                      ],
+                            random(40, 100)
+                          ]
+                        }
+                      ]
                     }}
                     options={{
                       maintainAspectRatio: false,
                       plugins: {
                         legend: {
-                          display: false,
-                        },
+                          display: false
+                        }
                       },
                       scales: {
                         x: {
-                          display: false,
+                          display: false
                         },
                         y: {
-                          display: false,
-                        },
-                      },
+                          display: false
+                        }
+                      }
                     }}
                   />
                 }
@@ -213,23 +197,7 @@ const Widgets = () => {
                     className="mx-auto"
                     style={{ height: '40px', width: '80px' }}
                     data={{
-                      labels: [
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                      ],
+                      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'],
                       datasets: [
                         {
                           backgroundColor: getStyle('--cui-primary'),
@@ -250,26 +218,26 @@ const Widgets = () => {
                             random(40, 100),
                             random(40, 100),
                             random(40, 100),
-                            random(40, 100),
-                          ],
-                        },
-                      ],
+                            random(40, 100)
+                          ]
+                        }
+                      ]
                     }}
                     options={{
                       maintainAspectRatio: false,
                       plugins: {
                         legend: {
-                          display: false,
-                        },
+                          display: false
+                        }
                       },
                       scales: {
                         x: {
-                          display: false,
+                          display: false
                         },
                         y: {
-                          display: false,
-                        },
-                      },
+                          display: false
+                        }
+                      }
                     }}
                   />
                 }
@@ -285,23 +253,7 @@ const Widgets = () => {
                     className="mx-auto"
                     style={{ height: '40px', width: '80px' }}
                     data={{
-                      labels: [
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                      ],
+                      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'],
                       datasets: [
                         {
                           backgroundColor: getStyle('--cui-success'),
@@ -322,26 +274,26 @@ const Widgets = () => {
                             random(40, 100),
                             random(40, 100),
                             random(40, 100),
-                            random(40, 100),
-                          ],
-                        },
-                      ],
+                            random(40, 100)
+                          ]
+                        }
+                      ]
                     }}
                     options={{
                       maintainAspectRatio: false,
                       plugins: {
                         legend: {
-                          display: false,
-                        },
+                          display: false
+                        }
                       },
                       scales: {
                         x: {
-                          display: false,
+                          display: false
                         },
                         y: {
-                          display: false,
-                        },
-                      },
+                          display: false
+                        }
+                      }
                     }}
                   />
                 }
@@ -357,23 +309,7 @@ const Widgets = () => {
                     className="mx-auto"
                     style={{ height: '40px', width: '80px' }}
                     data={{
-                      labels: [
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                      ],
+                      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'],
                       datasets: [
                         {
                           backgroundColor: 'transparent',
@@ -394,34 +330,34 @@ const Widgets = () => {
                             random(40, 100),
                             random(40, 100),
                             random(40, 100),
-                            random(40, 100),
-                          ],
-                        },
-                      ],
+                            random(40, 100)
+                          ]
+                        }
+                      ]
                     }}
                     options={{
                       maintainAspectRatio: false,
                       elements: {
                         line: {
-                          tension: 0.4,
+                          tension: 0.4
                         },
                         point: {
-                          radius: 0,
-                        },
+                          radius: 0
+                        }
                       },
                       plugins: {
                         legend: {
-                          display: false,
-                        },
+                          display: false
+                        }
                       },
                       scales: {
                         x: {
-                          display: false,
+                          display: false
                         },
                         y: {
-                          display: false,
-                        },
-                      },
+                          display: false
+                        }
+                      }
                     }}
                   />
                 }
@@ -437,23 +373,7 @@ const Widgets = () => {
                     className="mx-auto"
                     style={{ height: '40px', width: '80px' }}
                     data={{
-                      labels: [
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                      ],
+                      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'],
                       datasets: [
                         {
                           backgroundColor: 'transparent',
@@ -474,34 +394,34 @@ const Widgets = () => {
                             random(40, 100),
                             random(40, 100),
                             random(40, 100),
-                            random(40, 100),
-                          ],
-                        },
-                      ],
+                            random(40, 100)
+                          ]
+                        }
+                      ]
                     }}
                     options={{
                       maintainAspectRatio: false,
                       elements: {
                         line: {
-                          tension: 0.4,
+                          tension: 0.4
                         },
                         point: {
-                          radius: 0,
-                        },
+                          radius: 0
+                        }
                       },
                       plugins: {
                         legend: {
-                          display: false,
-                        },
+                          display: false
+                        }
                       },
                       scales: {
                         x: {
-                          display: false,
+                          display: false
                         },
                         y: {
-                          display: false,
-                        },
-                      },
+                          display: false
+                        }
+                      }
                     }}
                   />
                 }
@@ -517,23 +437,7 @@ const Widgets = () => {
                     className="mx-auto"
                     style={{ height: '40px', width: '80px' }}
                     data={{
-                      labels: [
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                        'T',
-                        'W',
-                        'T',
-                        'F',
-                        'S',
-                        'S',
-                        'M',
-                      ],
+                      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S', 'M'],
                       datasets: [
                         {
                           backgroundColor: 'transparent',
@@ -554,34 +458,34 @@ const Widgets = () => {
                             random(40, 100),
                             random(40, 100),
                             random(40, 100),
-                            random(40, 100),
-                          ],
-                        },
-                      ],
+                            random(40, 100)
+                          ]
+                        }
+                      ]
                     }}
                     options={{
                       maintainAspectRatio: false,
                       elements: {
                         line: {
-                          tension: 0.4,
+                          tension: 0.4
                         },
                         point: {
-                          radius: 0,
-                        },
+                          radius: 0
+                        }
                       },
                       plugins: {
                         legend: {
-                          display: false,
-                        },
+                          display: false
+                        }
                       },
                       scales: {
                         x: {
-                          display: false,
+                          display: false
                         },
                         y: {
-                          display: false,
-                        },
-                      },
+                          display: false
+                        }
+                      }
                     }}
                   />
                 }

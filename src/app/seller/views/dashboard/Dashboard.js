@@ -16,7 +16,7 @@ import {
   CTableDataCell,
   CTableHead,
   CTableHeaderCell,
-  CTableRow,
+  CTableRow
 } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
 import { getStyle, hexToRgba } from '@coreui/utils'
@@ -41,7 +41,7 @@ import {
   cilCloudDownload,
   cilPeople,
   cilUser,
-  cilUserFemale,
+  cilUserFemale
 } from '@coreui/icons'
 
 import avatar1 from '../../assets/images/avatars/1.jpg'
@@ -64,7 +64,7 @@ const Dashboard = () => {
     { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },
     { title: 'Pageviews', value: '78.706 Views', percent: 60, color: 'warning' },
     { title: 'New Users', value: '22.123 Users', percent: 80, color: 'danger' },
-    { title: 'Bounce Rate', value: 'Average Rate', percent: 40.15, color: 'primary' },
+    { title: 'Bounce Rate', value: 'Average Rate', percent: 40.15, color: 'primary' }
   ]
 
   const progressGroupExample1 = [
@@ -74,19 +74,19 @@ const Dashboard = () => {
     { title: 'Thursday', value1: 43, value2: 91 },
     { title: 'Friday', value1: 22, value2: 73 },
     { title: 'Saturday', value1: 53, value2: 82 },
-    { title: 'Sunday', value1: 9, value2: 69 },
+    { title: 'Sunday', value1: 9, value2: 69 }
   ]
 
   const progressGroupExample2 = [
     { title: 'Male', icon: cilUser, value: 53 },
-    { title: 'Female', icon: cilUserFemale, value: 43 },
+    { title: 'Female', icon: cilUserFemale, value: 43 }
   ]
 
   const progressGroupExample3 = [
     { title: 'Organic Search', icon: cibGoogle, percent: 56, value: '191,235' },
     { title: 'Facebook', icon: cibFacebook, percent: 15, value: '51,223' },
     { title: 'Twitter', icon: cibTwitter, percent: 11, value: '37,564' },
-    { title: 'LinkedIn', icon: cibLinkedin, percent: 8, value: '27,319' },
+    { title: 'LinkedIn', icon: cibLinkedin, percent: 8, value: '27,319' }
   ]
 
   const tableExample = [
@@ -95,32 +95,32 @@ const Dashboard = () => {
       user: {
         name: 'Yiorgos Avraamu',
         new: true,
-        registered: 'Jan 1, 2021',
+        registered: 'Jan 1, 2021'
       },
       country: { name: 'USA', flag: cifUs },
       usage: {
         value: 50,
         period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'success',
+        color: 'success'
       },
       payment: { name: 'Mastercard', icon: cibCcMastercard },
-      activity: '10 sec ago',
+      activity: '10 sec ago'
     },
     {
       avatar: { src: avatar2, status: 'danger' },
       user: {
         name: 'Avram Tarasios',
         new: false,
-        registered: 'Jan 1, 2021',
+        registered: 'Jan 1, 2021'
       },
       country: { name: 'Brazil', flag: cifBr },
       usage: {
         value: 22,
         period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'info',
+        color: 'info'
       },
       payment: { name: 'Visa', icon: cibCcVisa },
-      activity: '5 minutes ago',
+      activity: '5 minutes ago'
     },
     {
       avatar: { src: avatar3, status: 'warning' },
@@ -129,10 +129,10 @@ const Dashboard = () => {
       usage: {
         value: 74,
         period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'warning',
+        color: 'warning'
       },
       payment: { name: 'Stripe', icon: cibCcStripe },
-      activity: '1 hour ago',
+      activity: '1 hour ago'
     },
     {
       avatar: { src: avatar4, status: 'secondary' },
@@ -141,43 +141,43 @@ const Dashboard = () => {
       usage: {
         value: 98,
         period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'danger',
+        color: 'danger'
       },
       payment: { name: 'PayPal', icon: cibCcPaypal },
-      activity: 'Last month',
+      activity: 'Last month'
     },
     {
       avatar: { src: avatar5, status: 'success' },
       user: {
         name: 'Agapetus Tadeáš',
         new: true,
-        registered: 'Jan 1, 2021',
+        registered: 'Jan 1, 2021'
       },
       country: { name: 'Spain', flag: cifEs },
       usage: {
         value: 22,
         period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'primary',
+        color: 'primary'
       },
       payment: { name: 'Google Wallet', icon: cibCcApplePay },
-      activity: 'Last week',
+      activity: 'Last week'
     },
     {
       avatar: { src: avatar6, status: 'danger' },
       user: {
         name: 'Friderik Dávid',
         new: true,
-        registered: 'Jan 1, 2021',
+        registered: 'Jan 1, 2021'
       },
       country: { name: 'Poland', flag: cifPl },
       usage: {
         value: 43,
         period: 'Jun 11, 2021 - Jul 10, 2021',
-        color: 'success',
+        color: 'success'
       },
       payment: { name: 'Amex', icon: cibCcAmex },
-      activity: 'Last week',
-    },
+      activity: 'Last week'
+    }
   ]
 
   return (
@@ -198,12 +198,7 @@ const Dashboard = () => {
               </CButton>
               <CButtonGroup className="float-end me-3">
                 {['Day', 'Month', 'Year'].map((value) => (
-                  <CButton
-                    color="outline-secondary"
-                    key={value}
-                    className="mx-0"
-                    active={value === 'Month'}
-                  >
+                  <CButton color="outline-secondary" key={value} className="mx-0" active={value === 'Month'}>
                     {value}
                   </CButton>
                 ))}
@@ -228,9 +223,9 @@ const Dashboard = () => {
                     random(50, 200),
                     random(50, 200),
                     random(50, 200),
-                    random(50, 200),
+                    random(50, 200)
                   ],
-                  fill: true,
+                  fill: true
                 },
                 {
                   label: 'My Second dataset',
@@ -245,8 +240,8 @@ const Dashboard = () => {
                     random(50, 200),
                     random(50, 200),
                     random(50, 200),
-                    random(50, 200),
-                  ],
+                    random(50, 200)
+                  ]
                 },
                 {
                   label: 'My Third dataset',
@@ -255,43 +250,43 @@ const Dashboard = () => {
                   pointHoverBackgroundColor: getStyle('--cui-danger'),
                   borderWidth: 1,
                   borderDash: [8, 5],
-                  data: [65, 65, 65, 65, 65, 65, 65],
-                },
-              ],
+                  data: [65, 65, 65, 65, 65, 65, 65]
+                }
+              ]
             }}
             options={{
               maintainAspectRatio: false,
               plugins: {
                 legend: {
-                  display: false,
-                },
+                  display: false
+                }
               },
               scales: {
                 x: {
                   grid: {
-                    drawOnChartArea: false,
-                  },
+                    drawOnChartArea: false
+                  }
                 },
                 y: {
                   ticks: {
                     beginAtZero: true,
                     maxTicksLimit: 5,
                     stepSize: Math.ceil(250 / 5),
-                    max: 250,
-                  },
-                },
+                    max: 250
+                  }
+                }
               },
               elements: {
                 line: {
-                  tension: 0.4,
+                  tension: 0.4
                 },
                 point: {
                   radius: 0,
                   hitRadius: 10,
                   hoverRadius: 4,
-                  hoverBorderWidth: 3,
-                },
-              },
+                  hoverBorderWidth: 3
+                }
+              }
             }}
           />
         </CCardBody>
@@ -387,8 +382,7 @@ const Dashboard = () => {
                         <CIcon className="me-2" icon={item.icon} size="lg" />
                         <span>{item.title}</span>
                         <span className="ms-auto fw-semibold">
-                          {item.value}{' '}
-                          <span className="text-medium-emphasis small">({item.percent}%)</span>
+                          {item.value} <span className="text-medium-emphasis small">({item.percent}%)</span>
                         </span>
                       </div>
                       <div className="progress-group-bars">
@@ -423,8 +417,7 @@ const Dashboard = () => {
                       <CTableDataCell>
                         <div>{item.user.name}</div>
                         <div className="small text-medium-emphasis">
-                          <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered:{' '}
-                          {item.user.registered}
+                          <span>{item.user.new ? 'New' : 'Recurring'}</span> | Registered: {item.user.registered}
                         </div>
                       </CTableDataCell>
                       <CTableDataCell className="text-center">

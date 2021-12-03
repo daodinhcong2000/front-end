@@ -2,7 +2,8 @@
   box-shadow: 0 4px 4px 0 rgb(0 0 0 / 10%);
   text-align: center;
 }
-#Header, .ant-layout-header {
+#Header,
+.ant-layout-header {
   color: #000;
   background-color: #041529;
   /* height: 100px; */

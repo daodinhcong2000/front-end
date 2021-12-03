@@ -4,9 +4,9 @@ import { getLocalData } from './StorageServices'
 const token = getLocalData('accessToken')
 
 export const getRoles = async () => {
-    if (!token) return []
+  if (!token) return []
 
-    const response = await getUserInformation(token)
+  const response = await getUserInformation(token)
 
-    return response.data.data.roles
+  return response.data.data.roles
 }

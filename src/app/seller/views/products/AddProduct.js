@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import axios from "axios";
-import { getShops, postProduct } from "../../../../services/api/sellerApi";
+import React, { useState, useRef, useEffect } from 'react'
+import axios from 'axios'
+import { getShops, postProduct } from '../../../../services/api/sellerApi'
 import {
   CButton,
   CCol,
@@ -12,135 +12,126 @@ import {
   CInputGroupText,
   CImage,
   CRow,
-  CFormSelect,
-} from "@coreui/react";
-import { useToast } from "../../../../contexts/toast";
+  CFormSelect
+} from '@coreui/react'
+import { useToast } from '../../../../contexts/toast'
 
 const AddProduct = () => {
   const initData = {
-    name: "",
-    description: "",
-    category: "",
+    name: '',
+    description: '',
+    category: '',
     sizes: [],
     images: [],
-    price: "",
-  };
-  const { error, warn, info, success } = useToast();
-  const inputFile = useRef(null);
-  const [data, setData] = useState(initData);
+    price: ''
+  }
+  const { error, warn, info, success } = useToast()
+  const inputFile = useRef(null)
+  const [data, setData] = useState(initData)
 
-  const [sizes, setSizes] = useState([{ name: "", numberInStock: "" }]);
-  const [images, setImages] = useState([]);
-  const [shopId, setShopId] = useState("0");
-  const [listShop, setListShop] = useState([]);
+  const [sizes, setSizes] = useState([{ name: '', numberInStock: '' }])
+  const [images, setImages] = useState([])
+  const [shopId, setShopId] = useState('0')
+  const [listShop, setListShop] = useState([])
   useEffect(() => {
     getShops().then((response) => {
-      setListShop(response.data.data);
-    });
-  }, [shopId]);
+      setListShop(response.data.data)
+    })
+  }, [shopId])
 
   //
   const uploadImage = (image) => {
     // Tạo một form data chứa dữ liệu gửi lên
-    const formData = new FormData();
+    const formData = new FormData()
     // Hình ảnh cần upload
-    formData.append("file", image);
+    formData.append('file', image)
     // Tên preset vừa tạo ở bước 1
-    formData.append("upload_preset", "new_preset");
+    formData.append('upload_preset', 'new_preset')
     // Tải ảnh lên cloudinary
     // API: https://api.cloudinary.com/v1_1/{Cloudinary-Name}/image/upload
     axios
-      .post("https://api.cloudinary.com/v1_1/accomerce/image/upload", formData)
+      .post('https://api.cloudinary.com/v1_1/accomerce/image/upload', formData)
       .then((response) => {
         //data.images.push(response.data.secure_url);
-        setImages([...images, response.data.secure_url]);
+        setImages([...images, response.data.secure_url])
       })
-      .catch((err) => console.error(err));
-  };
+      .catch((err) => console.error(err))
+  }
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    data.images = images;
+    event.preventDefault()
+    data.images = images
     if (shopId == 0) {
-      warn("Vui lòng chọn cửa hàng");
+      warn('Vui lòng chọn cửa hàng')
     } else {
       postProduct(shopId, data)
         .then((respone) => {
           if (respone.data.success == true) {
-            success(respone.data.message);
-            window.location.reload(false);
+            success(respone.data.message)
+            window.location.reload(false)
           } else {
-            error(respone.data.message);
+            error(respone.data.message)
           }
         })
         .catch((err) => {
-          error(err.response.data.message);
-        });
+          error(err.response.data.message)
+        })
     }
-  };
+  }
 
-  const handleChange = (e) =>
-    setData({ ...data, [e.target.name]: e.target.value });
+  const handleChange = (e) => setData({ ...data, [e.target.name]: e.target.value })
   // handle input change
   const handleInputChange = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...sizes];
-    list[index][name] = value;
-    setSizes(list);
-    data.sizes = sizes;
-  };
+    const { name, value } = e.target
+    const list = [...sizes]
+    list[index][name] = value
+    setSizes(list)
+    data.sizes = sizes
+  }
 
   // handle click event of the Remove button
   const handleRemoveClick = (index) => {
-    const list = [...sizes];
-    list.splice(index, 1);
-    setSizes(list);
-    data.sizes.splice(index, 1);
-  };
+    const list = [...sizes]
+    list.splice(index, 1)
+    setSizes(list)
+    data.sizes.splice(index, 1)
+  }
 
   // handle click event of the Add button
   const handleAddClick = () => {
-    if (
-      sizes[sizes.length - 1].name == "" ||
-      sizes[sizes.length - 1].name == ""
-    ) {
-      warn("Vui lòng điền đủ thông tin về kích thước trước khi thêm mới");
+    if (sizes[sizes.length - 1].name == '' || sizes[sizes.length - 1].name == '') {
+      warn('Vui lòng điền đủ thông tin về kích thước trước khi thêm mới')
     } else {
-      setSizes([...sizes, { name: "", numberInStock: "" }]);
+      setSizes([...sizes, { name: '', numberInStock: '' }])
     }
-  };
+  }
 
   const onButtonClick = () => {
-    inputFile.current.click();
-  };
+    inputFile.current.click()
+  }
 
   const deleteFile = (e) => {
-    const s = images.filter((image, index) => index !== e);
-    setImages(s);
-    console.log(s);
-  };
+    const s = images.filter((image, index) => index !== e)
+    setImages(s)
+    console.log(s)
+  }
   return (
     <div>
       <div className="mb-3">
-        <CFormSelect
-          aria-label="Default select example"
-          onChange={(e) => setShopId(e.target.value)}
-        >
+        <CFormSelect aria-label="Default select example" onChange={(e) => setShopId(e.target.value)}>
           <option value="0">Chọn shop</option>
           {listShop.map((shop) => {
             return (
               <option value={shop._id} key={shop._id}>
                 {shop.name}
               </option>
-            );
+            )
           })}
         </CFormSelect>
       </div>
       <CForm className="row g-3">
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput1">
-            Tên sản phẩm
-          </CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput1">Tên sản phẩm</CFormLabel>
           <CFormInput
             type="text"
             id="exampleFormControlInput1"
@@ -152,9 +143,7 @@ const AddProduct = () => {
         <div className="mb-3">
           <CRow>
             <CCol xs>
-              <CFormLabel htmlFor="exampleFormControlInput1">
-                Loại sản phẩm
-              </CFormLabel>
+              <CFormLabel htmlFor="exampleFormControlInput1">Loại sản phẩm</CFormLabel>
               <CFormInput
                 type="text"
                 id="exampleFormControlInput1"
@@ -165,9 +154,7 @@ const AddProduct = () => {
               />
             </CCol>
             <CCol xs>
-              <CFormLabel htmlFor="exampleFormControlInput1">
-                Giá sản phẩm
-              </CFormLabel>
+              <CFormLabel htmlFor="exampleFormControlInput1">Giá sản phẩm</CFormLabel>
               <CInputGroup>
                 <CFormInput
                   aria-label="Amount (to the nearest dollar)"
@@ -181,9 +168,7 @@ const AddProduct = () => {
           </CRow>
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlTextarea1">
-            Mô tả sản phẩm
-          </CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlTextarea1">Mô tả sản phẩm</CFormLabel>
           <CFormTextarea
             id="exampleFormControlTextarea1"
             rows="3"
@@ -215,39 +200,31 @@ const AddProduct = () => {
                   </CCol>
                 </CRow>
                 {sizes.length - 1 === i && (
-                  <CButton
-                    color="dark"
-                    shape="rounded-pill"
-                    onClick={handleAddClick}
-                    size="sm"
-                  >
+                  <CButton color="dark" shape="rounded-pill" onClick={handleAddClick} size="sm">
                     Thêm
                   </CButton>
                 )}
                 {sizes.length !== 1 && (
-                  <CButton
-                    color="dark"
-                    shape="rounded-pill"
-                    size="sm"
-                    onClick={() => handleRemoveClick(i)}
-                  >
+                  <CButton color="dark" shape="rounded-pill" size="sm" onClick={() => handleRemoveClick(i)}>
                     Xóa
                   </CButton>
                 )}
               </div>
-            );
+            )
           })}
         </CCol>
         <CCol xs={12}>
           <CFormInput
             type="file"
             onChange={(e) => {
-              uploadImage(e.target.files[0]);
+              uploadImage(e.target.files[0])
             }}
             ref={inputFile}
-            style={{ display: "none" }}
+            style={{ display: 'none' }}
           />
-          <CButton onClick={onButtonClick} color="secondary" shape="rounded-pill">Thêm ảnh</CButton>
+          <CButton onClick={onButtonClick} color="secondary" shape="rounded-pill">
+            Thêm ảnh
+          </CButton>
         </CCol>
         <CCol xs={12} id="imageShow">
           {images &&
@@ -261,7 +238,7 @@ const AddProduct = () => {
                   onClick={() => deleteFile(index)}
                   key={index}
                 />
-              );
+              )
             })}
         </CCol>
         <CCol xs={12}>
@@ -271,7 +248,7 @@ const AddProduct = () => {
         </CCol>
       </CForm>
     </div>
-  );
-};
+  )
+}
 
-export default AddProduct;
+export default AddProduct

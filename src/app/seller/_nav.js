@@ -10,7 +10,7 @@ import {
   cilPencil,
   cilPuzzle,
   cilSpeedometer,
-  cilStar,
+  cilStar
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
@@ -22,34 +22,34 @@ const _nav = [
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
     badge: {
       color: 'info',
-      text: 'NEW',
-    },
+      text: 'NEW'
+    }
   },
   {
     component: CNavTitle,
-    name: 'Quản lý cửa hàng',
+    name: 'Quản lý cửa hàng'
   },
   {
     component: CNavItem,
     name: 'Danh sách cửa hàng',
     to: '/shops',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />
   },
   {
     component: CNavItem,
     name: 'Thêm cửa hàng',
     to: '/register-shop',
-    icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilCursor} customClassName="nav-icon" />
   },
   {
     component: CNavItem,
     name: 'Thống kê',
     to: '/seller-a',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />
   },
   {
     component: CNavTitle,
-    name: 'Quản lý sản phẩm',
+    name: 'Quản lý sản phẩm'
   },
   {
     component: CNavGroup,
@@ -60,19 +60,19 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Thêm sản phẩm',
-        to: '/add-product',
+        to: '/add-product'
       },
       {
         component: CNavItem,
         name: 'Sửa sản phẩm',
-        to: '/change-product',
+        to: '/change-product'
       },
       {
         component: CNavItem,
         name: 'Xóa sản phẩm',
-        to: '/delete-product',
-      },
-    ],
+        to: '/delete-product'
+      }
+    ]
   },
   {
     component: CNavGroup,
@@ -83,19 +83,19 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Buttons',
-        to: '/seller-a',
+        to: '/seller-a'
       },
       {
         component: CNavItem,
         name: 'Buttons groups',
-        to: '/seller-a',
+        to: '/seller-a'
       },
       {
         component: CNavItem,
         name: 'Dropdowns',
-        to: '/seller-a',
-      },
-    ],
+        to: '/seller-a'
+      }
+    ]
   },
   {
     component: CNavGroup,
@@ -105,15 +105,15 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Form Control',
-        to: '/seller-a',
+        to: '/seller-a'
       }
-    ],
+    ]
   },
   {
     component: CNavItem,
     name: 'Thống kê',
     to: '/seller',
-    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />
   },
   {
     component: CNavGroup,
@@ -126,20 +126,20 @@ const _nav = [
         to: '/seller-a',
         badge: {
           color: 'success',
-          text: 'NEW',
-        },
+          text: 'NEW'
+        }
       },
       {
         component: CNavItem,
         name: 'CoreUI Flags',
-        to: '/icons/flags',
+        to: '/icons/flags'
       },
       {
         component: CNavItem,
         name: 'CoreUI Brands',
-        to: '/icons/brands',
-      },
-    ],
+        to: '/icons/brands'
+      }
+    ]
   },
   {
     component: CNavGroup,
@@ -149,24 +149,24 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Alerts',
-        to: '/notifications/alerts',
+        to: '/notifications/alerts'
       },
       {
         component: CNavItem,
         name: 'Badges',
-        to: '/notifications/badges',
+        to: '/notifications/badges'
       },
       {
         component: CNavItem,
         name: 'Modal',
-        to: '/notifications/modals',
+        to: '/notifications/modals'
       },
       {
         component: CNavItem,
         name: 'Toasts',
-        to: '/notifications/toasts',
-      },
-    ],
+        to: '/notifications/toasts'
+      }
+    ]
   },
   {
     component: CNavItem,
@@ -175,12 +175,12 @@ const _nav = [
     icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
     badge: {
       color: 'info',
-      text: 'NEW',
-    },
+      text: 'NEW'
+    }
   },
   {
     component: CNavTitle,
-    name: 'Extras',
+    name: 'Extras'
   },
   {
     component: CNavGroup,
@@ -190,25 +190,25 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Login',
-        to: '/login',
+        to: '/login'
       },
       {
         component: CNavItem,
         name: 'Register',
-        to: '/register',
+        to: '/register'
       },
       {
         component: CNavItem,
         name: 'Error 404',
-        to: '/404',
+        to: '/404'
       },
       {
         component: CNavItem,
         name: 'Error 500',
-        to: '/500',
-      },
-    ],
-  },
+        to: '/500'
+      }
+    ]
+  }
 ]
 
 export default _nav

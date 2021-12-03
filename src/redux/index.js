@@ -7,10 +7,10 @@ import logFormReducer from './reducers/logFormReducer'
 import searchReducer from './reducers/searchReducer'
 
 const reducers = combineReducers({
-    user: userReducer,
-    logForm: logFormReducer,
-    // cart: cartReducer,
-    search: searchReducer,
+  user: userReducer,
+  logForm: logFormReducer,
+  // cart: cartReducer,
+  search: searchReducer
 })
 
 const store = createStore(reducers, applyMiddleware(thunk))

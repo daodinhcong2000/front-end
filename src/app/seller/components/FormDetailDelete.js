@@ -1,7 +1,7 @@
-import React from "react";
-import { Form, Input } from "antd";
-import axios from "axios";
-import { useState, useRef } from "react";
+import React from 'react'
+import { Form, Input } from 'antd'
+import axios from 'axios'
+import { useState, useRef } from 'react'
 import {
   CButton,
   CCol,
@@ -15,22 +15,20 @@ import {
   CImage,
   CRow,
   CFormFeedback,
-  CFormSelect,
-} from "@coreui/react";
-const { TextArea } = Input;
+  CFormSelect
+} from '@coreui/react'
+const { TextArea } = Input
 
 const FormDetailDelete = (recvData) => {
-  const [data, setData] = useState(recvData.data);
-  const [imageUrls, setImageUrls] = useState(data.images);
-  const [sizes, setSizes] = useState(data.sizes);
+  const [data, setData] = useState(recvData.data)
+  const [imageUrls, setImageUrls] = useState(data.images)
+  const [sizes, setSizes] = useState(data.sizes)
 
   return (
     <div>
       <CForm className="row g-3">
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput1">
-            Tên sản phẩm
-          </CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput1">Tên sản phẩm</CFormLabel>
           <CFormInput
             disabled
             type="text"
@@ -43,37 +41,20 @@ const FormDetailDelete = (recvData) => {
         <div className="mb-3">
           <CRow>
             <CCol xs>
-              <CFormLabel htmlFor="exampleFormControlInput1">
-                Loại sản phẩm
-              </CFormLabel>
-              <CFormInput
-                disabled
-                type="text"
-                id="exampleFormControlInput1"
-                name="category"
-                value={data.description}
-              />
+              <CFormLabel htmlFor="exampleFormControlInput1">Loại sản phẩm</CFormLabel>
+              <CFormInput disabled type="text" id="exampleFormControlInput1" name="category" value={data.description} />
             </CCol>
             <CCol xs>
-              <CFormLabel htmlFor="exampleFormControlInput1">
-                Giá sản phẩm
-              </CFormLabel>
+              <CFormLabel htmlFor="exampleFormControlInput1">Giá sản phẩm</CFormLabel>
               <CInputGroup className="mb-3">
-                <CFormInput
-                  aria-label="Amount (to the nearest dollar)"
-                  name="price"
-                  disabled
-                  value={data.price}
-                />
+                <CFormInput aria-label="Amount (to the nearest dollar)" name="price" disabled value={data.price} />
                 <CInputGroupText>VNĐ</CInputGroupText>
               </CInputGroup>
             </CCol>
           </CRow>
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlTextarea1">
-            Mô tả sản phẩm
-          </CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlTextarea1">Mô tả sản phẩm</CFormLabel>
           <CFormTextarea
             disabled
             id="exampleFormControlTextarea1"
@@ -93,33 +74,21 @@ const FormDetailDelete = (recvData) => {
                     <CFormInput name="name" value={size.name} disabled />
                   </CCol>
                   <CCol xs>
-                    <CFormInput
-                      name="numberInStock"
-                      value={size.numberInStock}
-                      disabled
-                    />
+                    <CFormInput name="numberInStock" value={size.numberInStock} disabled />
                   </CCol>
                 </CRow>
               </div>
-            );
+            )
           })}
         </CCol>
         <CCol xs={12} id="imageShow">
           {imageUrls &&
             imageUrls.map((imageUrl, idx) => {
-              return (
-                <CImage
-                  fluid
-                  src={imageUrl}
-                  width={150}
-                  height={150}
-                  key={idx}
-                />
-              );
+              return <CImage fluid src={imageUrl} width={150} height={150} key={idx} />
             })}
         </CCol>
       </CForm>
     </div>
-  );
-};
-export default FormDetailDelete;
+  )
+}
+export default FormDetailDelete

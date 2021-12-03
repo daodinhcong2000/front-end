@@ -12,76 +12,78 @@ import { _search, _setKeyword } from '../../../redux/actions/searchActions'
 
 const { Header } = Layout
 
-const PageHeader = props => {
-    const dispatch = useDispatch()
-    const { username } = useSelector(state => state.user)
-    const { searching, keyword, page, limit, sort } = useSelector(state => state.search)
-    useEffect(() => {
-        if (isAuthenticated() && !username) {
-            dispatch(_setUser())
-        }
-    }, [username])
-
-    const onSearch = (value, event) => {dispatch(_search(keyword, page, limit, sort))}
-    const handleValueChange = e => {
-        dispatch(_setKeyword(e.target.value))
+const PageHeader = (props) => {
+  const dispatch = useDispatch()
+  const { username } = useSelector((state) => state.user)
+  const { searching, keyword, page, limit, sort } = useSelector((state) => state.search)
+  useEffect(() => {
+    if (isAuthenticated() && !username) {
+      dispatch(_setUser())
     }
-    return (
-        <Row id="Header" justify="start">
-            {/* LOGO */}
-            <Col span={4} offset={1}>
-                <Layout width={"20%"}>
-                    <Header width={"100%"}>
-                        <a href="/"><Image src="/img/acCommerce.png" height={100} preview={false} /></a>
-                    </Header>
-                </Layout>
-            </Col>
+  }, [username])
 
-            {/* SEARCH */}
-            <Col span={13}>
-                {/* Search bar */}
-                <Row >
-                    <Col span={24}>
-                        <div id="headerSearch">
-                            <Input.Search
-                                id='inp_headerSearch'
-                                placeholder='Nhập tên sản phẩm, thương hiệu muốn tìm ...'
-                                allowClear
-                                size='large'
-                                loading={searching}
-                                value={keyword}
-                                onSearch={onSearch}
-                                onChange={handleValueChange}
-                            />
-                        </div>
-                    </Col>
-                </Row>
+  const onSearch = (value, event) => {
+    dispatch(_search(keyword, page, limit, sort))
+  }
+  const handleValueChange = (e) => {
+    dispatch(_setKeyword(e.target.value))
+  }
+  return (
+    <Row id="Header" justify="start">
+      {/* LOGO */}
+      <Col span={4} offset={1}>
+        <Layout width={'20%'}>
+          <Header width={'100%'}>
+            <a href="/">
+              <Image src="/img/acCommerce.png" height={100} preview={false} />
+            </a>
+          </Header>
+        </Layout>
+      </Col>
 
-                {/* Search item */}
-                <Row>
-                    <Col span={3} >{SearchItem('/icons/phones.png', 'Điện thoại')}</Col>
-                    <Col span={3} >{SearchItem('/icons/electronices.png', 'Đồ điện tử')}</Col>
-                    <Col span={3} >{SearchItem('/icons/housewares.png', 'Đồ gia dụng')}</Col>
-                    <Col span={3} >{SearchItem('/icons/clothes.png', 'Quần áo')}</Col>
-                    <Col span={3} >{SearchItem('/icons/toys.png', 'Đồ chơi')}</Col>
-                    <Col span={3} >{SearchItem('/icons/books.png', 'Sách')}</Col>
-                    <Col span={3} >{SearchItem('/icons/sports.png', 'Thể thao')}</Col>
-                    <Col span={3} >{SearchItem('/icons/pets.png', 'Thú cưng')}</Col>
-                </Row>
-            </Col>
-
-            {/* LOGIN - USER */}
-            <Col span={3}>
-                {!isAuthenticated() ? <LogModal /> : <UserMenu />}
-            </Col>
-
-            {/* CART */}
-            <Col span={1}>
-                <CartModal />
-            </Col>
-            <hr></hr>
+      {/* SEARCH */}
+      <Col span={13}>
+        {/* Search bar */}
+        <Row>
+          <Col span={24}>
+            <div id="headerSearch">
+              <Input.Search
+                id="inp_headerSearch"
+                placeholder="Nhập tên sản phẩm, thương hiệu muốn tìm ..."
+                allowClear
+                size="large"
+                loading={searching}
+                value={keyword}
+                onSearch={onSearch}
+                onChange={handleValueChange}
+              />
+            </div>
+          </Col>
         </Row>
-    )
+
+        {/* Search item */}
+        <Row>
+          <Col span={3}>{SearchItem('/icons/phones.png', 'Điện thoại')}</Col>
+          <Col span={3}>{SearchItem('/icons/electronices.png', 'Đồ điện tử')}</Col>
+          <Col span={3}>{SearchItem('/icons/housewares.png', 'Đồ gia dụng')}</Col>
+          <Col span={3}>{SearchItem('/icons/clothes.png', 'Quần áo')}</Col>
+          <Col span={3}>{SearchItem('/icons/toys.png', 'Đồ chơi')}</Col>
+          <Col span={3}>{SearchItem('/icons/books.png', 'Sách')}</Col>
+          <Col span={3}>{SearchItem('/icons/sports.png', 'Thể thao')}</Col>
+          <Col span={3}>{SearchItem('/icons/pets.png', 'Thú cưng')}</Col>
+        </Row>
+      </Col>
+
+      {/* LOGIN - USER */}
+      <Col span={3}>{!isAuthenticated() ? <LogModal /> : <UserMenu />}</Col>
+
+      {/* CART */}
+      <Col span={1}>
+        <CartModal />
+      </Col>
+      <hr></hr>
+    </Row>
+  )
 }
 
 export default PageHeader

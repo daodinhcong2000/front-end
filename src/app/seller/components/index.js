@@ -6,13 +6,4 @@ import AppHeaderDropdown from './header/AppHeaderDropdown'
 import AppSidebar from './AppSidebar'
 import FormDetail from './FormDetail'
 
-export {
-  AppBreadcrumb,
-  AppContent,
-  AppFooter,
-  FormDetail,
-  AppHeader,
-  AppHeaderDropdown,
-  AppSidebar,
-  
-}
+export { AppBreadcrumb, AppContent, AppFooter, FormDetail, AppHeader, AppHeaderDropdown, AppSidebar }
