@@ -28,7 +28,7 @@ const AppSidebar = () => {
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
         <CImage rounded  src={logos} width={70}  />
-        <span>KÊNH BÁN HÀNG</span>
+        <span><h2>DMIN</h2></span>
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>

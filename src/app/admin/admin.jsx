@@ -6,7 +6,7 @@ import {
   AppContent,
 } from "./components/index";
 import { ToastProvider } from "../../contexts/ToastProvider";
-const seller = () => {
+const admin = () => {
   return (
     <ToastProvider>
       <div>
@@ -23,4 +23,4 @@ const seller = () => {
   );
 };
 
-export default seller;
+export default admin;

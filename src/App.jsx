@@ -7,7 +7,7 @@ import getHistory from "./helpers/rounting/getHistory";
 
 import Home from "./app/home/";
 import seller from "./app/seller/seller";
-import admin from "./app/admin/admin"
+import admin from "./app/admin/admin";
 import "./scss/style.scss";
 import { getRoles } from "./services/getRoles";
 import PrivateRoute from "./helpers/PrivateRoute";
@@ -40,32 +40,28 @@ const App = () => {
             />
           );
         })}
-        {sellerRoutes.map((route, idx) => {
-          return (
-                roles.includes("seller") ? (
-                  <Route
-                    key={idx}
-                    path={route.path}
-                    exact={route.exact}
-                    component={seller}
-                  />
-                ) : (
-                  <Redirect to="/" />
-                )
+        {adminRoutes.map((route, idx) => {
+          return true ? (
+            <Route
+              key={idx}
+              path={route.path}
+              exact={route.exact}
+              component={admin}
+            />
+          ) : (
+            <Redirect to="/" />
           );
         })}
-        {adminRoutes.map((route, idx) => {
-          return (
-            roles.includes("admin") ? (
-                  <Route
-                    key={idx}
-                    path={route.path}
-                    exact={route.exact}
-                    component={admin}
-                  />
-                ) : (
-                  <Redirect to="/" />
-                )
+        {sellerRoutes.map((route, idx) => {
+          return roles.includes("seller") ? (
+            <Route
+              key={idx}
+              path={route.path}
+              exact={route.exact}
+              component={seller}
+            />
+          ) : (
+            <Redirect to="/" />
           );
         })}
       </Switch>
