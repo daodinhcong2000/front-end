@@ -2,10 +2,10 @@ import { Form, Input, Button, Row, Col, message as Message } from 'antd'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import validateInput from '../../../helpers/validating/validateInput'
-import hashPassword from '../../../helpers/validating/hashPassword'
-import { _changeLogForm } from '../../../redux/actions/logFormActions'
-import { register as _register } from '../../../services/api/userApi'
+import validateInput from '../../../../helpers/validating/validateInput'
+import hashPassword from '../../../../helpers/validating/hashPassword'
+import { _changeLogForm } from '../../../../redux/actions/logFormActions'
+import { register as _register } from '../../../../services/api/userApi'
 
 const RegisterForm = (props) => {
   const dispatch = useDispatch()
@@ -86,23 +86,7 @@ const RegisterForm = (props) => {
         .catch((e) => e.response.data)
       if (!success) {
         setLoading(false)
-        const notification = ((message) => {
-          switch (message) {
-            case `Error: User with username ${username} already exists!`: {
-              return 'Tên đăng nhập đã được sử dụng!'
-            }
-
-            case `Error: User with phone number ${phoneNumber} already exists!`: {
-              return 'Số điện thoại đã được sử dụng!'
-            }
-
-            default: {
-              return message
-            }
-          }
-        })(message)
-        setLoading(false)
-        Message.error(notification)
+        Message.error(message)
       } else {
         Message.success(`Người dùng ${firstName} ${lastName} đã đăng ký tài khoản ${username} thành công`)
         setTimeout(() => {

@@ -27,6 +27,12 @@
 .product-item:hover {
   background-color: 'lightgrey';
 }
+.sort:hover {
+  background-color: grey;
+  color: #fff;
+  font-weight: bolder;
+}
+
 #btn_forgot {
   text-align: center;
 }

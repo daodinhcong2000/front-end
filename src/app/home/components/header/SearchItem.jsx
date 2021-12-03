@@ -1,11 +1,14 @@
 import { Image } from 'antd'
 import { useState } from 'react'
 
-const SearchItem = (image, title) => {
+const SearchItem = (image, title, setFilter) => {
   const [size, setSize] = useState('2em')
   const [hidden, setHidden] = useState(false)
 
-  const handleClick = (e) => {}
+  const handleClick = (e) => {
+    document.getElementById('inp_headerSearch').value = title
+    setFilter(title)
+  }
 
   const handleMouseOver = (e) => {
     setSize('3em')

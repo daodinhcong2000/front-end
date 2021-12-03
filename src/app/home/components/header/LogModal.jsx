@@ -5,7 +5,7 @@ import LoginForm from './LoginForm'
 import RegisterForm from './RegisterFrom'
 import ForgotForm from './ForgotForm'
 
-import { _showLogForm, _hideLogForm } from '../../../redux/actions/logFormActions'
+import { _showLogForm, _hideLogForm } from '../../../../redux/actions/logFormActions'
 
 const LogModal = (props) => {
   const { visible, mode } = useSelector((state) => state.logForm)

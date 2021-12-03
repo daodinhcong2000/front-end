@@ -2,8 +2,8 @@ import { Form, Input, Button, Row, Col, Image } from 'antd'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { _changeLogForm } from '../../../redux/actions/logFormActions'
-import { _login, _setStatus } from '../../../redux/actions/userActions'
+import { _changeLogForm } from '../../../../redux/actions/logFormActions'
+import { _login, _setStatus } from '../../../../redux/actions/userActions'
 
 const LoginForm = (props) => {
   const dispatch = useDispatch()
@@ -101,6 +101,7 @@ const LoginForm = (props) => {
             width: '50%'
           }}
         >
+          {' '}
           Đăng nhập
         </Button>
       </Form.Item>
@@ -119,11 +120,13 @@ const LoginForm = (props) => {
               />
             </Button>
           </Col>
+
           <Col span={6} style={{ textAlign: 'center' }}>
             <Button shape="circle" type="primary" style={{ width: '4em', height: '4em' }}>
               <Image src="/icons/Facebook.png" preview={false} width={'3.5em'} height={'3.5em'} />
             </Button>
           </Col>
+
           <Col span={6} style={{ textAlign: 'center' }}>
             <Button shape="circle" type="primary" style={{ width: '4em', height: '4em' }}>
               <Image src="/icons/Apple.png" preview={false} width={'3em'} height={'3em'} />

@@ -1,17 +1,17 @@
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button, Dropdown, Menu } from 'antd'
 import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled, CrownOutlined } from '@ant-design/icons'
 
-import { _setUser, _logout } from '../../../redux/actions/userActions'
-import { NavLink, Redirect } from 'react-router-dom'
+import { _setUser, _logout } from '../../../../redux/actions/userActions'
 
 const UserMenu = (props) => {
   const dispatch = useDispatch()
-  const { loading, username, fullName, roles } = useSelector((state) => state.user)
+  const { loading, username, fullName } = useSelector((state) => state.user)
 
   useEffect(() => {
-    if (!loading) dispatch(_setUser())
+    if (!username) dispatch(_setUser())
   }, [])
 
   const handleMenuClick = (e) => {
@@ -19,9 +19,6 @@ const UserMenu = (props) => {
     switch (key) {
       case 'self': {
         break
-      }
-
-      case 'admin': {
       }
 
       case 'seller': {
@@ -46,19 +43,17 @@ const UserMenu = (props) => {
       <Menu.Item key="self" icon={<UserOutlined />}>
         {fullName}
       </Menu.Item>
-      {roles.includes('admin') && (
-        <Menu.Item key="admin" icon={<CrownOutlined />}>
-          Quản trị
-        </Menu.Item>
-      )}
-      {roles.includes('seller') && (
-        <Menu.Item key="seller" icon={<ShopFilled />}>
-          Cửa hàng
-        </Menu.Item>
-      )}
+
+      <Menu.Item key="seller" icon={<ShopFilled />}>
+        <Link to="/seller" style={{ textDecoration: 'none' }}>
+          Kênh bán hàng
+        </Link>
+      </Menu.Item>
+
       <Menu.Item key="setting" icon={<SettingOutlined />}>
         Cài đặt
       </Menu.Item>
+
       <Menu.Item key="logout" icon={<LogoutOutlined />}>
         Đăng xuất
       </Menu.Item>

@@ -1,9 +1,8 @@
 import './styles/index.css'
 
 import { Layout } from 'antd'
-import PageHeader from './components/PageHeader'
-import CarouselHeader from './components/CarouselHeader'
-import PageContent from './components/PageContent'
+import PageHeader from './components/header/PageHeader'
+import PageContent from './components/homePage/PageContent'
 
 const Home = (props) => {
   return (
