@@ -32,13 +32,13 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Danh sách cửa hàng',
-    to: '/shops',
+    to: '/seller/shops',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />
   },
   {
     component: CNavItem,
     name: 'Thêm cửa hàng',
-    to: '/register-shop',
+    to: '/seller/register-shop',
     icon: <CIcon icon={cilCursor} customClassName="nav-icon" />
   },
   {
@@ -60,17 +60,17 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Thêm sản phẩm',
-        to: '/add-product'
+        to: '/seller/add-product'
       },
       {
         component: CNavItem,
         name: 'Sửa sản phẩm',
-        to: '/change-product'
+        to: '/seller/change-product'
       },
       {
         component: CNavItem,
         name: 'Xóa sản phẩm',
-        to: '/delete-product'
+        to: '/seller/delete-product'
       }
     ]
   },

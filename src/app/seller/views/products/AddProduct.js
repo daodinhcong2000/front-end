@@ -23,7 +23,8 @@ const AddProduct = () => {
     category: '',
     sizes: [],
     images: [],
-    price: ''
+    price: '',
+    originalPrice: ''
   }
   const { error, warn, info, success } = useToast()
   const inputFile = useRef(null)
@@ -141,31 +142,15 @@ const AddProduct = () => {
           />
         </div>
         <div className="mb-3">
-          <CRow>
-            <CCol xs>
-              <CFormLabel htmlFor="exampleFormControlInput1">Loại sản phẩm</CFormLabel>
-              <CFormInput
-                type="text"
-                id="exampleFormControlInput1"
-                name="category"
-                placeholder="Nhập loại mặt hàng mà bạn muốn đề xuất"
-                onChange={(e) => handleChange(e)}
-                value={data.category}
-              />
-            </CCol>
-            <CCol xs>
-              <CFormLabel htmlFor="exampleFormControlInput1">Giá sản phẩm</CFormLabel>
-              <CInputGroup>
-                <CFormInput
-                  aria-label="Amount (to the nearest dollar)"
-                  name="price"
-                  onChange={(e) => handleChange(e)}
-                  value={data.price}
-                />
-                <CInputGroupText>VNĐ</CInputGroupText>
-              </CInputGroup>
-            </CCol>
-          </CRow>
+          <CFormLabel htmlFor="exampleFormControlInput1">Loại sản phẩm</CFormLabel>
+          <CFormInput
+            type="text"
+            id="exampleFormControlInput1"
+            name="category"
+            placeholder="Nhập loại mặt hàng mà bạn muốn đề xuất"
+            onChange={(e) => handleChange(e)}
+            value={data.category}
+          />
         </div>
         <div className="mb-3">
           <CFormLabel htmlFor="exampleFormControlTextarea1">Mô tả sản phẩm</CFormLabel>
@@ -174,6 +159,7 @@ const AddProduct = () => {
             rows="3"
             name="description"
             onChange={(e) => handleChange(e)}
+            value={data.description}
           ></CFormTextarea>
         </div>
         <CCol xs={12}>
@@ -241,6 +227,36 @@ const AddProduct = () => {
               )
             })}
         </CCol>
+        <div className="mb-3">
+          <CRow>
+            <CCol xs>
+              <CFormLabel htmlFor="exampleFormControlInput1">Giá bán</CFormLabel>
+              <CInputGroup>
+                <CFormInput
+                  aria-label="Amount (to the nearest dollar)"
+                  name="price"
+                  onChange={(e) => handleChange(e)}
+                  value={data.price}
+                />
+                <CInputGroupText>VNĐ</CInputGroupText>
+              </CInputGroup>
+            </CCol>
+            <CCol xs>
+              <CFormLabel htmlFor="exampleFormControlInput1">Giá gốc</CFormLabel>
+              <CInputGroup>
+                <CFormInput
+                  type="text"
+                  id="exampleFormControlInput1"
+                  name="originalPrice"
+                  placeholder="Nhập giá gốc sản phẩm của bạn"
+                  onChange={(e) => handleChange(e)}
+                  value={data.originalPrice}
+                />
+                <CInputGroupText>VNĐ</CInputGroupText>
+              </CInputGroup>
+            </CCol>
+          </CRow>
+        </div>
         <CCol xs={12}>
           <CButton onClick={handleSubmit} type="submit" color="primary">
             Đăng sản phẩm

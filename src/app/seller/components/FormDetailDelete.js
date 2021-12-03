@@ -39,19 +39,8 @@ const FormDetailDelete = (recvData) => {
           />
         </div>
         <div className="mb-3">
-          <CRow>
-            <CCol xs>
-              <CFormLabel htmlFor="exampleFormControlInput1">Loại sản phẩm</CFormLabel>
-              <CFormInput disabled type="text" id="exampleFormControlInput1" name="category" value={data.description} />
-            </CCol>
-            <CCol xs>
-              <CFormLabel htmlFor="exampleFormControlInput1">Giá sản phẩm</CFormLabel>
-              <CInputGroup className="mb-3">
-                <CFormInput aria-label="Amount (to the nearest dollar)" name="price" disabled value={data.price} />
-                <CInputGroupText>VNĐ</CInputGroupText>
-              </CInputGroup>
-            </CCol>
-          </CRow>
+          <CFormLabel htmlFor="exampleFormControlInput1">Loại sản phẩm</CFormLabel>
+          <CFormInput disabled type="text" id="exampleFormControlInput1" name="category" value={data.description} />
         </div>
         <div className="mb-3">
           <CFormLabel htmlFor="exampleFormControlTextarea1">Mô tả sản phẩm</CFormLabel>
@@ -87,6 +76,29 @@ const FormDetailDelete = (recvData) => {
               return <CImage fluid src={imageUrl} width={150} height={150} key={idx} />
             })}
         </CCol>
+        <div className="mb-3">
+          <CRow>
+            <CCol xs>
+              <CFormLabel htmlFor="exampleFormControlInput1">Giá bán</CFormLabel>
+              <CInputGroup className="mb-3">
+                <CFormInput aria-label="Amount (to the nearest dollar)" name="price" disabled value={data.price} />
+                <CInputGroupText>VNĐ</CInputGroupText>
+              </CInputGroup>
+            </CCol>
+            <CCol xs>
+              <CFormLabel htmlFor="exampleFormControlInput1">Giá gốc</CFormLabel>
+              <CInputGroup className="mb-3">
+                <CFormInput
+                  aria-label="Amount (to the nearest dollar)"
+                  name="originalPrice"
+                  disabled
+                  value={data.originalPrice}
+                />
+                <CInputGroupText>VNĐ</CInputGroupText>
+              </CInputGroup>
+            </CCol>
+          </CRow>
+        </div>
       </CForm>
     </div>
   )

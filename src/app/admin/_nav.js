@@ -114,6 +114,22 @@ const _nav = [
     name: 'Thống kê',
     to: '/admin',
     icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />
+  },
+  {
+    component: CNavTitle,
+    name: 'Người dùng'
+  },
+  {
+    component: CNavItem,
+    name: 'Danh sách người dùng',
+    to: '/admin/list-users',
+    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />
+  },
+  {
+    component: CNavItem,
+    name: 'Quản lý người dùng',
+    to: '/admin/manage-users',
+    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />
   }
 ]
 

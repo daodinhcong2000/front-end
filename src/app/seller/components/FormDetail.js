@@ -50,7 +50,6 @@ const FormDetail = (recvData) => {
       .then((respone) => {
         if (respone.data.success == true) {
           success(respone.data.message)
-          //setTimeout(setData(recvData.data), 3000);
           window.location.reload(false)
         } else {
           error(respone.data.message)
@@ -126,39 +125,23 @@ const FormDetail = (recvData) => {
           />
         </div>
         <div className="mb-3">
-          <CRow>
-            <CCol xs>
-              <CFormLabel htmlFor="exampleFormControlInput1">Loại sản phẩm</CFormLabel>
-              <CFormInput
-                type="text"
-                id="exampleFormControlInput1"
-                name="category"
-                placeholder="Nhập loại mặt hàng mà bạn muốn đề xuất"
-                onChange={(e) => handleChange(e)}
-                value={data.category}
-              />
-            </CCol>
-            <CCol xs>
-              <CFormLabel htmlFor="exampleFormControlInput1">Giá sản phẩm</CFormLabel>
-              <CInputGroup>
-                <CFormInput
-                  aria-label="Amount (to the nearest dollar)"
-                  name="price"
-                  onChange={(e) => handleChange(e)}
-                  value={data.price}
-                />
-                <CInputGroupText>VNĐ</CInputGroupText>
-              </CInputGroup>
-            </CCol>
-          </CRow>
+          <CFormLabel htmlFor="exampleFormControlInput1">Loại sản phẩm</CFormLabel>
+          <CFormInput
+            type="text"
+            id="exampleFormControlInput1"
+            name="category"
+            placeholder="Nhập loại mặt hàng mà bạn muốn đề xuất"
+            onChange={(e) => handleChange(e)}
+            value={data.category}
+          />
         </div>
         <div className="mb-3">
           <CFormLabel htmlFor="exampleFormControlTextarea1">Mô tả sản phẩm</CFormLabel>
           <CFormTextarea
-            id="exampleFormControlTextarea1"
             rows="3"
             name="description"
             onChange={(e) => handleChange(e)}
+            value={data.description}
           ></CFormTextarea>
         </div>
         <CCol xs={12}>
@@ -171,7 +154,7 @@ const FormDetail = (recvData) => {
                     <CFormInput
                       name="name"
                       value={size.name}
-                      placeholder="Nhập kích thước"
+                      placeholder="Nhập tên size"
                       onChange={(e) => handleInputChange(e, i)}
                     />
                   </CCol>
@@ -181,6 +164,7 @@ const FormDetail = (recvData) => {
                       value={size.numberInStock}
                       placeholder="Nhập số lượng"
                       onChange={(e) => handleInputChange(e, i)}
+                      type="number"
                     />
                   </CCol>
                 </CRow>
@@ -219,6 +203,31 @@ const FormDetail = (recvData) => {
               )
             })}
         </CCol>
+        <div className="mb-3">
+          <CRow>
+            <CCol xs>
+              <CFormLabel htmlFor="exampleFormControlInput1">Giá bán</CFormLabel>
+              <CInputGroup>
+                <CFormInput type="number" name="price" onChange={(e) => handleChange(e)} value={data.price} />
+                <CInputGroupText>VNĐ</CInputGroupText>
+              </CInputGroup>
+            </CCol>
+            <CCol xs>
+              <CFormLabel htmlFor="exampleFormControlInput1">Giá gốc</CFormLabel>
+              <CInputGroup>
+                <CFormInput
+                  type="number"
+                  id="exampleFormControlInput1"
+                  name="originalPrice"
+                  placeholder="Nhập giá gốc sản phẩm của bạn"
+                  onChange={(e) => handleChange(e)}
+                  value={data.originalPrice}
+                />
+                <CInputGroupText>VNĐ</CInputGroupText>
+              </CInputGroup>
+            </CCol>
+          </CRow>
+        </div>
         <CCol xs={12}>
           <CButton onClick={handleSubmit} type="submit">
             Lưu
