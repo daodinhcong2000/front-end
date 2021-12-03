@@ -2,9 +2,10 @@
   box-shadow: 0 4px 4px 0 rgb(0 0 0 / 10%);
   text-align: center;
 }
-#Header, .ant-layout-header {
+#Header,
+.ant-layout-header {
   color: #000;
-  background-color: #5FC090;
+  background-color: #5fc090;
   height: 120px;
 }
 .ant-image-img {
@@ -21,17 +22,16 @@
 }
 .header-cart {
   height: 60px;
-  margin-top: 25px
+  margin-top: 25px;
 }
 .product-item:hover {
-  background-color: 'lightgrey'
+  background-color: 'lightgrey';
 }
 .sort:hover {
   background-color: grey;
   color: #fff;
   font-weight: bolder;
 }
-
 
 #btn_forgot {
   text-align: center;
@@ -42,16 +42,16 @@
   /* background: #ffff; */
   color: #fff;
   margin-top: 20px;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   font-weight: bold;
-  font-size: 130%
+  font-size: 130%;
 }
 #btn_login:hover {
   color: red;
   font-weight: bolder;
   font-size: 160%;
 }
-#headerSearch{
+#headerSearch {
   margin-top: 10px;
   margin-bottom: 10px;
   vertical-align: middle;

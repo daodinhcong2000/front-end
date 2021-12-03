@@ -1,7 +1,7 @@
-import React from "react";
-import { Form, Input } from "antd";
-import axios from "axios";
-import { useState, useRef } from "react";
+import React from 'react'
+import { Form, Input } from 'antd'
+import axios from 'axios'
+import { useState, useRef } from 'react'
 import {
   CButton,
   CCol,
@@ -15,22 +15,20 @@ import {
   CImage,
   CRow,
   CFormFeedback,
-  CFormSelect,
-} from "@coreui/react";
-const { TextArea } = Input;
+  CFormSelect
+} from '@coreui/react'
+const { TextArea } = Input
 
 const FormDetailDelete = (recvData) => {
-  const [data, setData] = useState(recvData.data);
-  const [imageUrls, setImageUrls] = useState(data.images);
-  const [sizes, setSizes] = useState(data.sizes);
+  const [data, setData] = useState(recvData.data)
+  const [imageUrls, setImageUrls] = useState(data.images)
+  const [sizes, setSizes] = useState(data.sizes)
 
   return (
     <div>
       <CForm className="row g-3">
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput1">
-            Tên sản phẩm
-          </CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput1">Tên sản phẩm</CFormLabel>
           <CFormInput
             disabled
             type="text"
@@ -41,9 +39,11 @@ const FormDetailDelete = (recvData) => {
           />
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlTextarea1">
-            Mô tả sản phẩm
-          </CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput1">Loại sản phẩm</CFormLabel>
+          <CFormInput disabled type="text" id="exampleFormControlInput1" name="category" value={data.description} />
+        </div>
+        <div className="mb-3">
+          <CFormLabel htmlFor="exampleFormControlTextarea1">Mô tả sản phẩm</CFormLabel>
           <CFormTextarea
             disabled
             id="exampleFormControlTextarea1"
@@ -52,20 +52,9 @@ const FormDetailDelete = (recvData) => {
             value={data.description}
           ></CFormTextarea>
         </div>
-        <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput1">
-            Loại sản phẩm
-          </CFormLabel>
-          <CFormInput
-            disabled
-            type="text"
-            id="exampleFormControlInput1"
-            name="category"
-            value={data.description}
-          />
-        </div>
+
         <CCol xs={12}>
-          <CFormLabel htmlFor="inputAddress">Kích thước</CFormLabel>
+          <CFormLabel htmlFor="inputAddress">Sizes</CFormLabel>
           {sizes.map((size, i) => {
             return (
               <div className="box">
@@ -74,35 +63,44 @@ const FormDetailDelete = (recvData) => {
                     <CFormInput name="name" value={size.name} disabled />
                   </CCol>
                   <CCol xs>
-                    <CFormInput
-                      name="numberInStock"
-                      value={size.numberInStock}
-                      disabled
-                    />
+                    <CFormInput name="numberInStock" value={size.numberInStock} disabled />
                   </CCol>
                 </CRow>
               </div>
-            );
+            )
           })}
         </CCol>
-        <CCol xs={12} id = "imageShow">
+        <CCol xs={12} id="imageShow">
           {imageUrls &&
-            imageUrls.map((imageUrl , idx) => {
-              return <CImage fluid src={imageUrl} width={150} height={150} key = {idx}/>;
+            imageUrls.map((imageUrl, idx) => {
+              return <CImage fluid src={imageUrl} width={150} height={150} key={idx} />
             })}
         </CCol>
-        <CInputGroup className="mb-3">
-          <CInputGroupText>$</CInputGroupText>
-          <CFormInput
-            aria-label="Amount (to the nearest dollar)"
-            name="price"
-            disabled
-            value={data.price}
-          />
-          <CInputGroupText>VNĐ</CInputGroupText>
-        </CInputGroup>
+        <div className="mb-3">
+          <CRow>
+            <CCol xs>
+              <CFormLabel htmlFor="exampleFormControlInput1">Giá bán</CFormLabel>
+              <CInputGroup className="mb-3">
+                <CFormInput aria-label="Amount (to the nearest dollar)" name="price" disabled value={data.price} />
+                <CInputGroupText>VNĐ</CInputGroupText>
+              </CInputGroup>
+            </CCol>
+            <CCol xs>
+              <CFormLabel htmlFor="exampleFormControlInput1">Giá gốc</CFormLabel>
+              <CInputGroup className="mb-3">
+                <CFormInput
+                  aria-label="Amount (to the nearest dollar)"
+                  name="originalPrice"
+                  disabled
+                  value={data.originalPrice}
+                />
+                <CInputGroupText>VNĐ</CInputGroupText>
+              </CInputGroup>
+            </CCol>
+          </CRow>
+        </div>
       </CForm>
     </div>
-  );
-};
-export default FormDetailDelete;
+  )
+}
+export default FormDetailDelete

@@ -1,119 +1,127 @@
-import { Row, Col, Image, Rate, Button, Card } from "antd"
-import { Link } from "react-router-dom"
-import { ShoppingCartOutlined, EyeOutlined, ShopOutlined } from "@ant-design/icons"
+import { Row, Col, Image, Rate, Button, Card } from 'antd'
+import { Link } from 'react-router-dom'
+import { ShoppingCartOutlined, EyeOutlined, ShopOutlined } from '@ant-design/icons'
 
-const ProductItem = props => {
-    const { product } = props
-    const { _id, name, rating, images, price, originPrice, sold = 0, views = 0, shop } = product
+const ProductItem = (props) => {
+  const { product } = props
+  const { _id, name, rating, images, price, originPrice, sold = 0, views = 0, shop } = product
 
-    const showView = views => {
-        if (views > 1000000) {
-            return `${Math.floor(views / 100000) / 10}M`
-        }
-
-        if (views > 1000) {
-            return `${Math.floor(views / 100) / 10}K`
-        }
-
-        return views
+  const showView = (views) => {
+    if (views > 1000000) {
+      return `${Math.floor(views / 100000) / 10}M`
     }
 
-    const showShopName = name => {
-        if (name.length > 20) {
-            return `${name.slice(0, 20)}...`
-        }
-        return name
+    if (views > 1000) {
+      return `${Math.floor(views / 100) / 10}K`
     }
 
-    const addToCart = e => { console.log(e) }
+    return views
+  }
 
-    return (
-        <Col span={24} style={{ textAlign: 'center' }} >
-            <Card
-                style={{ width: '100%', borderRadius: '30px' }}
-                hoverable
-            >
-                <Link to={`/shops/${_id}`} style={{ textDecoration: 'none' }}>
-                    <Image
-                        style={{ padding: '10px', height: '300px', width: '300px' }}
-                        alt="example"
-                        src={images[0] || '/img/product.jpeg'}
-                        preview={false}
-                    />
+  const showShopName = (name) => {
+    if (name.length > 20) {
+      return `${name.slice(0, 20)}...`
+    }
+    return name
+  }
 
-                    <Row >
-                        <Col span={24} >
-                            <h3 style={{ textAlign: 'center', color: 'mediumseagreen', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                {name}
-                            </h3>
-                        </Col>
-                    </Row>
+  const addToCart = (e) => {
+    console.log(e)
+  }
 
-                    <Row >
-                        <Col span={24} >
-                            <Rate allowHalf defaultValue={rating} disabled />
-                        </Col>
-                    </Row>
+  return (
+    <Col span={24} style={{ textAlign: 'center' }}>
+      <Card style={{ width: '100%', borderRadius: '30px' }} hoverable>
+        <Link to={`/shops/${_id}`} style={{ textDecoration: 'none' }}>
+          <Image
+            style={{ padding: '10px', height: '300px', width: '300px' }}
+            alt="example"
+            src={images[0] || '/img/product.jpeg'}
+            preview={false}
+          />
 
-                    <Row >
-                        <Col span={10} style={{ paddingTop: '10px' }}>
-                            <Row>
-                                <Col span={24}>
-                                    <strong style={{ color: 'blue' }}>Lượt xem: </strong>
-                                    {showView(views)}
-                                </Col>
-                            </Row>
+          <Row>
+            <Col span={24}>
+              <h3
+                style={{ textAlign: 'center', color: 'mediumseagreen', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+              >
+                {name}
+              </h3>
+            </Col>
+          </Row>
 
-                            <Row>
-                                <Col span={24}>
-                                    <strong style={{ color: 'green' }}>Đã bán: </strong>
-                                    {sold}
-                                </Col>
-                            </Row>
-                        </Col>
+          <Row>
+            <Col span={24}>
+              <Rate allowHalf defaultValue={rating} disabled />
+            </Col>
+          </Row>
 
-                        <Col span={14} >
-                            <Row>
-                                <Col span={24} style={{ color: 'red' }}>
-                                    <b style={{ fontSize: '150%' }}>{price}đ</b>
-                                </Col>
-                            </Row>
+          <Row>
+            <Col span={10} style={{ paddingTop: '10px' }}>
+              <Row>
+                <Col span={24}>
+                  <strong style={{ color: 'blue' }}>Lượt xem: </strong>
+                  {showView(views)}
+                </Col>
+              </Row>
 
-                            {
-                                originPrice && <Row>
-                                    <Col span={24} style={{ color: 'silver' }}>
-                                        <b style={{ textAlign: 'center', textDecoration: 'line-through' }}>
-                                            {originPrice}đ
-                                        </b>
-                                    </Col>
-                                </Row>}
-                        </Col>
-                    </Row>
-                </Link>
+              <Row>
+                <Col span={24}>
+                  <strong style={{ color: 'green' }}>Đã bán: </strong>
+                  {sold}
+                </Col>
+              </Row>
+            </Col>
 
-                <Row style={{ paddingTop: '20px', textAlign: 'left' }}>
-                    <Col span={20} >
-                        <Button shape='round' style={{ height: '40px', paddingBottom: '5px', background: 'orange', color: 'white' }}>
-                            <Link to={`/shops/${shop._id}`} style={{ textDecoration: 'none' }}>
-                                <ShopOutlined style={{ fontSize: '25px' }} />
-                                <b style={{ width: '160px' }}>
-                                    {showShopName(shop.name)}
-                                </b>
-                            </Link>
-                        </Button>
-                    </Col>
+            <Col span={14}>
+              <Row>
+                <Col span={24} style={{ color: 'red' }}>
+                  <b style={{ fontSize: '150%' }}>{price}đ</b>
+                </Col>
+              </Row>
 
-                    <Col span={4} >
-                        <Button shape='circle'
-                            style={{ height: '40px', width: '40px', paddingBottom: '5px', background: 'mediumseagreen', color: 'white' }}>
-                            <ShoppingCartOutlined style={{ fontSize: '25px' }} />
-                        </Button>
-                    </Col>
+              {originPrice && (
+                <Row>
+                  <Col span={24} style={{ color: 'silver' }}>
+                    <b style={{ textAlign: 'center', textDecoration: 'line-through' }}>{originPrice}đ</b>
+                  </Col>
                 </Row>
+              )}
+            </Col>
+          </Row>
+        </Link>
 
-            </Card>
-        </Col >
-    )
+        <Row style={{ paddingTop: '20px', textAlign: 'left' }}>
+          <Col span={20}>
+            <Button
+              shape="round"
+              style={{ height: '40px', paddingBottom: '5px', background: 'orange', color: 'white' }}
+            >
+              <Link to={`/shops/${shop._id}`} style={{ textDecoration: 'none' }}>
+                <ShopOutlined style={{ fontSize: '25px' }} />
+                <b style={{ width: '160px' }}>{showShopName(shop.name)}</b>
+              </Link>
+            </Button>
+          </Col>
+
+          <Col span={4}>
+            <Button
+              shape="circle"
+              style={{
+                height: '40px',
+                width: '40px',
+                paddingBottom: '5px',
+                background: 'mediumseagreen',
+                color: 'white'
+              }}
+            >
+              <ShoppingCartOutlined style={{ fontSize: '25px' }} />
+            </Button>
+          </Col>
+        </Row>
+      </Card>
+    </Col>
+  )
 }
 
 export default ProductItem

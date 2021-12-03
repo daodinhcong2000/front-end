@@ -1,11 +1,11 @@
-import PageHeader from "../header/PageHeader"
+import PageHeader from '../header/PageHeader'
 
-const ShopDetail = props => {
-    return (
-        <>
-            <PageHeader />
-        </>
-    )
+const ShopDetail = (props) => {
+  return (
+    <>
+      <PageHeader />
+    </>
+  )
 }
 
 export default ShopDetail

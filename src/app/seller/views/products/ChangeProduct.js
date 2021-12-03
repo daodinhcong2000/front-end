@@ -1,78 +1,77 @@
-import React, { useState, useEffect ,Suspense } from "react";
-import TableProduct from "../../components/TableProduct";
-import {
-  getShops,
-  postProduct,
-  getProducts,
-} from "../../../../services/api/sellerApi";
-import { CFormSelect , CSpinner} from "@coreui/react";
+import React, { useState, useEffect, Suspense } from 'react'
+import TableProduct from '../../components/TableProduct'
+import { getShops, postProduct, getProducts } from '../../../../services/api/sellerApi'
+import { CFormSelect, CSpinner } from '@coreui/react'
 const ChangeProduct = () => {
-  const [shopId, setShopId] = useState("");
-  const [listShop, setListShop] = useState([]);
-  const [dataProducts, setDataProducts] = useState([]);
-
+  const [shopId, setShopId] = useState('')
+  const [listShop, setListShop] = useState([])
+  const [dataProducts, setDataProducts] = useState([])
 
   useEffect(() => {
     getShops().then((response) => {
-      setListShop(response.data.data);
-    });
-  }, []);
+      setListShop(response.data.data)
+    })
+  }, [])
 
   useEffect(() => {
-  
-    if (shopId != "" && shopId != 1 ) {
+    if (shopId != '' && shopId != 1) {
       getProducts(shopId).then((response) => {
-        setDataProducts(response.data.data.products);
-      });
+        setDataProducts(response.data.data.products)
+      })
     }
-  }, [shopId]);
+  }, [shopId])
 
   const columns = [
     {
-      label: "Tên sản Phẩm",
-      key: "name",
-      _style: { width: "40%" },
-      _props: { className: "fw-semibold" },
+      label: 'Tên sản Phẩm',
+      key: 'name',
+      _style: { width: '40%' },
+      _props: { className: 'fw-semibold' }
     },
     {
-      label: "Ngày bán",
-      key: "createdAt",
+      label: 'Loại sản phẩm',
+      key: 'category'
     },
     {
-      label: "Loại hàng",
-      key: "category",
+      label: 'Giá sản phẩm',
+      key: 'price',
       filter: true,
       sorter: false,
-      _style: { width: "20%" },
+      _style: { width: '20%' }
     },
-    { label: "Đánh giá", key: "rating", _style: { width: "20%" } },
+    { label: 'Đánh giá', key: 'rating', _style: { width: '20%' } },
     {
-      key: "show_details",
-      label: "",
-      _style: { width: "1%" },
+      key: 'show_details',
+      label: '',
+      _style: { width: '1%' },
       filter: false,
       sorter: false,
-      _props: { color: "primary", className: "fw-semibold" },
-    },
-  ];
+      _props: { color: 'primary', className: 'fw-semibold' }
+    }
+  ]
 
   return (
     <div>
       <div className="mb-3" id="changeProduct">
-        <CFormSelect
-          aria-label="Default select example"
-          onChange={(e) => setShopId(e.target.value)}
-        >
-          <option value = "1" >Chọn shop</option>
+        <CFormSelect aria-label="Default select example" onChange={(e) => setShopId(e.target.value)}>
+          <option value="1">Chọn shop</option>
           {listShop.map((shop) => {
-            return <option value={shop._id} key={shop._id}>{shop.name}</option>;
+            return (
+              <option value={shop._id} key={shop._id}>
+                {shop.name}
+              </option>
+            )
           })}
         </CFormSelect>
       </div>
       <Suspense fallback={<CSpinner color="primary" />}>
-       {dataProducts.length != 0 ? <TableProduct columns={columns} usersData={dataProducts} type ="fix"/> : "Không có sản phẩm nào"}
-       </Suspense>
+        {dataProducts.length != 0 ? (
+          <TableProduct columns={columns} usersData={dataProducts} type="fix" />
+        ) : (
+          'Không có sản phẩm nào'
+        )}
+      </Suspense>
     </div>
-  );
-};
-export default ChangeProduct;
+  )
+}
+export default ChangeProduct

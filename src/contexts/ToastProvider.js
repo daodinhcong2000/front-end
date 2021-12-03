@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
-import { Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import { ToastContext } from './toast';
+import React, { useState } from 'react'
+import { Snackbar } from '@material-ui/core'
+import { Alert } from '@material-ui/lab'
+import { ToastContext } from './toast'
 
 export const ToastProvider = (props) => {
-  const { children } = props;
-  const [state, setState] = useState({ isOpen: false });
+  const { children } = props
+  const [state, setState] = useState({ isOpen: false })
 
   const show = (message) => {
-    setState({ isOpen: true, message });
-  };
+    setState({ isOpen: true, message })
+  }
 
-  const hide = () => setState({ isOpen: false });
+  const hide = () => setState({ isOpen: false })
 
   const error = (message) => {
-    show({ type: 'error', text: message });
-  };
+    show({ type: 'error', text: message })
+  }
 
   const warn = (message) => {
-    show({ type: 'warning', text: message });
-  };
+    show({ type: 'warning', text: message })
+  }
 
   const info = (message) => {
-    show({ type: 'info', text: message });
-  };
+    show({ type: 'info', text: message })
+  }
 
   const success = (message) => {
-    show({ type: 'success', text: message });
-  };
-  const { isOpen, message } = state;
+    show({ type: 'success', text: message })
+  }
+  const { isOpen, message } = state
   return (
     <ToastContext.Provider
       value={{
@@ -38,7 +38,8 @@ export const ToastProvider = (props) => {
         success: success,
         hide: hide
       }}
-      id ="alertSeller">
+      id="alertSeller"
+    >
       {children}
       {message && (
         <Snackbar open={isOpen} autoHideDuration={3000} onClose={hide}>
@@ -48,5 +49,5 @@ export const ToastProvider = (props) => {
         </Snackbar>
       )}
     </ToastContext.Provider>
-  );
-};
+  )
+}
