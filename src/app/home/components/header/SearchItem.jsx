@@ -1,14 +1,14 @@
 import { Image } from 'antd'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { _setKeyword } from '../../../../redux/actions/searchActions'
 
-const SearchItem = (image, title) => {
-    const dispatch = useDispatch()
+const SearchItem = (image, title, setFilter) => {
     const [size, setSize] = useState('2em')
     const [hidden, setHidden] = useState(false)
 
-    const handleClick = e => dispatch(_setKeyword(title))
+    const handleClick = e => {
+        document.getElementById('inp_headerSearch').value = title
+        setFilter(title) 
+    }
 
     const handleMouseOver = e => {
         setSize('3em')

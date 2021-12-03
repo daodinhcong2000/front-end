@@ -4,7 +4,7 @@ import { ShoppingCartOutlined, EyeOutlined, ShopOutlined } from "@ant-design/ico
 
 const ProductItem = props => {
     const { product } = props
-    const { _id, name, rating, images, price, sold = 0, views = 0, shop } = product
+    const { _id, name, rating, images, price, originPrice, sold = 0, views = 0, shop } = product
 
     const showView = views => {
         if (views > 1000000) {
@@ -25,20 +25,12 @@ const ProductItem = props => {
         return name
     }
 
-    const handleClickViewProduct = () => {
-
-    }
-
-    const handleClickViewShop = () => {
-
-    }
-
     const addToCart = e => { console.log(e) }
 
     return (
         <Col span={24} style={{ textAlign: 'center' }} >
             <Card
-                style={{ width: '100%', textAlign: 'center' }}
+                style={{ width: '100%', borderRadius: '30px' }}
                 hoverable
             >
                 <Link to={`/shops/${_id}`} style={{ textDecoration: 'none' }}>
@@ -58,7 +50,7 @@ const ProductItem = props => {
                     </Row>
 
                     <Row >
-                        <Col span={24} style={{ textAlign: 'center' }}>
+                        <Col span={24} >
                             <Rate allowHalf defaultValue={rating} disabled />
                         </Col>
                     </Row>
@@ -80,31 +72,31 @@ const ProductItem = props => {
                             </Row>
                         </Col>
 
-                        <Col span={14} style={{ textAlign: 'center' }}>
+                        <Col span={14} >
                             <Row>
                                 <Col span={24} style={{ color: 'red' }}>
-                                    <b style={{ fontSize: '150%' }}>{price}</b>
-                                    VNĐ
+                                    <b style={{ fontSize: '150%' }}>{price}đ</b>
                                 </Col>
                             </Row>
 
-                            <Row>
-                                <Col span={24} style={{ color: 'silver' }}>
-                                    <b style={{ textAlign: 'center', textDecoration: 'line-through' }}>
-                                        {price}VNĐ
-                                    </b>
-                                </Col>
-                            </Row>
+                            {
+                                originPrice && <Row>
+                                    <Col span={24} style={{ color: 'silver' }}>
+                                        <b style={{ textAlign: 'center', textDecoration: 'line-through' }}>
+                                            {originPrice}đ
+                                        </b>
+                                    </Col>
+                                </Row>}
                         </Col>
                     </Row>
                 </Link>
 
-                <Row style={{ textAlign: 'center', paddingTop: '20px' }}>
+                <Row style={{ paddingTop: '20px', textAlign: 'left' }}>
                     <Col span={20} >
                         <Button shape='round' style={{ height: '40px', paddingBottom: '5px', background: 'orange', color: 'white' }}>
                             <Link to={`/shops/${shop._id}`} style={{ textDecoration: 'none' }}>
                                 <ShopOutlined style={{ fontSize: '25px' }} />
-                                <b style={{ width: '160px', overflow: "hidden", whiteSpace: "nowrap", textOverflow: "...v.v..." }}>
+                                <b style={{ width: '160px' }}>
                                     {showShopName(shop.name)}
                                 </b>
                             </Link>

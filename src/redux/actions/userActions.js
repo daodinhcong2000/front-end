@@ -2,6 +2,8 @@ import { login } from "../../services/api/userApi"
 import { getUserInformation } from "../../services/api/customerApi"
 import { isAuthenticated, setToken, removeToken } from "../../services/makeApiRequest"
 import hasPassword from '../../helpers/validating/hashPassword'
+import { getLocalData, removeLocalData, setLocalData } from "../../services/StorageServices"
+import { useSelector } from "react-redux"
 
 export const _setStatus = (status = '', error = '') => {
     return dispatch => dispatch({
@@ -44,8 +46,6 @@ export const _login = (username, password) => {
 }
 
 export const _setUser = () => {
-    if (!isAuthenticated()) { return }
-
     return dispatch => {
         dispatch({
             type: 'LOAD_USER',
@@ -55,6 +55,7 @@ export const _setUser = () => {
         return getUserInformation()
             .then(response => {
                 const { username, firstName, lastName, roles } = response.data.data
+                setLocalData('fullName', `${firstName} ${lastName}`)
                 dispatch({
                     type: 'LOAD_USER',
                     payload: { loading: false }
@@ -80,6 +81,7 @@ export const _setUser = () => {
 
 export const _logout = () => {
     removeToken()
+    removeLocalData('fullName')
     return dispatch => dispatch({
         type: 'LOG_OUT'
     })

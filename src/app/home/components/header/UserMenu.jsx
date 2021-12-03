@@ -8,10 +8,10 @@ import { _setUser, _logout } from '../../../../redux/actions/userActions'
 
 const UserMenu = props => {
     const dispatch = useDispatch()
-    const { loading, username, fullName, roles } = useSelector(state => state.user)
+    const { loading, username, fullName } = useSelector(state => state.user)
 
     useEffect(() => {
-        if (!loading) dispatch(_setUser())
+        if (!username) dispatch(_setUser())
     }, [])
 
     const handleMenuClick = e => {

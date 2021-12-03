@@ -1,19 +1,25 @@
-import { useState } from "react";
-import sellerRoutes from "./app/seller/routes";
+import "./scss/style.scss";
+
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
 import getHistory from "./helpers/rounting/getHistory";
 
 import Home from "./app/home/Home";
 import Products from "./app/home/Products"
 import Shops from "./app/home/Shops"
-
 import seller from "./app/seller/seller";
 import AdminPage from "./app/admin/components/AdminPage";
-import "./scss/style.scss";
+
+import sellerRoutes from "./app/seller/routes";
+
 import { roles } from "./services/checkRole";
 import PrivateRoute from "./helpers/PrivateRoute";
+
 const App = () => {
   // const { location } = getHistory()
+  const dispatch = useDispatch()
+
   const checkSeller = roles("seller");
   return (
     <Router history={getHistory()}>

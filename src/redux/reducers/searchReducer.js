@@ -25,8 +25,8 @@ const searchReducer = (state = searchInitialState, action) => {
         }
 
         case 'PAGINATION': {
-            const { page, limit } = action.payload
-            return { ...state, page, limit }
+            const { page, limit, sort } = action.payload
+            return { ...state, page, limit, sort }
         }
 
         default:
