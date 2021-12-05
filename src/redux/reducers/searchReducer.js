@@ -20,8 +20,8 @@ const searchReducer = (state = searchInitialState, action) => {
     }
 
     case 'SEARCHED': {
-      const { items } = action.payload
-      return { ...state, searching: false, items, total: items.length }
+      const { items, total } = action.payload
+      return { ...state, searching: false, items, total }
     }
 
     case 'PAGINATION': {

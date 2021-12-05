@@ -22,10 +22,15 @@ export const _search = (keyword, page = null, limit = null, sort = 'price') => {
           payload: { keyword }
         })
 
-        const { products } = res.data.data
+        dispatch({
+          type: 'PAGINATION',
+          payload: { page, limit, sort }
+        })
+
+        const { products, total } = res.data.data
         dispatch({
           type: 'SEARCHED',
-          payload: { items: products }
+          payload: { items: products, total }
         })
       })
       .catch((e) => {

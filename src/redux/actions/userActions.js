@@ -56,7 +56,6 @@ export const _setUser = () => {
     return getUserInformation()
       .then((response) => {
         const { username, firstName, lastName, roles } = response.data.data
-        setLocalData('fullName', `${firstName} ${lastName}`)
         dispatch({
           type: 'LOAD_USER',
           payload: { loading: false }
@@ -82,7 +81,6 @@ export const _setUser = () => {
 
 export const _logout = () => {
   removeToken()
-  removeLocalData('fullName')
   return (dispatch) =>
     dispatch({
       type: 'LOG_OUT'
