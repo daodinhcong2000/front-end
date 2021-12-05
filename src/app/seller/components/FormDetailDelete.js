@@ -1,23 +1,16 @@
 import React from 'react'
-import { Form, Input } from 'antd'
-import axios from 'axios'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import {
-  CButton,
   CCol,
   CForm,
   CFormInput,
   CInputGroup,
   CFormLabel,
-  CFormCheck,
   CFormTextarea,
   CInputGroupText,
   CImage,
-  CRow,
-  CFormFeedback,
-  CFormSelect
+  CRow
 } from '@coreui/react'
-const { TextArea } = Input
 
 const FormDetailDelete = (recvData) => {
   const [data, setData] = useState(recvData.data)

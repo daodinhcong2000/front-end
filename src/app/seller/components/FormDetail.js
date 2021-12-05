@@ -48,12 +48,8 @@ const FormDetail = (recvData) => {
     // console.log(data);
     updateProduct(idShop, idProduct, data)
       .then((respone) => {
-        if (respone.data.success == true) {
-          success(respone.data.message)
-          window.location.reload(false)
-        } else {
-          error(respone.data.message)
-        }
+        success(respone.data.message)
+        window.location.reload(false)
       })
       .catch((err) => {
         error(err.response.data.message)

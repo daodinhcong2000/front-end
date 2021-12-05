@@ -5,7 +5,7 @@ import { CSmartTable, CBadge } from '@coreui/react-pro'
 const TableShop = () => {
   const columns = [
     {
-      label: 'Tên sản Phẩm',
+      label: 'Tên cửa hàng',
       key: 'name',
       _style: { width: '40%' },
       _props: { className: 'fw-semibold' }
@@ -36,7 +36,7 @@ const TableShop = () => {
         return 'success'
       case 'pending':
         return 'warning'
-      case 'Banned':
+      case 'rejected':
         return 'danger'
       default:
         return 'primary'
@@ -57,19 +57,15 @@ const TableShop = () => {
           itemsPerPageSelect
           itemsPerPage={5}
           pagination
-          copedColumns={{
+          scopedColumns={{
             approvalStatus: (item) => (
               <td>
-                {/* <CBadge color={getBadge(item.approvalstatus)}>{item.approvalstatus}</CBadge> */}
-                <p>test</p>
+                <CBadge color={getBadge(item.approvalStatus)}>{item.approvalStatus}</CBadge>
               </td>
             )
           }}
           sorterValue={{ column: 'name', state: 'asc' }}
           tableFilter
-          tableHeadProps={{
-            color: 'none'
-          }}
           tableProps={{
             striped: true,
             hover: true

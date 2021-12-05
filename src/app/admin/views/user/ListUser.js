@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { getUsers } from '../../../../services/api/adminApi'
 import { CSmartTable, CBadge } from '@coreui/react-pro'
 
-const ListUser = () => {
+const ListUsersDetail = () => {
   const columns = [
     {
       label: 'Tên sản Phẩm',
@@ -21,23 +21,23 @@ const ListUser = () => {
       sorter: false,
       _style: { width: '20%' }
     },
-    { label: 'Trạng thái', key: 'isActive', _style: { width: '20%' } }
+    { label: 'Vai trò', key: 'roles', _style: { width: '20%' } }
   ]
   const [listUsers, setListUsers] = useState([])
   useEffect(() => {
     getUsers().then((response) => {
       setListUsers(response.data.data.users)
-      console.log(response.data.data)
     })
   }, [])
 
-  const getBadge = (approvalStatus) => {
-    switch (approvalStatus) {
-      case 'approved':
+  console.log('user', listUsers)
+  const getBadge = (role) => {
+    switch (role) {
+      case 'customer':
         return 'success'
-      case 'pending':
+      case 'seller':
         return 'warning'
-      case 'Banned':
+      case 'admin':
         return 'danger'
       default:
         return 'primary'
@@ -57,19 +57,16 @@ const ListUser = () => {
         itemsPerPageSelect
         itemsPerPage={5}
         pagination
-        copedColumns={{
-          approvalStatus: (item) => (
+        scopedColumns={{
+          email: (item) => <td>{item.email != '' ? item.email : ''}</td>,
+          roles: (item) => (
             <td>
-              {/* <CBadge color={getBadge(item.approvalstatus)}>{item.approvalstatus}</CBadge> */}
-              <p>test</p>
+              <CBadge color={getBadge(item.roles[item.roles.length - 1])}>{item.roles[item.roles.length - 1]}</CBadge>
             </td>
           )
         }}
         sorterValue={{ column: 'name', state: 'asc' }}
         tableFilter
-        tableHeadProps={{
-          color: 'none'
-        }}
         tableProps={{
           striped: true,
           hover: true
@@ -79,4 +76,4 @@ const ListUser = () => {
   )
 }
 
-export default ListUser
+export default ListUsersDetail

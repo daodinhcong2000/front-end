@@ -16,6 +16,13 @@ export const getProducts = (id) => {
     method: 'GET'
   })
 }
+export const getOrders = (idShop, ...query) => {
+  //const queryString = query2string(query)
+  return apiRequest({
+    url: `${url}/shops/${idShop}/orders?${query}`,
+    method: 'GET'
+  })
+}
 export const postProduct = (id, payload) => {
   return apiRequest({
     url: `${url}/shops/${id}/products`,
@@ -37,6 +44,20 @@ export const updateProduct = (idShop, idProduct, payload) => {
     url: `${url}/shops/${idShop}/products/${idProduct}`,
     method: 'PUT',
     data: payload
+  })
+}
+
+export const confirmOrder = (idShop, idOrder) => {
+  return apiRequest({
+    url: `${url}/shops/${idShop}/orders/${idOrder}/status/confirm`,
+    method: 'PUT'
+  })
+}
+
+export const cancelOrder = (idShop, idOrder) => {
+  return apiRequest({
+    url: `${url}/shops/${idShop}/orders/${idOrder}/status/cancel`,
+    method: 'PUT'
   })
 }
 
