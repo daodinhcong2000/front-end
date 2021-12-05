@@ -10,7 +10,7 @@ import {
   cilPencil,
   cilPuzzle,
   cilSpeedometer,
-  cilStar
+  cibShopify
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
@@ -32,20 +32,14 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Danh sách cửa hàng',
-    to: '/admin',
+    to: '/admin/list-shops',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />
   },
   {
     component: CNavItem,
     name: 'Thêm cửa hàng',
     to: '/admin',
-    icon: <CIcon icon={cilCursor} customClassName="nav-icon" />
-  },
-  {
-    component: CNavItem,
-    name: 'Thống kê',
-    to: '/admin',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />
+    icon: <CIcon icon={cibShopify} customClassName="nav-icon" />
   },
   {
     component: CNavTitle,

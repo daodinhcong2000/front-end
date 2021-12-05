@@ -36,17 +36,28 @@ const AddShop = () => {
           type="text"
           id="exampleFormControlInput1"
           name="name"
-          placeholder="Nhập tên sản phẩm"
+          placeholder="Nhập tên cửa hàng"
           onChange={(e) => handleChange(e)}
         />
       </div>
       <div className="mb-3">
         <CFormLabel htmlFor="exampleFormControlTextarea1">Email cửa hàng</CFormLabel>
-        <CFormInput id="exampleFormControlTextarea1" name="email" onChange={(e) => handleChange(e)}></CFormInput>
+        <CFormInput
+          id="exampleFormControlTextarea1"
+          placeholder="Nhập email của cửa hàng"
+          name="email"
+          onChange={(e) => handleChange(e)}
+        ></CFormInput>
       </div>
       <div className="mb-3">
         <CFormLabel htmlFor="exampleFormControlInput1">Địa chỉ cửa hàng</CFormLabel>
-        <CFormInput type="text" id="exampleFormControlInput1" name="address" onChange={(e) => handleChange(e)} />
+        <CFormInput
+          type="text"
+          placeholder="Nhập địa chỉ cửa hàng"
+          id="exampleFormControlInput1"
+          name="address"
+          onChange={(e) => handleChange(e)}
+        />
       </div>
       <CCol xs={12}>
         <CButton onClick={handleSubmit}>Gửi</CButton>

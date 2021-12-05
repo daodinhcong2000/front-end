@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getUsers, deleteUser, putActiveUser } from '../../../../services/api/adminApi'
+import { getShops, putApproved } from '../../../../services/api/adminApi'
 import { CSmartTable, CBadge, CButton, CCollapse, CCardBody } from '@coreui/react-pro'
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react'
 import { useToast } from '../../../../contexts/toast'
@@ -9,8 +9,8 @@ const ListUsersDetail = () => {
   const [details, setDetails] = useState([])
   const columns = [
     {
-      label: 'Tên tài khoản',
-      key: 'username',
+      label: 'Tên cửa hàng',
+      key: 'name',
       _style: { width: '40%' },
       _props: { className: 'fw-semibold' }
     },
@@ -19,13 +19,13 @@ const ListUsersDetail = () => {
       key: 'email'
     },
     {
-      label: 'Số điện thoại',
-      key: 'phoneNumber',
+      label: 'Địa chỉ',
+      key: 'address',
       filter: true,
       sorter: false,
       _style: { width: '20%' }
     },
-    { label: 'Vai trò', filter: false, key: 'roles', _style: { width: '20%' } },
+    { label: 'Trạng thái phê duyệt', filter: false, key: 'approvalStatus', _style: { width: '20%' } },
     {
       key: 'show_details',
       label: '',
@@ -35,23 +35,23 @@ const ListUsersDetail = () => {
       _props: { color: 'primary', className: 'fw-semibold' }
     }
   ]
-  const [listUsers, setListUsers] = useState([])
+  const [listShops, setListShops] = useState([])
   useEffect(() => {
-    getUsers().then((response) => {
-      response.data.data.users.map((data, i) => {
-        data.idUser = data._id
+    getShops().then((response) => {
+      response.data.data.map((data, i) => {
+        data.idShop = data._id
       })
-      setListUsers(response.data.data.users)
+      setListShops(response.data.data)
     })
   }, [])
 
   const getBadge = (role) => {
     switch (role) {
-      case 'customer':
+      case 'approved':
         return 'success'
-      case 'seller':
+      case 'pending':
         return 'warning'
-      case 'admin':
+      case 'rejected':
         return 'danger'
       default:
         return 'primary'
@@ -70,9 +70,11 @@ const ListUsersDetail = () => {
     setDetails(newDetails)
   }
 
-  const handleDelete = (idUser) => {
-    //console.log(idUser)
-    deleteUser(idUser)
+  const handleApproved = (idShop, status) => {
+    const approvalStatus = {
+      approvalStatus: status
+    }
+    putApproved(idShop, approvalStatus)
       .then((respone) => {
         success(respone.data.message)
         setTimeout(window.location.reload(false), 3000)
@@ -81,18 +83,20 @@ const ListUsersDetail = () => {
         error(err.response.data.message)
       })
   }
-  const changeStatus = (user) => {
-    const status = {
-      isActive: !user.isActive
-    }
-    putActiveUser(user.idUser, status)
-      .then((respone) => {
-        success(respone.data.message)
-        setTimeout(window.location.reload(false), 3000)
-      })
-      .catch((err) => {
-        error(err.response.data.message)
-      })
+
+  const changeStatus = (shop) => {
+    // const status = {
+    //   isActive: !shop.isActive
+    // }
+    // putActiveshop(shop.idshop, status)
+    //   .then((respone) => {
+    //     success(respone.data.message)
+    //     setTimeout(window.location.reload(false), 3000)
+    //   })
+    //   .catch((err) => {
+    //     error(err.response.data.message)
+    //   })
+    info('Tính năng đang hoàn thiện')
   }
   return (
     <div>
@@ -103,15 +107,15 @@ const ListUsersDetail = () => {
         columns={columns}
         columnFilter
         columnSorter
-        items={listUsers}
+        items={listShops}
         itemsPerPageSelect
         itemsPerPage={5}
         pagination
         scopedColumns={{
           email: (item) => <td>{item.email != '' ? item.email : ''}</td>,
-          roles: (item) => (
+          approvalStatus: (item) => (
             <td>
-              <CBadge color={getBadge(item.roles[item.roles.length - 1])}>{item.roles[item.roles.length - 1]}</CBadge>
+              <CBadge color={getBadge(item.approvalStatus)}>{item.approvalStatus}</CBadge>
             </td>
           ),
           show_details: (item) => {
@@ -137,29 +141,21 @@ const ListUsersDetail = () => {
                   <div className="mb-3">
                     <CRow>
                       <CCol xs>
-                        <CFormLabel htmlFor="exampleFormControlInput1">Họ</CFormLabel>
+                        <CFormLabel htmlFor="exampleFormControlInput1">Người quản lý</CFormLabel>
                         <CFormInput
                           aria-label="Amount (to the nearest dollar)"
                           name="price"
                           disabled
-                          value={item.firstName}
+                          value={item.seller}
                         />
                       </CCol>
-                      <CCol xs>
-                        <CFormLabel htmlFor="exampleFormControlInput1">Tên</CFormLabel>
-                        <CFormInput
-                          aria-label="Amount (to the nearest dollar)"
-                          name="originalPrice"
-                          disabled
-                          value={item.lastName}
-                        />
-                      </CCol>
+                      <CCol xs></CCol>
                     </CRow>
                   </div>
                   <div className="mb-3">
                     <CRow>
                       <CCol xs>
-                        <CFormLabel htmlFor="exampleFormControlInput1">Trạng thái:</CFormLabel>
+                        <CFormLabel htmlFor="exampleFormControlInput1">Trạng thái hoạt động:</CFormLabel>
                         {item.isActive ? (
                           <CButton color="success" variant="outline" disabled>
                             Đã kích hoạt
@@ -171,21 +167,34 @@ const ListUsersDetail = () => {
                         )}
                       </CCol>
                       <CCol xs>
-                        {item.roles[item.roles.length - 1] != 'admin' ? (
-                          <CButton color="info" variant="outline" onClick={() => changeStatus(item)}>
-                            Đổi trạng thái
-                          </CButton>
-                        ) : (
-                          ''
-                        )}
+                        <CButton color="info" variant="outline" onClick={() => changeStatus(item)}>
+                          Đổi trạng thái
+                        </CButton>
                       </CCol>
                     </CRow>
                   </div>
                   <div className="mb-3">
-                    {item.roles[item.roles.length - 1] != 'admin' ? (
-                      <CButton color="danger" shape="rounded-pill" onClick={() => handleDelete(item.idUser)}>
-                        Xóa
-                      </CButton>
+                    {item.approvalStatus == 'pending' ? (
+                      <CRow>
+                        <CCol xs>
+                          <CButton
+                            color="success"
+                            shape="rounded-pill"
+                            onClick={() => handleApproved(item.idShop, 'approved')}
+                          >
+                            Phê duyệt
+                          </CButton>
+                        </CCol>
+                        <CCol xs>
+                          <CButton
+                            color="danger"
+                            shape="rounded-pill"
+                            onClick={() => handleApproved(item.idShop, 'rejected')}
+                          >
+                            Từ chối
+                          </CButton>
+                        </CCol>
+                      </CRow>
                     ) : (
                       ''
                     )}
