@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/react-slick": "^0.28.4",
     "@coreui/chartjs": "^3.0.0",
     "@coreui/coreui": "^4.0.5",
     "@coreui/icons": "^2.1.0",
@@ -42,6 +43,7 @@
     "redux-thunk": "^2.4.1",
     "sass": "^1.43.5",
     "simplebar-react": "^2.3.6",
+    "slick-carousel": "^1.8.1",
     "store": "^2.0.12",
     "web-vitals": "^1.0.1"
   },
