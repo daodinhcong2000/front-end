@@ -2,7 +2,7 @@ import { Carousel, Image } from 'antd'
 
 const CarouselHeader = () => {
   return (
-    <Carousel autoplay autoplaySpeed={3000} style={{ margin: '15px' }}>
+    <Carousel dots={false} autoplay autoplaySpeed={3000} style={{ margin: '20px 50px 20px 50px' }}>
       <div>
         <Image src="https://rukminim1.flixcart.com/flap/3376/560/image/d117a62eb5fbb8e1.jpg?q=50" />
       </div>

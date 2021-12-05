@@ -8,7 +8,7 @@ import { _setUser, _logout } from '../../../../redux/actions/userActions'
 
 const UserMenu = (props) => {
   const dispatch = useDispatch()
-  const { loading, username, fullName } = useSelector((state) => state.user)
+  const { loading, username, fullName, roles } = useSelector((state) => state.user)
 
   useEffect(() => {
     if (!username) dispatch(_setUser())
@@ -45,9 +45,15 @@ const UserMenu = (props) => {
       </Menu.Item>
 
       <Menu.Item key="seller" icon={<ShopFilled />}>
-        <Link to="/seller" style={{ textDecoration: 'none' }}>
-          Kênh bán hàng
-        </Link>
+        {roles.includes('seller') ? (
+          <a href="/seller" style={{ textDecoration: 'none' }}>
+            Kênh bán hàng
+          </a>
+        ) : (
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            Đăng ký bán
+          </Link>
+        )}
       </Menu.Item>
 
       <Menu.Item key="setting" icon={<SettingOutlined />}>
