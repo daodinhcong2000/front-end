@@ -37,7 +37,7 @@ const ProductItem = (props) => {
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 color: 'black',
-                height: '60px',
+                height: '48px',
                 lineHeight: '30px'
               }}
             >
