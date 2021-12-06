@@ -102,6 +102,7 @@ const ListUsersDetail = () => {
         clickableRows
         columns={columns}
         columnFilter
+        noItemsLabel="Không có người dùng nào"
         columnSorter
         items={listUsers}
         itemsPerPageSelect

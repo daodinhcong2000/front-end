@@ -1,14 +1,19 @@
 import { makeAuthRequest } from '../makeApiRequest'
 const apiRequest = makeAuthRequest(true)
+import query2string from '../../helpers/validating/query2string'
 
 const url = '/seller-service/api'
 const urlCommon = '/common-service/api'
 
-export const getShops = () => {
-  return apiRequest({
-    url: `${url}/shops`,
-    method: 'GET'
-  })
+export const getShops = (...query) => {
+  if (query.length != 0) {
+    const queryString = query2string(query[0])
+    console.log('query', queryString)
+    return apiRequest({
+      url: `${url}/shops?${queryString}`,
+      method: 'GET'
+    })
+  }
 }
 export const getProducts = (id) => {
   return apiRequest({

@@ -7,7 +7,7 @@ const DeleteProduct = () => {
   const [listShop, setListShop] = useState([])
   const [dataProducts, setDataProducts] = useState([])
   useEffect(() => {
-    getShops().then((response) => {
+    getShops({}).then((response) => {
       setListShop(response.data.data)
     })
   }, [])
@@ -16,7 +16,6 @@ const DeleteProduct = () => {
     if (shopId != '' && shopId != 1) {
       getProducts(shopId).then((response) => {
         setDataProducts(response.data.data.products)
-        console.log(dataProducts)
       })
     }
   }, [shopId])

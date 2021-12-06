@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Suspense } from 'react'
+import React, { useState, useEffect } from 'react'
 import { getShops } from '../../../../services/api/sellerApi'
-import { CSmartTable, CBadge } from '@coreui/react-pro'
+import { CSmartTable, CBadge, CFormSelect, CRow, CCol, CFormLabel, CHeader as h1 } from '@coreui/react-pro'
 
 const TableShop = () => {
   const columns = [
@@ -21,14 +21,15 @@ const TableShop = () => {
       sorter: false,
       _style: { width: '20%' }
     },
-    { label: 'Trạng thái', key: 'approvalStatus', _style: { width: '20%' } }
+    { label: 'Trạng thái phê duyệt', key: 'approvalStatus', filter: false, _style: { width: '100%' } }
   ]
   const [listShop, setListShop] = useState([])
+  const [status, setStatus] = useState('approved')
   useEffect(() => {
-    getShops().then((response) => {
+    getShops({ approvalStatus: status }).then((response) => {
       setListShop(response.data.data)
     })
-  }, [])
+  }, [status])
 
   const getBadge = (approvalStatus) => {
     switch (approvalStatus) {
@@ -45,33 +46,49 @@ const TableShop = () => {
 
   return (
     <div>
-      <Suspense fallback={<h1>Loading posts...</h1>}>
-        <CSmartTable
-          activePage={3}
-          cleaner
-          clickableRows
-          columns={columns}
-          columnFilter
-          columnSorter
-          items={listShop}
-          itemsPerPageSelect
-          itemsPerPage={5}
-          pagination
-          scopedColumns={{
-            approvalStatus: (item) => (
-              <td>
-                <CBadge color={getBadge(item.approvalStatus)}>{item.approvalStatus}</CBadge>
-              </td>
-            )
-          }}
-          sorterValue={{ column: 'name', state: 'asc' }}
-          tableFilter
-          tableProps={{
-            striped: true,
-            hover: true
-          }}
-        />
-      </Suspense>
+      <div className="mb-3">
+        <CRow>
+          <CCol xs="9">
+            <h2>Danh sách các cửa hàng đã đăng ký </h2>
+          </CCol>
+          {/* <CCol xs></CCol>
+        <CCol xs></CCol>
+        <CCol xs></CCol> */}
+          <CCol xs="3">
+            <CFormLabel htmlFor="exampleFormControlInput1">Trạng thái đang xem</CFormLabel>
+            <CFormSelect aria-label="Default select example" onChange={(e) => setStatus(e.target.value)}>
+              <option value="approved">approved</option>
+              <option value="pending">pending</option>
+              <option value="rejected">rejected</option>
+            </CFormSelect>
+          </CCol>
+        </CRow>
+      </div>
+      <CSmartTable
+        activePage={3}
+        cleaner
+        clickableRows
+        columns={columns}
+        noItemsLabel="Chưa có cửa hàng nào"
+        columnSorter
+        items={listShop}
+        itemsPerPageSelect
+        itemsPerPage={5}
+        pagination
+        scopedColumns={{
+          approvalStatus: (item) => (
+            <td>
+              <CBadge color={getBadge(item.approvalStatus)}>{item.approvalStatus}</CBadge>
+            </td>
+          )
+        }}
+        sorterValue={{ column: 'name', state: 'asc' }}
+        tableFilter
+        tableProps={{
+          striped: true,
+          hover: true
+        }}
+      />
     </div>
   )
 }

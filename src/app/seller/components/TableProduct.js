@@ -31,7 +31,11 @@ const TableProduct = ({ columns, usersData, type }) => {
           setTimeout(window.location.reload(), 3000)
         })
         .catch((err) => {
-          error(err.response.data.message)
+          {
+            err.response.status == 500
+              ? error('Có lỗi xảy ra. Vui lòng thử lại sau!')
+              : error(err.response.data.message)
+          }
         })
     }
   }
