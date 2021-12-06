@@ -1,7 +1,6 @@
 import { Col, Image, Divider } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { DownOutlined, UpOutlined } from '@ant-design/icons'
 
 import ProductItem from './ProductItem'
 import CarouselHeader from './CarouselHeader'
