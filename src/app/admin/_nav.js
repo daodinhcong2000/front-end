@@ -1,17 +1,6 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
-import {
-  cilBell,
-  cilCalculator,
-  cilChartPie,
-  cilCursor,
-  cilDrop,
-  cilNotes,
-  cilPencil,
-  cilPuzzle,
-  cilSpeedometer,
-  cibShopify
-} from '@coreui/icons'
+import { cilChartPie, cilContact, cilSpeedometer, cibShopify } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
@@ -33,81 +22,7 @@ const _nav = [
     component: CNavItem,
     name: 'Danh sách cửa hàng',
     to: '/admin/list-shops',
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />
-  },
-  {
-    component: CNavItem,
-    name: 'Thêm cửa hàng',
-    to: '/admin',
     icon: <CIcon icon={cibShopify} customClassName="nav-icon" />
-  },
-  {
-    component: CNavTitle,
-    name: 'Quản lý sản phẩm'
-  },
-  {
-    component: CNavGroup,
-    name: 'Sản phẩm',
-    to: '/admin/add-product',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Thêm sản phẩm',
-        to: '/admin'
-      },
-      {
-        component: CNavItem,
-        name: 'Sửa sản phẩm',
-        to: '/admin'
-      },
-      {
-        component: CNavItem,
-        name: 'Xóa sản phẩm',
-        to: '/admin'
-      }
-    ]
-  },
-  {
-    component: CNavGroup,
-    name: 'Sản phẩm còn trong kho',
-    to: '/admin-a',
-    icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Buttons',
-        to: '/admin-a'
-      },
-      {
-        component: CNavItem,
-        name: 'Buttons groups',
-        to: '/admin-a'
-      },
-      {
-        component: CNavItem,
-        name: 'Dropdowns',
-        to: '/admin-a'
-      }
-    ]
-  },
-  {
-    component: CNavGroup,
-    name: 'Sản phẩm đã bán',
-    icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Form Control',
-        to: '/admin-a'
-      }
-    ]
-  },
-  {
-    component: CNavItem,
-    name: 'Thống kê',
-    to: '/admin',
-    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />
   },
   {
     component: CNavTitle,
@@ -115,14 +30,19 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Danh sách người dùng',
-    to: '/admin/list-users',
-    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />
-  },
-  {
-    component: CNavItem,
     name: 'Quản lý người dùng',
     to: '/admin/manage-users',
+    icon: <CIcon icon={cilContact} customClassName="nav-icon" />
+  },
+  {
+    component: CNavTitle,
+    name: 'Quản lý sản phẩm'
+  },
+
+  {
+    component: CNavItem,
+    name: 'Thống kê',
+    to: '/admin',
     icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />
   }
 ]

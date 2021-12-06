@@ -54,7 +54,7 @@ const TableOrder = () => {
   const { error, warn, info, success } = useToast()
 
   useEffect(() => {
-    getShops().then((response) => {
+    getShops({}).then((response) => {
       setListShop(response.data.data)
     })
   }, [])
@@ -142,6 +142,7 @@ const TableOrder = () => {
           itemsPerPageSelect
           itemsPerPage={5}
           pagination
+          noItemsLabel="Chưa có đơn hàng nào."
           scopedColumns={{
             name: (item) => (
               <td>

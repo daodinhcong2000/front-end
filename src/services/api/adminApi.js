@@ -26,8 +26,12 @@ export const deleteUser = (idUser) => {
   })
 }
 
-export const getShops = (...query) => {
-  const queryString = query2string(query)
+export const getShops = (query) => {
+  const queryString = ''
+  if (query != null) {
+    queryString = query2string(query)
+  }
+
   return apiRequest({
     url: `${urlAdmin}/shops?${queryString}`,
     method: 'GET'
@@ -39,5 +43,20 @@ export const putApproved = (idShop, payload) => {
     url: `${urlAdmin}/shops/${idShop}/approval`,
     method: 'PUT',
     data: payload
+  })
+}
+
+export const putActiveShop = (idShop, payload) => {
+  return apiRequest({
+    url: `${urlAdmin}/shops/${idShop}/active-status`,
+    method: 'PUT',
+    data: payload
+  })
+}
+
+export const deleteShop = (idShop) => {
+  return apiRequest({
+    url: `${urlAdmin}/shops/${idShop}`,
+    method: 'DELETE'
   })
 }

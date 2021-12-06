@@ -35,7 +35,7 @@ const AddProduct = () => {
   const [shopId, setShopId] = useState('0')
   const [listShop, setListShop] = useState([])
   useEffect(() => {
-    getShops().then((response) => {
+    getShops({}).then((response) => {
       setListShop(response.data.data)
     })
   }, [shopId])

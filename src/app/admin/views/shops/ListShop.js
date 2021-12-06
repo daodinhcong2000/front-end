@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getShops, putApproved } from '../../../../services/api/adminApi'
+import { getShops, putApproved, putActiveShop, deleteShop } from '../../../../services/api/adminApi'
 import { CSmartTable, CBadge, CButton, CCollapse, CCardBody } from '@coreui/react-pro'
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react'
 import { useToast } from '../../../../contexts/toast'
@@ -85,18 +85,29 @@ const ListUsersDetail = () => {
   }
 
   const changeStatus = (shop) => {
-    // const status = {
-    //   isActive: !shop.isActive
-    // }
-    // putActiveshop(shop.idshop, status)
-    //   .then((respone) => {
-    //     success(respone.data.message)
-    //     setTimeout(window.location.reload(false), 3000)
-    //   })
-    //   .catch((err) => {
-    //     error(err.response.data.message)
-    //   })
-    info('Tính năng đang hoàn thiện')
+    const status = {
+      isActive: !shop.isActive
+    }
+    putActiveShop(shop.idShop, status)
+      .then((respone) => {
+        success(respone.data.message)
+        setTimeout(window.location.reload(false), 3000)
+      })
+      .catch((err) => {
+        error(err.response.data.message)
+      })
+    //info('Tính năng đang hoàn thiện')
+  }
+
+  const handleDelete = (idShop) => {
+    deleteShop(idShop)
+      .then((respone) => {
+        success(respone.data.message)
+        setTimeout(window.location.reload(false), 3000)
+      })
+      .catch((err) => {
+        error(err.response.data.message)
+      })
   }
   return (
     <div>
@@ -107,6 +118,7 @@ const ListUsersDetail = () => {
         columns={columns}
         columnFilter
         columnSorter
+        noItemsLabel="Chưa có cửa hàng nào"
         items={listShops}
         itemsPerPageSelect
         itemsPerPage={5}
@@ -146,7 +158,7 @@ const ListUsersDetail = () => {
                           aria-label="Amount (to the nearest dollar)"
                           name="price"
                           disabled
-                          value={item.seller}
+                          value={item.seller.username}
                         />
                       </CCol>
                       <CCol xs></CCol>
@@ -195,6 +207,17 @@ const ListUsersDetail = () => {
                           </CButton>
                         </CCol>
                       </CRow>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                  <div className="mb-3">
+                    {item.approvalStatus == 'approved' ? (
+                      <CCol xs>
+                        <CButton color="danger" shape="rounded-pill" onClick={() => handleDelete(item.idShop)}>
+                          Xóa cửa hàng
+                        </CButton>
+                      </CCol>
                     ) : (
                       ''
                     )}
