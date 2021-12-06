@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Image } from 'antd'
+import { Image, Button } from 'antd'
 import { _search } from '../../../../redux/actions/searchActions'
 
 const SearchItem = (image, title, setFilter) => {
   const dispatch = useDispatch()
-  const [size, setSize] = useState('2em')
-  const [hidden, setHidden] = useState(false)
   const { limit, sort } = useSelector((state) => state.search)
 
   const handleClick = (e) => {
@@ -15,25 +13,15 @@ const SearchItem = (image, title, setFilter) => {
     dispatch(_search(title, 1, limit, sort))
   }
 
-  const handleMouseOver = (e) => {
-    setSize('3em')
-    setHidden(true)
-  }
-  const handleMouseOut = (e) => {
-    setSize('2em')
-    setHidden(false)
-  }
-
   return (
-    <div
-      onMouseOver={handleMouseOver}
-      onMouseOut={handleMouseOut}
+    <Button
+      type="text"
       style={{ color: '#fff', textAlign: 'center', verticalAlign: 'baseline' }}
       onClick={handleClick}
+      icon={<Image src={image} style={{ width: '25px', height: '25px' }} preview={false} />}
     >
-      <Image src={image} style={{ width: size, height: size }} preview={false} />
-      {!hidden && <div>{title}</div>}
-    </div>
+      <div>{title}</div>
+    </Button>
   )
 }
 

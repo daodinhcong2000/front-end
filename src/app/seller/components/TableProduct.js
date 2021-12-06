@@ -20,24 +20,22 @@ const TableProduct = ({ columns, usersData, type }) => {
   })
 
   const handleDelete = () => {
-    console.log(usersData[0].shop._id)
     idDelete.map((id, i) => (idDeleteProduct.productIds[i] = idProduct[id]))
     if (idDeleteProduct.productIds.length == 0) {
       warn('Vui lòng chọn sản phẩm cần xóa')
     } else {
       deleteProduct(usersData[0].shop._id, idDeleteProduct)
         .then((respone) => {
-          console.log('res', respone)
-          if (respone.data.success == true) {
-            setIdDelete([])
-            success(respone.data.message)
-            setTimeout(window.location.reload(), 3000)
-          } else {
-            error(respone.data.message)
-          }
+          setIdDelete([])
+          success(respone.data.message)
+          setTimeout(window.location.reload(), 3000)
         })
         .catch((err) => {
-          error(err.response.data.message)
+          {
+            err.response.status == 500
+              ? error('Có lỗi xảy ra. Vui lòng thử lại sau!')
+              : error(err.response.data.message)
+          }
         })
     }
   }

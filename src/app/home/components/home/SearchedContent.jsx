@@ -121,12 +121,12 @@ const SearchedContent = (props) => {
             />
           </Col>
 
-          <Row gutter={[16, 16]}>
+          <Row style={{ width: '100%' }}>
             {items.map((item, index) => {
               return (
-                <Col gutter={(8, 16)} span={6}>
+                <div style={{ width: '20%', paddingBottom: '20px' }}>
                   <ProductItem key={index} item={item} />
-                </Col>
+                </div>
               )
             })}
           </Row>

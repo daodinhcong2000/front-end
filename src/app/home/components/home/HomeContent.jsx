@@ -30,30 +30,30 @@ const PageContent = (props) => {
 
             <Col span={22} offset={1} style={{ marginBottom: '30px' }}>
               <Divider>
-                <h2>Bán chạy</h2>
+                <h2 style={{ fontWeight: 'bolder' }}>Bán chạy</h2>
               </Divider>
-              <SlickItems Item={ProductItem} listItems={topSold} style={{ width: '25%' }} />
+              <SlickItems Item={ProductItem} listItems={topSold} style={{ width: '20%' }} itemPerSlide={4} />
             </Col>
 
             <Col span={22} offset={1} style={{ marginBottom: '30px' }}>
               <Divider>
-                <h2>Giảm giá</h2>
+                <h2 style={{ fontWeight: 'bolder' }}>Giảm giá</h2>
               </Divider>
-              <SlickItems Item={ProductItem} listItems={sales} style={{ width: '25%' }} />
+              <SlickItems Item={ProductItem} listItems={sales} style={{ width: '20%' }} itemPerSlide={4} />
             </Col>
 
             <Col span={22} offset={1} style={{ marginBottom: '30px' }}>
               <Divider>
-                <h2>Đồ chơi hot</h2>
+                <h2 style={{ fontWeight: 'bolder' }}>Đồ chơi hot</h2>
               </Divider>
-              <SlickItems Item={ProductItem} listItems={toys} style={{ width: '25%' }} />
+              <SlickItems Item={ProductItem} listItems={toys} style={{ width: '20%' }} itemPerSlide={4} />
             </Col>
 
             <Col span={22} offset={1} style={{ marginBottom: '30px' }}>
               <Divider>
-                <h2>Sách hot</h2>
+                <h2 style={{ fontWeight: 'bolder' }}>Sách hot</h2>
               </Divider>
-              <SlickItems Item={ProductItem} listItems={books} style={{ width: '25%' }} />
+              <SlickItems Item={ProductItem} listItems={books} style={{ width: '20%' }} itemPerSlide={4} />
             </Col>
           </>
         ) : (

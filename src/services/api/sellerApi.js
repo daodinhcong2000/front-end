@@ -1,18 +1,30 @@
 import { makeAuthRequest } from '../makeApiRequest'
 const apiRequest = makeAuthRequest(true)
+import query2string from '../../helpers/validating/query2string'
 
 const url = '/seller-service/api'
 const urlCommon = '/common-service/api'
 
-export const getShops = () => {
-  return apiRequest({
-    url: `${url}/shops`,
-    method: 'GET'
-  })
+export const getShops = (...query) => {
+  if (query.length != 0) {
+    const queryString = query2string(query[0])
+    console.log('query', queryString)
+    return apiRequest({
+      url: `${url}/shops?${queryString}`,
+      method: 'GET'
+    })
+  }
 }
 export const getProducts = (id) => {
   return apiRequest({
     url: `${urlCommon}/shops/${id}/products`,
+    method: 'GET'
+  })
+}
+export const getOrders = (idShop, ...query) => {
+  //const queryString = query2string(query)
+  return apiRequest({
+    url: `${url}/shops/${idShop}/orders?${query}`,
     method: 'GET'
   })
 }
@@ -37,6 +49,20 @@ export const updateProduct = (idShop, idProduct, payload) => {
     url: `${url}/shops/${idShop}/products/${idProduct}`,
     method: 'PUT',
     data: payload
+  })
+}
+
+export const confirmOrder = (idShop, idOrder) => {
+  return apiRequest({
+    url: `${url}/shops/${idShop}/orders/${idOrder}/status/confirm`,
+    method: 'PUT'
+  })
+}
+
+export const cancelOrder = (idShop, idOrder) => {
+  return apiRequest({
+    url: `${url}/shops/${idShop}/orders/${idOrder}/status/cancel`,
+    method: 'PUT'
   })
 }
 
