@@ -22,7 +22,7 @@ export const login = (payload) => {
 
 export const getOneProduct = (id) => {
   return apiRequest({
-    url: `${COMMON_SERVICE_API}/shops/${id}`,
+    url: `${COMMON_SERVICE_API}/products/${id}`,
     method: 'GET'
   })
 }
