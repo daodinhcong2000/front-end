@@ -1,11 +1,5 @@
-import PageHeader from '../header/PageHeader'
-
 const ShopDetail = (props) => {
-  return (
-    <>
-      <PageHeader />
-    </>
-  )
+  return <></>
 }
 
 export default ShopDetail

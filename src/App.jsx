@@ -14,8 +14,9 @@ const App = () => {
     <Router history={getHistory()}>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/shops/:shopId" component={Shops} />
-        <Route exact path="/products/:productId" component={Products} />
+        <Route path="/shops/:shopId" component={Shops} />
+        <Route path="/products/:productId" component={Products} />
+        {/* <Route exact path='/carts' component={''}/> */}
 
         <Route path="/seller" component={Seller} />
         <Route path="/admin" component={Admin} />

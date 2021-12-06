@@ -1,7 +1,7 @@
 import Slick from '@ant-design/react-slick'
 
 const SlickItems = (props) => {
-  const { Item: ItemComponent, listItems, style } = props
+  const { Item: ItemComponent, listItems, style, itemPerSlide = 5 } = props
 
   return (
     <Slick
@@ -12,8 +12,9 @@ const SlickItems = (props) => {
       pauseOnDotsHover
       infinite
       speed={300}
-      slidesToShow={4}
+      slidesToShow={itemPerSlide}
       slidesToScroll={1}
+      rows={1}
     >
       {listItems.map((item, index) => {
         return (
