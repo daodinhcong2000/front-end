@@ -8,7 +8,7 @@ const ChangeProduct = () => {
   const [dataProducts, setDataProducts] = useState([])
 
   useEffect(() => {
-    getShops().then((response) => {
+    getShops({}).then((response) => {
       setListShop(response.data.data)
     })
   }, [])

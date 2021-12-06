@@ -33,16 +33,16 @@ const AppHeader = () => {
           <CImage rounded src={logos} width={100} height={60} />
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto">
-          <CNavItem>
+          {/* <CNavItem>
             <CNavLink to="/seller" component={NavLink} activeClassName="active">
               Tổng quan
             </CNavLink>
-          </CNavItem>
+          </CNavItem> */}
         </CHeaderNav>
 
         <CHeaderNav className="d-none d-md-flex me-auto">
           <CNavItem>
-            <CNavLink to="/seller" component={NavLink} activeClassName="active">
+            <CNavLink to="/admin" component={NavLink} activeClassName="active">
               <CImage rounded src={logos} width={100} height={60} />
             </CNavLink>
           </CNavItem>
