@@ -10,7 +10,6 @@ export const _addToCart = (productId, size, quantity) => {
 
     return addToCart(payload)
       .then((res) => {
-        console.log(`Add To Cart success!`)
         dispatch({
           type: 'ADD_TO_CART',
           payload: {

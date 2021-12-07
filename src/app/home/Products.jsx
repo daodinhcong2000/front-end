@@ -21,10 +21,8 @@ const Products = (props) => {
         setItem(data)
       })
       .catch((e) => {
-        console.log(e)
         setLoading(false)
         const { message } = e.response.data
-        console.log(message)
         setError(message)
       })
   }, [])
