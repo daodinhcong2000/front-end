@@ -17,6 +17,20 @@ export const _addToCart = (productId, size, quantity) => {
           }
         })
       })
-      .catch((e) => console.log(e))
+      .catch((e) => {
+        const { eMessage, message } = e.response.data
+        dispatch({
+          type: 'ADD_CART_FAIL',
+          payload: {
+            error: message
+          }
+        })
+
+        if (eMessage.includes('not authorized as customer')) {
+          dispatch({
+            type: 'SHOW_LOG_FORM'
+          })
+        }
+      })
   }
 }

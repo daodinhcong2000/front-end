@@ -6,7 +6,7 @@ import numberSeparator from '../../../../helpers/validating/numberSeparator'
 
 const ProductItem = (props) => {
   const { item } = props
-  const { _id, name, images = [], price, sold = 0 } = item
+  const { _id, name, images = [], price, sold = 0, views, originalPrice } = item
 
   const thumbnail = ((link) => {
     if (!link) return ''
@@ -31,30 +31,48 @@ const ProductItem = (props) => {
             <Col
               span={24}
               style={{
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                color: 'black',
-                height: '48px',
-                lineHeight: '30px'
+                marginBottom: '5px'
               }}
             >
-              <div style={{ width: '100%' }}>
+              <div
+                style={{
+                  width: '100%',
+                  fontSize: '14rem',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  color: 'black',
+                  height: '48px'
+                }}
+              >
                 <h5>{name}</h5>
               </div>
             </Col>
           </Row>
 
           <Row>
-            <Col span={16} style={{ color: 'red' }}>
-              <b style={{ fontSize: '110%' }}>{numberSeparator(price)}đ</b>
+            <Col span={14}>
+              <div className="col-sm-12">
+                <b style={{ fontSize: '110%', color: 'red' }}>{numberSeparator(price)}₫</b>
+              </div>
+              {originalPrice !== price && (
+                <div className="col-sm-12" style={{ color: 'silver', textDecorationLine: 'line-through' }}>
+                  {numberSeparator(originalPrice)}₫
+                </div>
+              )}
             </Col>
 
-            <Col span={8} style={{ color: 'black', textAlign: 'right' }}>
-              <b style={{ fontSize: '110%' }}>Đã bán: </b>
-              {sold}
+            <Col span={10} style={{ color: 'black', textAlign: 'right' }}>
+              <div className="col-sm-12">
+                <b style={{ fontSize: '110%' }}>Bán: </b>
+                {sold}
+              </div>
+              <div className="col-sm-12">
+                <b style={{ fontSize: '110%' }}>Xem: </b>
+                {views}
+              </div>
             </Col>
           </Row>
         </Link>

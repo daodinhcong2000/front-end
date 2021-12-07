@@ -1,9 +1,21 @@
 import { useEffect, useState } from 'react'
-import { Row, Col, Image, Carousel } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { Row, Col, Image, Button, Rate, InputNumber, message as Message, message } from 'antd'
+import SlickItems from '../home/SlickItems'
+
+import { _addToCart } from '../../../../redux/actions/cartActions'
+
+const PreviewImage = (props) => {
+  const { item } = props
+  return (
+    <>
+      <Image src={item} preview={false} />
+    </>
+  )
+}
 
 const ProductDetail = (props) => {
   const { detail } = props
-  console.log(detail)
   const {
     _id: id,
     category,
@@ -19,21 +31,88 @@ const ProductDetail = (props) => {
     views
   } = detail
   const [preview, setPreview] = useState(`${images[0]}` || '')
+  const [targetSize, setTargetSize] = useState({ name: '', numberInStock: 0 })
+  const { error } = useSelector((state) => state.cart)
+  const [quantity, setQuantity] = useState(1)
+
+  useEffect(() => {
+    setQuantity(1)
+  }, [name])
+
+  const dispatch = useDispatch()
+  const handleAddToCart = (e) => {
+    dispatch(_addToCart(id, targetSize.name, quantity))
+  }
+  console.log(error)
 
   return (
-    <Col span={22} offset={1} style={{ marginTop: '20px' }}>
-      <Row>
-        <Col span={10}>
-          <div style={{ width: '100%', height: '600px', width: '100%', textAlign: 'center', padding: '10px' }}>
-            <Carousel arrows dots autoplay autoplaySpeed={3000} style={{ textAlign: 'center' }}>
-              {images.map((image) => {
-                return <Image src={image} height={'400px'} style={{ maxWidth: '700px' }}></Image>
-              })}
-            </Carousel>
-          </div>
-        </Col>
-      </Row>
-    </Col>
+    <>
+      {error && Message.error(error)}
+      <Col span={22} offset={1} style={{ marginTop: '20px' }}>
+        <Row>
+          <Col span={10}>
+            <div style={{ width: '100%', height: '600px', textAlign: 'center', padding: '10px' }}>
+              <Image src={preview} />
+            </div>
+          </Col>
+
+          <Col span={14} style={{ paddingLeft: '20px', paddingTop: '10px' }}>
+            <div>
+              <h4>{name}</h4>
+            </div>
+
+            <Row>
+              <div className="col-sm-3">
+                <text style={{ fontSize: '1.1em', marginRight: '3px' }}>{rating}</text>
+                <Rate allowHalf value={rating} disabled />
+              </div>
+              <div>
+                <text style={{ fontSize: '1.1em' }}>Đã bán {sold}</text>
+              </div>
+            </Row>
+
+            <Row>
+              {originalPrice !== price && (
+                <div className="col-sm-3">
+                  <text style={{ color: 'silver', textDecorationLine: 'line-through', fontSize: '1.5em' }}>
+                    {price}₫
+                  </text>
+                </div>
+              )}
+              <text style={{ color: 'red', fontSize: '2em' }}>₫{price}</text>
+            </Row>
+
+            <Row style={{ margin: '5px' }}>
+              <Col span={3}>Sizes: </Col>
+              <Col>
+                {sizes.map((size, index) => {
+                  const { name, numberInStock } = size
+                  return (
+                    <Button
+                      key={index}
+                      disabled={!numberInStock}
+                      onClick={(e) => setTargetSize({ name, numberInStock })}
+                    >
+                      {name}
+                    </Button>
+                  )
+                })}
+              </Col>
+            </Row>
+
+            <Row style={{ margin: '5px' }}>
+              <Col span={3}>Số lượng: </Col>
+              <Col span={3}>
+                <InputNumber min={1} defaultValue={quantity} onChange={setQuantity} />
+              </Col>
+              <Col>{targetSize.numberInStock > 0 && <text>{targetSize.numberInStock} sản phẩm có sẵn</text>}</Col>
+            </Row>
+
+            <Button onClick={handleAddToCart}>Thêm vào giỏ hàng</Button>
+          </Col>
+        </Row>
+      </Col>
+    </>
   )
 }
 

@@ -1,6 +1,7 @@
 const cartInitialState = {
   loading: false,
-  items: []
+  items: [],
+  error: ''
 }
 
 const cartReducer = (state = cartInitialState, action) => {
@@ -17,15 +18,9 @@ const cartReducer = (state = cartInitialState, action) => {
       return { ...state, items: newItems, loading: false }
     }
 
-    case 'REMOVE_FROM_CART':
-      return state
-
-    case 'CLEAR_CART': {
-      return cartInitialState
-    }
-
-    case 'EDIT_CART': {
-      return state
+    case 'ADD_CART_FAIL': {
+      const { error } = action.payload
+      return { ...state, error }
     }
 
     default:
