@@ -31,9 +31,11 @@ const UserMenu = (props) => {
 
       case 'logout': {
         dispatch(_logout())
+        break
       }
 
       default: {
+        break
       }
     }
   }

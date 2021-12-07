@@ -159,13 +159,7 @@ const RegisterForm = (props) => {
 
       {/* EMAIL */}
       <Form.Item label="Email" hasFeedback validateStatus={status.email} help={suggest.email}>
-        <Input
-          name="email"
-          allowClear={true}
-          onPressEnter={onRegister}
-          onChange={handleValueChange}
-          onPressEnter={register}
-        />
+        <Input name="email" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
       </Form.Item>
 
       <Row>

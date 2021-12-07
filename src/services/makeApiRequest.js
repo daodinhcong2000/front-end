@@ -15,20 +15,15 @@ const makeAuthRequest = (auth = true) => {
   const instance = axios.create(options)
 
   return async (args) => {
-    try {
-      const additionOptions = {}
-      if (auth) {
-        additionOptions['headers'] = {
-          Authorization: `${getToken()}`
-        }
+    const additionOptions = {}
+    if (auth) {
+      additionOptions['headers'] = {
+        Authorization: `${getToken()}`
       }
-
-      const res = await instance({ ...additionOptions, ...args })
-      return res
-    } catch (e) {
-      throw e
-      console.log(e)
     }
+
+    const res = await instance({ ...additionOptions, ...args })
+    return res
   }
 }
 
