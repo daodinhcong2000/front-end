@@ -65,7 +65,6 @@ const LoginForm = (props) => {
         name="password"
         type="string"
         validateStatus={status}
-        help={error}
         rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
       >
         <Input.Password allowClear={true} name="password" onChange={handleValueChange} onPressEnter={login} />
