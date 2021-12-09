@@ -1,3 +1,4 @@
+import 'antd/dist/antd.css'
 import { Router, Switch, Route, Redirect } from 'react-router-dom'
 import getHistory from './helpers/rounting/getHistory'
 
@@ -19,7 +20,6 @@ const App = () => {
         <Route path="/shop" component={Shop} />
         <Route path="/product" component={Product} />
         <Route path="/search" component={Search} />
-
         <Route path="/seller" component={Seller} />
         <Route path="/admin" component={Admin} />
       </Switch>
