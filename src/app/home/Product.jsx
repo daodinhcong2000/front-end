@@ -3,8 +3,9 @@ import Header from './components/Header'
 
 const Product = (props) => {
   return (
-    <div className="App">
+    <>
       <Header />
+
       <section className="section-content padding-y bg">
         <div className="container">
           <article className="card">
@@ -13,31 +14,24 @@ const Product = (props) => {
                 <aside className="col-md-6">
                   <article className="gallery-wrap">
                     <div className="card img-big-wrap">
-                      <a href="#">
-                        {' '}
-                        <img src="assets/images/items/3.jpg" />
-                      </a>
+                      <img src="assets/images/items/3.jpg" />
                     </div>
+
                     <div className="thumbs-wrap">
-                      <a href="#" className="item-thumb">
-                        {' '}
-                        <img src="assets/images/items/3.jpg" />
-                      </a>
-                      <a href="#" className="item-thumb">
-                        {' '}
-                        <img src="assets/images/items/3.jpg" />
-                      </a>
-                      <a href="#" className="item-thumb">
-                        {' '}
-                        <img src="assets/images/items/3.jpg" />
-                      </a>
-                      <a href="#" className="item-thumb">
-                        {' '}
-                        <img src="assets/images/items/3.jpg" />
-                      </a>
+                      <img className="item-thumb" src="assets/images/items/3.jpg" />
+                      <img className="item-thumb" src="assets/images/items/3.jpg" />
+                      <img className="item-thumb" src="assets/images/items/3.jpg" />
+                      <img className="item-thumb" src="assets/images/items/3.jpg" />
+                      <img className="item-thumb" src="assets/images/items/3.jpg" />
+                      <img className="item-thumb" src="assets/images/items/3.jpg" />
+                      <img className="item-thumb" src="assets/images/items/3.jpg" />
+                      <img className="item-thumb" src="assets/images/items/3.jpg" />
+                      <img className="item-thumb" src="assets/images/items/3.jpg" />
+                      <img className="item-thumb" src="assets/images/items/3.jpg" />
                     </div>
                   </article>
                 </aside>
+
                 <main className="col-md-6">
                   <article>
                     <a href="#" className="text-primary btn-link">
@@ -47,12 +41,15 @@ const Product = (props) => {
                     <div>
                       <ul className="rating-stars">
                         <li className="stars-active">
-                          <i className="fa fa-star" /> <i className="fa fa-star" />
+                          <i className="fa fa-star" />
+                          <i className="fa fa-star" />
                           <i className="fa fa-star" />
                         </li>
                         <li>
-                          <i className="fa fa-star" /> <i className="fa fa-star" />
-                          <i className="fa fa-star" /> <i className="fa fa-star" />
+                          <i className="fa fa-star" />
+                          <i className="fa fa-star" />
+                          <i className="fa fa-star" />
+                          <i className="fa fa-star" />
                           <i className="fa fa-star" />
                         </li>
                       </ul>
@@ -119,6 +116,7 @@ const Product = (props) => {
               </div>
             </div>
           </article>
+
           <article className="card mt-5">
             <div className="card-body">
               <div className="row">
@@ -160,8 +158,9 @@ const Product = (props) => {
           </article>
         </div>
       </section>
+
       <Footer />
-    </div>
+    </>
   )
 }
 

@@ -1,10 +1,25 @@
 import Header from './components/Header'
 import Footer from './components/Footer'
+import ProductItem from './components/ProductItem'
+import { Spin } from 'antd'
+
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { _search } from '../../redux/actions/searchActions'
+import { Link } from 'react-router-dom'
 
 const Home = (props) => {
+  const dispatch = useDispatch()
+  const { items = [], keyword, page, limit, sort, searching } = useSelector((state) => state.search)
+
+  useEffect(() => {
+    dispatch(_search(keyword, page, limit, sort))
+  }, [])
+
   return (
     <div className="App">
       <Header />
+
       <section className="section-main bg padding-y">
         <div className="container">
           <div className="row">
@@ -20,124 +35,21 @@ const Home = (props) => {
       <section className="section-name padding-y-sm">
         <div className="container">
           <header className="section-heading">
-            <a href="#" className="btn btn-outline-primary float-right">
-              See all
-            </a>
-            <h3 className="section-title">Popular products</h3>
+            <Link to={`/search/${' '}`} className="btn btn-outline-primary float-right">
+              Thêm
+            </Link>
+            <h3 className="section-title">Sản phẩm phổ biến</h3>
           </header>
+
           <div className="row">
-            <div className="col-md-3">
-              <div href="#" className="card card-product-grid">
-                <a href="#" className="img-wrap">
-                  {' '}
-                  <img src="assets/images/items/1.jpg" />{' '}
-                </a>
-                <figcaption className="info-wrap">
-                  <a href="#" className="title">
-                    Just another product name
-                  </a>
-                  <div className="price mt-1">$179.00</div>
-                </figcaption>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div href="#" className="card card-product-grid">
-                <a href="#" className="img-wrap">
-                  {' '}
-                  <img src="assets/images/items/2.jpg" />{' '}
-                </a>
-                <figcaption className="info-wrap">
-                  <a href="#" className="title">
-                    Some item name here
-                  </a>
-                  <div className="price mt-1">$280.00</div>
-                </figcaption>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div href="#" className="card card-product-grid">
-                <a href="#" className="img-wrap">
-                  {' '}
-                  <img src="assets/images/items/3.jpg" />{' '}
-                </a>
-                <figcaption className="info-wrap">
-                  <a href="#" className="title">
-                    Great product name here
-                  </a>
-                  <div className="price mt-1">$56.00</div>
-                </figcaption>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div href="#" className="card card-product-grid">
-                <a href="#" className="img-wrap">
-                  {' '}
-                  <img src="assets/images/items/4.jpg" />{' '}
-                </a>
-                <figcaption className="info-wrap">
-                  <a href="#" className="title">
-                    Just another product name
-                  </a>
-                  <div className="price mt-1">$179.00</div>
-                </figcaption>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div href="#" className="card card-product-grid">
-                <a href="#" className="img-wrap">
-                  {' '}
-                  <img src="assets/images/items/5.jpg" />{' '}
-                </a>
-                <figcaption className="info-wrap">
-                  <a href="#" className="title">
-                    Just another product name
-                  </a>
-                  <div className="price mt-1">$179.00</div>
-                </figcaption>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div href="#" className="card card-product-grid">
-                <a href="#" className="img-wrap">
-                  {' '}
-                  <img src="assets/images/items/6.jpg" />{' '}
-                </a>
-                <figcaption className="info-wrap">
-                  <a href="#" className="title">
-                    Some item name here
-                  </a>
-                  <div className="price mt-1">$280.00</div>
-                </figcaption>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div href="#" className="card card-product-grid">
-                <a href="#" className="img-wrap">
-                  {' '}
-                  <img src="assets/images/items/7.jpg" />{' '}
-                </a>
-                <figcaption className="info-wrap">
-                  <a href="#" className="title">
-                    Great product name here
-                  </a>
-                  <div className="price mt-1">$56.00</div>
-                </figcaption>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div href="#" className="card card-product-grid">
-                <a href="#" className="img-wrap">
-                  {' '}
-                  <img src="assets/images/items/9.jpg" />{' '}
-                </a>
-                <figcaption className="info-wrap">
-                  <a href="#" className="title">
-                    Just another product name
-                  </a>
-                  <div className="price mt-1">$179.00</div>
-                </figcaption>
-              </div>
-            </div>
+            {items.slice(0, 12).map((item, index) => {
+              const { _id: id, images, name, price } = item
+              return (
+                <>
+                  <ProductItem key={index} id={id} image={images[0]} name={name} price={price} />
+                </>
+              )
+            })}
           </div>
         </div>
       </section>

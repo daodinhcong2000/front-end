@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import TableProduct from '../../components/TableProduct'
-import { getShops, postProduct, getProducts } from '../../../../services/api/sellerApi'
+import { getShops, getProducts } from '../../../../services/api/sellerApi'
 import { CFormSelect, CSpinner } from '@coreui/react'
 const ChangeProduct = () => {
   const [shopId, setShopId] = useState('')

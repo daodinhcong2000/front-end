@@ -60,7 +60,7 @@ const TableOrder = () => {
   }, [])
   useEffect(() => {
     if (shopId != '0') {
-      getOrders(shopId).then((response) => {
+      getOrders(shopId, {}).then((response) => {
         response.data.data.map((data, i) => {
           data.idOrder = data._id
         })
@@ -146,7 +146,7 @@ const TableOrder = () => {
           scopedColumns={{
             name: (item) => (
               <td>
-                {item.customer.firstName} {item.customer.lastName}
+                {item.customer.lastName} {item.customer.firstName}
               </td>
             ),
             phone: (item) => <td>{item.customer.phoneNumber}</td>,

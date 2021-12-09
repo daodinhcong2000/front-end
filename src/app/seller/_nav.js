@@ -47,7 +47,7 @@ const _nav = [
       },
       {
         component: CNavItem,
-        name: 'Sửa sản phẩm',
+        name: 'Danh sách sản phẩm',
         to: '/seller/change-product'
       },
       {
@@ -75,12 +75,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Đơn hàng chờ xác nhận',
-        to: '/seller-a'
-      },
-      {
-        component: CNavItem,
-        name: 'Dropdowns',
-        to: '/seller-a'
+        to: '/seller/waiting-orders'
       }
     ]
   },

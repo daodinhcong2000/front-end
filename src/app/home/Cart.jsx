@@ -1,9 +1,10 @@
 import Footer from './components/Footer'
 import Header from './components/Header'
+import CartItem from './components/CartItem'
 
 const Cart = (props) => {
   return (
-    <div className="App">
+    <>
       <Header />
       <div>
         <section className="section-pagetop bg">
@@ -79,6 +80,7 @@ const Cart = (props) => {
                           </a>
                         </td>
                       </tr>
+                      <CartItem />
                       <tr>
                         <td>
                           <figure className="itemside">
@@ -252,7 +254,7 @@ const Cart = (props) => {
         </section>
       </div>
       <Footer />
-    </div>
+    </>
   )
 }
 

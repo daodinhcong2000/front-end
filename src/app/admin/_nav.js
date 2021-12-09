@@ -36,14 +36,31 @@ const _nav = [
   },
   {
     component: CNavTitle,
-    name: 'Quản lý sản phẩm'
+    name: 'Quản lý doanh số'
   },
 
   {
-    component: CNavItem,
+    component: CNavGroup,
     name: 'Thống kê',
     to: '/admin',
-    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />
+    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Doanh thu người bán',
+        to: '/admin/statistic-seller'
+      },
+      {
+        component: CNavItem,
+        name: 'Doanh thu cửa hàng',
+        to: '/admin/statistic-shop'
+      },
+      {
+        component: CNavItem,
+        name: 'Chi tiêu khách hàng',
+        to: '/admin/statistic-customer'
+      }
+    ]
   }
 ]
 

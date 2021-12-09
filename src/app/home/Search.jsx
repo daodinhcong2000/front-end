@@ -1,12 +1,25 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Sider from './components/Sider'
 import ListView from './components/ListView'
 import GridView from './components/GridView'
 
+import { _search } from '../../redux/actions/searchActions'
+
 const Search = (props) => {
   const [view, setView] = useState('list')
+
+  const { keyword: searchKeyword } = useParams()
+
+  const dispatch = useDispatch()
+  const { items = [], page, limit, sort } = useSelector((state) => state.search)
+
+  useEffect(() => {
+    dispatch(_search(searchKeyword, page, limit, sort))
+  }, [searchKeyword, page, limit, sort])
 
   return (
     <div className="App">
@@ -30,9 +43,9 @@ const Search = (props) => {
           <div className="row">
             <Sider />
             {view === 'list' ? (
-              <ListView changeView={(e) => setView('grid')} />
+              <ListView list={items} changeView={(e) => setView('grid')} />
             ) : (
-              <GridView changeView={(e) => setView('list')} />
+              <GridView list={items} changeView={(e) => setView('list')} />
             )}
           </div>
         </div>

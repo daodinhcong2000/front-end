@@ -3,10 +3,11 @@ const apiRequest = makeAuthRequest(true)
 import query2string from '../../helpers/validating/query2string'
 const urlUser = '/user-service/api'
 const urlAdmin = '/admin-service/api'
-
-export const getUsers = () => {
+const urlStatistics = '/statistics-service/api'
+export const getUsers = (query) => {
+  const queryString = query2string(query)
   return apiRequest({
-    url: `${urlUser}/users`,
+    url: `${urlUser}/users?${queryString}`,
     method: 'GET'
   })
 }
@@ -58,5 +59,37 @@ export const deleteShop = (idShop) => {
   return apiRequest({
     url: `${urlAdmin}/shops/${idShop}`,
     method: 'DELETE'
+  })
+}
+
+export const getRevenue = (query) => {
+  const queryString = query2string(query)
+  return apiRequest({
+    url: `${urlStatistics}/order-statistics?${queryString}`,
+    method: 'GET'
+  })
+}
+
+export const getRevenueSeller = (idSeller, query) => {
+  const queryString = query2string(query)
+  return apiRequest({
+    url: `${urlStatistics}/sellers/${idSeller}/order-statistics?${queryString}`,
+    method: 'GET'
+  })
+}
+
+export const getRevenueShop = (idShop, query) => {
+  const queryString = query2string(query)
+  return apiRequest({
+    url: `${urlStatistics}/shops/${idShop}/order-statistics?${queryString}`,
+    method: 'GET'
+  })
+}
+
+export const getRevenueCustomer = (idCustomer, query) => {
+  const queryString = query2string(query)
+  return apiRequest({
+    url: `${urlStatistics}/customers/${idCustomer}/order-statistics?${queryString}`,
+    method: 'GET'
   })
 }

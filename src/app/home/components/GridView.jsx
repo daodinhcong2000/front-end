@@ -1,7 +1,7 @@
 import GridItem from './GridItem'
 
 const GridView = (props) => {
-  const { changeView } = props
+  const { list, changeView } = props
   return (
     <>
       <main className="col-md-9">
@@ -36,7 +36,15 @@ const GridView = (props) => {
             </div>
           </div>
         </header>
+
         <div className="row">
+          {list.map((item, index) => {
+            return (
+              <>
+                <GridItem key={index} {...item} />
+              </>
+            )
+          })}
           <GridItem />
           <div className="col-md-4">
             <figure className="card card-product-grid">

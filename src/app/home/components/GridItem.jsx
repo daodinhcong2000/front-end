@@ -1,25 +1,28 @@
+import numberSeparator from '../../../helpers/validating/numberSeparator'
+
 const GridItem = (props) => {
+  const { _id, images = [], name, price } = props
   return (
     <>
       <div className="col-md-4">
         <figure className="card card-product-grid">
           <div className="img-wrap">
-            <img src="assets/images/items/4.jpg" />
+            <img src={images[0]} />
             <a className="btn-overlay" href="#">
-              <i className="fa fa-search-plus" /> Quick view
+              <i className="fa fa-search-plus" /> Xem sản phẩm
             </a>
           </div>
           <figcaption className="info-wrap">
             <div className="fix-height">
               <a href="#" className="title">
-                Product name goes here just for demo item
+                {name}
               </a>
               <div className="price-wrap mt-2">
-                <span className="price">$1280</span>
+                <span className="price">₫ {numberSeparator(price)}</span>
               </div>
             </div>
             <a href="#" className="btn btn-block btn-primary">
-              Add to cart{' '}
+              Thêm vào giỏ
             </a>
           </figcaption>
         </figure>
