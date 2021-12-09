@@ -6,7 +6,7 @@ import getHistory from './helpers/rounting/getHistory'
 import Home from './app/home/Home'
 import Products from './app/home/Products'
 import Shops from './app/home/Shops'
-import Cart from './app/home/Cart'
+// import Cart from './app/home/Cart'
 import Seller from './app/seller/Seller'
 import Admin from './app/admin/Admin'
 
