@@ -1,0 +1,50 @@
+import React, { useState, useEffect } from 'react'
+import { getRevenueShop, getShops } from '../../../../services/api/adminApi'
+import { CFormSelect } from '@coreui/react'
+import moment from 'moment'
+import Chart from '../../components/Chart'
+const StatisticShop = () => {
+  const [listShop, setListShops] = useState([])
+  const [shopId, setShopId] = useState('')
+  const [statistics, setStatistics] = useState([])
+  const [totalAmount, setTotalAmount] = useState([])
+  const [orderCount, setOrderCount] = useState([])
+
+  useEffect(() => {
+    getShops().then((response) => {
+      setListShops(response.data.data)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (shopId != '' && shopId != 1) {
+      getRevenueShop(shopId, { from: moment().subtract(7, 'day'), to: moment() }).then((respone) => {
+        setTotalAmount(respone.data.data.totalAmount)
+        setOrderCount(respone.data.data.orderCount)
+        setStatistics(respone.data.data.statistics)
+      })
+    }
+  }, [shopId])
+  return (
+    <div>
+      <div className="mb-3" id="changeProduct">
+        <CFormSelect aria-label="Default select example" onChange={(e) => setShopId(e.target.value)}>
+          <option value="1">Chọn shop để xem</option>
+          {listShop.map((shop) => {
+            return (
+              <option value={shop._id} key={shop._id}>
+                {shop.name}
+              </option>
+            )
+          })}
+        </CFormSelect>
+      </div>
+      {statistics != null ? (
+        <Chart statistics={statistics} totalAmount={totalAmount} orderCount={orderCount} />
+      ) : (
+        'Cửa hàng hiện tại chưa có doanh thu'
+      )}
+    </div>
+  )
+}
+export default StatisticShop

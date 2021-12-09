@@ -18,7 +18,7 @@ import {
   CRow
 } from '@coreui/react'
 import { useToast } from '../../../../contexts/toast'
-const TableOrder = () => {
+const WaitingOrder = () => {
   const columns = [
     {
       label: 'Tên người nhận hàng',
@@ -60,7 +60,7 @@ const TableOrder = () => {
   }, [])
   useEffect(() => {
     if (shopId != '0') {
-      getOrders(shopId, {}).then((response) => {
+      getOrders(shopId, { status: 'Waiting for seller confirm' }).then((response) => {
         response.data.data.map((data, i) => {
           data.idOrder = data._id
         })
@@ -142,7 +142,7 @@ const TableOrder = () => {
           itemsPerPageSelect
           itemsPerPage={5}
           pagination
-          noItemsLabel="Chưa có đơn hàng nào."
+          noItemsLabel="Chưa có đơn hàng nào chờ xác nhận."
           scopedColumns={{
             name: (item) => (
               <td>
@@ -258,4 +258,4 @@ const TableOrder = () => {
   )
 }
 
-export default TableOrder
+export default WaitingOrder

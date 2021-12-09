@@ -17,3 +17,10 @@ export const addToCart = (payload) => {
     data: payload
   })
 }
+
+export const getCart = () => {
+  return apiRequest({
+    url: `${USER_SERVICE_API}/cart-items`,
+    method: 'GET'
+  })
+}

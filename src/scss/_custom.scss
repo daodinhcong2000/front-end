@@ -1,7 +1,4 @@
 // Here you can add other styles
-// input.form-check-input {
-//     display: none;
-// }
 #changeProduct > input.form-check-input {
     display: none;
 }
@@ -20,11 +17,6 @@ label.form-label.col-auto.col-form-label {
     position: absolute;
     right: -20px;
 }
-// .MuiSnackbar-root.MuiSnackbar-anchorOriginBottomCenter {
-//     position: absolute;
-//     top: -45rem;
-//     left: 60rem;
-// }
 
 #imageShow > img.img-fluid{
     margin-left: 10px;
@@ -35,4 +27,8 @@ label.form-label.col-auto.col-form-label {
 }
 #inputSize > button.btn.btn-dark.btn-sm.rounded-pill {
     margin: 0px 5px;
+}
+
+.row.cart-content {
+    padding: 3rem 0rem;
 }
