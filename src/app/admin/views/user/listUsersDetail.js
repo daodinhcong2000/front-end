@@ -37,7 +37,7 @@ const ListUsersDetail = () => {
   ]
   const [listUsers, setListUsers] = useState([])
   useEffect(() => {
-    getUsers().then((response) => {
+    getUsers({}).then((response) => {
       response.data.data.users.map((data, i) => {
         data.idUser = data._id
       })

@@ -1,6 +1,7 @@
+import '../../scss/style.scss'
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Router, Switch, Route, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { getRoles } from '../../services/getRoles'
 
 import { AppFooter, AppSidebar, AppHeader, AppContent } from './components/index'

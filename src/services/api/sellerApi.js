@@ -4,6 +4,7 @@ import query2string from '../../helpers/validating/query2string'
 
 const url = '/seller-service/api'
 const urlCommon = '/common-service/api'
+const urlStatistics = '/statistics-service/api'
 
 export const getShops = (...query) => {
   if (query.length != 0) {
@@ -21,13 +22,30 @@ export const getProducts = (id) => {
     method: 'GET'
   })
 }
-export const getOrders = (idShop, ...query) => {
-  //const queryString = query2string(query)
+export const getOrders = (idShop, query) => {
+  const queryString = query2string(query)
   return apiRequest({
-    url: `${url}/shops/${idShop}/orders?${query}`,
+    url: `${url}/shops/${idShop}/orders?${queryString}`,
     method: 'GET'
   })
 }
+
+export const getRevenue = (idSeller, query) => {
+  const queryString = query2string(query)
+  return apiRequest({
+    url: `${urlStatistics}/sellers/${idSeller}/order-statistics?${queryString}`,
+    method: 'GET'
+  })
+}
+
+export const getRevenueShop = (idShop, query) => {
+  const queryString = query2string(query)
+  return apiRequest({
+    url: `${urlStatistics}/shops/${idShop}/order-statistics?${queryString}`,
+    method: 'GET'
+  })
+}
+
 export const postProduct = (id, payload) => {
   return apiRequest({
     url: `${url}/shops/${id}/products`,

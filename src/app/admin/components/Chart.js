@@ -5,26 +5,11 @@ import { CChartLine } from '@coreui/react-chartjs'
 import { getStyle, hexToRgba } from '@coreui/utils'
 import CIcon from '@coreui/icons-react'
 import { cilCloudDownload } from '@coreui/icons'
-import { getUserInformation } from '../../../../services/api/customerApi'
-import { getRevenue, getRevenueShop, getRevenueSeller, getShops, getUsers } from '../../../../services/api/adminApi'
 
-import { CFormSelect } from '@coreui/react'
-import moment from 'moment'
-const WidgetsDropdown = lazy(() => import('../widgets/WidgetsDropdown.js'))
+const WidgetsDropdown = lazy(() => import('../views/widgets/WidgetsDropdown'))
 
-const Dashboard = () => {
-  const [statistics, setStatistics] = useState([])
-  const [totalAmount, setTotalAmount] = useState([])
-  const [orderCount, setOrderCount] = useState([])
-
-  useEffect(() => {
-    getRevenue({ from: moment().subtract(7, 'day'), to: moment() }).then((respone) => {
-      setTotalAmount(respone.data.data.totalAmount)
-      setOrderCount(respone.data.data.orderCount)
-      setStatistics(respone.data.data.statistics)
-    })
-  }, [])
-
+const Chart = ({ statistics, totalAmount, orderCount, title }) => {
+  console.log('statistics', statistics)
   return (
     <>
       <CCard className="mb-4">
@@ -32,9 +17,11 @@ const Dashboard = () => {
           <CRow>
             <CCol sm={5}>
               <h4 id="traffic" className="card-title mb-0">
-                Doanh thu bán hàng
+                {title ? title[0] : 'Doanh thu bán hàng'}
               </h4>
-              <div className="small text-medium-emphasis">Tổng doanh thu: {totalAmount} VNĐ</div>
+              <div className="small text-medium-emphasis">
+                {title ? title[1] : 'Tổng doanh thu:'} {totalAmount}VNĐ
+              </div>
             </CCol>
             <CCol sm={7} className="d-none d-md-block">
               <CButton color="primary" className="float-end">
@@ -52,15 +39,15 @@ const Dashboard = () => {
           <CChartLine
             style={{ height: '300px', marginTop: '40px' }}
             data={{
-              labels: statistics ? statistics.map((statistic) => statistic.date) : [],
+              labels: statistics ? statistics.map((statistic) => statistic.date) : '',
               datasets: [
                 {
-                  label: 'Doanh thu',
+                  label: title ? title[2] : 'Doanh thu',
                   backgroundColor: hexToRgba(getStyle('--cui-info'), 10),
                   borderColor: getStyle('--cui-info'),
                   pointHoverBackgroundColor: getStyle('--cui-info'),
                   borderWidth: 2,
-                  data: statistics ? statistics.map((statistic) => statistic.totalAmount) : [],
+                  data: statistics ? statistics.map((statistic) => statistic.totalAmount) : '',
                   fill: true
                 }
               ]
@@ -129,7 +116,7 @@ const Dashboard = () => {
           <CChartLine
             style={{ height: '300px', marginTop: '40px' }}
             data={{
-              labels: statistics ? statistics.map((statistic) => statistic.date) : [],
+              labels: statistics.map((statistic) => statistic.date),
               datasets: [
                 {
                   label: 'Số đơn hàng',
@@ -137,7 +124,7 @@ const Dashboard = () => {
                   borderColor: getStyle('--cui-info'),
                   pointHoverBackgroundColor: getStyle('--cui-info'),
                   borderWidth: 2,
-                  data: statistics ? statistics.map((statistic) => statistic.orderCount) : [],
+                  data: statistics.map((statistic) => statistic.orderCount),
                   fill: true
                 }
               ]
@@ -180,9 +167,10 @@ const Dashboard = () => {
         </CCardBody>
         <CCardFooter></CCardFooter>
       </CCard>
+
       <WidgetsDropdown />
     </>
   )
 }
 
-export default Dashboard
+export default Chart

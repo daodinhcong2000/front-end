@@ -1,10 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Router, Switch, Route, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { getRoles } from '../../services/getRoles'
 
 import { AppFooter, AppSidebar, AppHeader, AppContent } from './components/index'
 import { ToastProvider } from '../../contexts/ToastProvider'
+import '../../scss/style.scss'
 const Seller = () => {
   const [roles, setRoles] = useState(['seller'])
 
@@ -24,6 +25,7 @@ const Seller = () => {
         <div className="wrapper d-flex flex-column min-vh-100 bg-light">
           <AppHeader />
           <div className="body flex-grow-1 px-3 ">
+            {console.log(roles)}
             <AppContent />
           </div>
           <AppFooter />
