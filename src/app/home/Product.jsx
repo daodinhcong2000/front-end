@@ -6,8 +6,10 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 
 import classnames from 'classnames'
+import { ToastProvider } from '../../contexts/ToastProvider'
 import numberSeparator from '../../helpers/validating/numberSeparator'
 import { getOneProduct } from '../../services/api/userApi'
+import CommentProduct from './components/CommentProduct'
 
 const Product = (props) => {
   const { productId } = useParams()
@@ -193,6 +195,15 @@ const Product = (props) => {
                     </aside>
                   </div>
                   <hr />
+                </div>
+              </article>
+
+              <article className="card mt-5">
+                <div className="card-body">
+                  <h5>Bình luận</h5>
+                  <ToastProvider>
+                    <CommentProduct id={productId} />
+                  </ToastProvider>
                 </div>
               </article>
             </div>

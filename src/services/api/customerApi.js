@@ -24,3 +24,18 @@ export const getCart = () => {
     method: 'GET'
   })
 }
+
+export const postComment = (payload) => {
+  return apiRequest({
+    url: `${CUSTOMER_SERVICE_API}/comments`,
+    method: 'POST',
+    data: payload
+  })
+}
+
+export const deleteComment = (idComment) => {
+  return apiRequest({
+    url: `${CUSTOMER_SERVICE_API}/comments/${idComment}`,
+    method: 'DELETE'
+  })
+}
