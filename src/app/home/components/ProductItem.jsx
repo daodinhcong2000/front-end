@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import Loading from 'react-loading'
 
 import numberSeparator from '../../../helpers/validating/numberSeparator'
+import CommentProduct from './CommentProduct'
 
 const ProductItem = (props) => {
   const { id, image, name, price } = props

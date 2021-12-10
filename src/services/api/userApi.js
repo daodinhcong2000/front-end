@@ -41,3 +41,10 @@ export const searchStoreProducts = (store, query) => {
     url: `${COMMON_SERVICE_API}/shops/${queryString}`
   })
 }
+
+export const getComment = (idProduct) => {
+  return apiRequest({
+    url: `${COMMON_SERVICE_API}/products/${idProduct}/comments`,
+    method: 'GET'
+  })
+}
