@@ -11,15 +11,14 @@ import { _search } from '../../redux/actions/searchActions'
 
 const Search = (props) => {
   const [view, setView] = useState('list')
-
-  const { keyword: searchKeyword } = useParams()
+  const { keyword: searchKeyword = '' } = useParams()
 
   const dispatch = useDispatch()
-  const { items = [], page, limit, sort } = useSelector((state) => state.search)
+  const { items = [], page, limit, sort, searching } = useSelector((state) => state.search)
 
   useEffect(() => {
-    dispatch(_search(searchKeyword, page, limit, sort))
-  }, [searchKeyword, page, limit, sort])
+    // dispatch(_search(searchKeyword.trim(), page, limit, sort))
+  }, [])
 
   return (
     <div className="App">

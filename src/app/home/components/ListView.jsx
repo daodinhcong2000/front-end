@@ -1,14 +1,17 @@
+import { Spin } from 'antd'
+import { useSelector } from 'react-redux'
 import ListItem from './ListItem'
 
 const ListView = (props) => {
   const { list, changeView } = props
+  const { searching } = useSelector((state) => state.search)
 
   return (
     <>
       <main className="col-md-9">
         <header className="border-bottom mb-4 pb-3">
           <div className="form-inline">
-            <span className="mr-md-auto">32 Items found </span>
+            <span className="mr-md-auto">{list.length} sản phẩm</span>
             {/* <select className="mr-2 form-control">
               <option>Latest items</option>
               <option>Trending</option>
@@ -16,7 +19,7 @@ const ListView = (props) => {
               <option>Cheapest</option>
             </select> */}
             <div className="btn-group">
-              <button className="btn btn-outline-secondary active" data-toggle="tooltip" title="List view" disabled>
+              <button className="btn btn-outline-secondary active" data-toggle="tooltip" title="List view">
                 <i className="fa fa-bars" />
               </button>
               <button
@@ -31,13 +34,15 @@ const ListView = (props) => {
           </div>
         </header>
 
-        {list.map((item, index) => {
-          return (
-            <>
-              <ListItem key={index} {...item} />
-            </>
-          )
-        })}
+        <Spin spinning={searching}>
+          {list.map((item, index) => {
+            return (
+              <>
+                <ListItem key={index} {...item} />
+              </>
+            )
+          })}
+        </Spin>
 
         <nav className="mt-4" aria-label="Page navigation sample">
           <ul className="pagination">

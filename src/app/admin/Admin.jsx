@@ -20,7 +20,7 @@ const Admin = () => {
 
   const render = roles.includes('admin') ? (
     <ToastProvider>
-      <div id="ADMIN_SELLER">
+      <div className="ADMIN_SELLER">
         <AppSidebar />
         <div className="wrapper d-flex flex-column min-vh-100 bg-light">
           <AppHeader />

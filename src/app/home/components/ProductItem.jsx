@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Loading from 'react-loading'
 
 import numberSeparator from '../../../helpers/validating/numberSeparator'
 
@@ -30,7 +31,7 @@ const ProductItem = (props) => {
                 {name}
               </div>
               <div className="price mt-1" style={{ color: 'red' }}>
-                ₫{numberSeparator(price)}
+                ₫ {numberSeparator(price)}
               </div>
             </figcaption>
           </div>

@@ -1,4 +1,4 @@
-import { Form, Input, Button, Row, Col, message as Message } from 'antd'
+import { Form, Input, Button, Row, Col, message as Message, Spin } from 'antd'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -31,6 +31,7 @@ const RegisterForm = (props) => {
     setSuggest({ ...suggest, [e.target.name]: '' })
     setPayload({ ...payload, [e.target.name]: e.target.value.trim() })
   }
+
   const handleLogin = (e) => {
     setPayload(initial)
     setStatus(initial)
@@ -40,16 +41,7 @@ const RegisterForm = (props) => {
 
   const register = async (e) => {
     setLoading(true)
-    setStatus({
-      firstName: 'validating',
-      lastName: 'validating',
-      phoneNumber: 'validating',
-      username: 'validating',
-      password: 'validating',
-      rePassword: 'validating',
-      address: 'validating',
-      email: 'validating'
-    })
+
     const validated = validateInput(payload)
     let errorCount = 0
     const newStatus = {}
@@ -65,6 +57,7 @@ const RegisterForm = (props) => {
         newStatus[`${key}`] = 'success'
       }
     })
+
     setStatus(newStatus)
     setSuggest(newSuggest)
 
@@ -83,10 +76,10 @@ const RegisterForm = (props) => {
       )
       const { success, message } = await _register(vPayload)
         .then((res) => res.data)
-        .catch((e) => e.response.data)
+        .catch((e) => console.log(e.response))
       if (!success) {
         setLoading(false)
-        Message.error(message)
+        return Message.error(message)
       } else {
         Message.success(`Người dùng ${firstName} ${lastName} đã đăng ký tài khoản ${username} thành công`)
         setTimeout(() => {
@@ -110,102 +103,97 @@ const RegisterForm = (props) => {
       autoComplete="off"
       style={{ textAlign: 'center' }}
     >
-      {/* FIRST NAME */}
-      <Form.Item label="Tên" hasFeedback required validateStatus={status.firstName} help={suggest.firstName}>
-        <Input name="firstName" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
-      </Form.Item>
+      <Spin spinning={false}>
+        {/* FIRST NAME */}
+        <Form.Item label="Tên" hasFeedback required validateStatus={status.firstName} help={suggest.firstName}>
+          <Input name="firstName" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
+        </Form.Item>
 
-      {/* LAST NAME */}
-      <Form.Item label="Họ và đệm" hasFeedback required validateStatus={status.lastName} help={suggest.lastName}>
-        <Input name="lastName" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
-      </Form.Item>
+        {/* LAST NAME */}
+        <Form.Item label="Họ và đệm" hasFeedback required validateStatus={status.lastName} help={suggest.lastName}>
+          <Input name="lastName" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
+        </Form.Item>
 
-      {/* PHONE NUMBER */}
-      <Form.Item
-        label="Số điện thoại"
-        hasFeedback
-        required
-        validateStatus={status.phoneNumber}
-        help={suggest.phoneNumber}
-      >
-        <Input name="phoneNumber" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
-      </Form.Item>
+        {/* PHONE NUMBER */}
+        <Form.Item
+          label="Số điện thoại"
+          hasFeedback
+          required
+          validateStatus={status.phoneNumber}
+          help={suggest.phoneNumber}
+        >
+          <Input name="phoneNumber" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
+        </Form.Item>
 
-      {/* USERNAME */}
-      <Form.Item label="Tài khoản" hasFeedback required validateStatus={status.username} help={suggest.username}>
-        <Input name="username" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
-      </Form.Item>
+        {/* USERNAME */}
+        <Form.Item label="Tài khoản" hasFeedback required validateStatus={status.username} help={suggest.username}>
+          <Input name="username" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
+        </Form.Item>
 
-      {/* PASSWORD */}
-      <Form.Item label="Mật khẩu" hasFeedback required validateStatus={status.password} help={suggest.password}>
-        <Input.Password name="password" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
-      </Form.Item>
+        {/* PASSWORD */}
+        <Form.Item label="Mật khẩu" hasFeedback required validateStatus={status.password} help={suggest.password}>
+          <Input.Password name="password" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
+        </Form.Item>
 
-      {/* RE PASSWORD */}
-      <Form.Item
-        label="Nhập lại mật khẩu"
-        hasFeedback
-        required
-        validateStatus={status.rePassword}
-        help={suggest.rePassword}
-      >
-        <Input.Password name="rePassword" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
-      </Form.Item>
+        {/* RE PASSWORD */}
+        <Form.Item
+          label="Nhập lại mật khẩu"
+          hasFeedback
+          required
+          validateStatus={status.rePassword}
+          help={suggest.rePassword}
+        >
+          <Input.Password name="rePassword" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
+        </Form.Item>
 
-      {/* ADDRESS */}
-      <Form.Item label="Địa chỉ" hasFeedback validateStatus={status.address} help={suggest.address}>
-        <Input name="address" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
-      </Form.Item>
+        {/* ADDRESS */}
+        <Form.Item label="Địa chỉ" hasFeedback validateStatus={status.address} help={suggest.address}>
+          <Input name="address" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
+        </Form.Item>
 
-      {/* EMAIL */}
-      <Form.Item label="Email" hasFeedback validateStatus={status.email} help={suggest.email}>
-        <Input
-          name="email"
-          allowClear={true}
-          onPressEnter={onRegister}
-          onChange={handleValueChange}
-          onPressEnter={register}
-        />
-      </Form.Item>
+        {/* EMAIL */}
+        <Form.Item label="Email" hasFeedback validateStatus={status.email} help={suggest.email}>
+          <Input name="email" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
+        </Form.Item>
 
-      <Row>
-        <Col span={12}>
-          <Button
-            size="large"
-            disabled={loading}
-            shape="round"
-            onClick={handleLogin}
-            style={{
-              textAlign: 'center',
-              background: '#41a9ff',
-              color: 'white',
-              fontSize: '130%',
-              height: '50px',
-              width: '60%'
-            }}
-          >
-            Đăng nhập
-          </Button>
-        </Col>
-        <Col span={12}>
-          <Button
-            size="large"
-            loading={loading}
-            shape="round"
-            onClick={register}
-            style={{
-              textAlign: 'center',
-              background: 'orange',
-              color: 'white',
-              fontSize: '130%',
-              height: '50px',
-              width: '60%'
-            }}
-          >
-            Đăng ký
-          </Button>
-        </Col>
-      </Row>
+        <Row>
+          <Col span={12}>
+            <Button
+              size="large"
+              disabled={loading}
+              shape="round"
+              onClick={handleLogin}
+              style={{
+                textAlign: 'center',
+                background: '#41a9ff',
+                color: 'white',
+                fontSize: '130%',
+                height: '50px',
+                width: '60%'
+              }}
+            >
+              Đăng nhập
+            </Button>
+          </Col>
+          <Col span={12}>
+            <Button
+              size="large"
+              shape="round"
+              onClick={register}
+              style={{
+                textAlign: 'center',
+                background: 'orange',
+                color: 'white',
+                fontSize: '130%',
+                height: '50px',
+                width: '60%'
+              }}
+            >
+              Đăng ký
+            </Button>
+          </Col>
+        </Row>
+      </Spin>
     </Form>
   )
 }

@@ -1,43 +1,100 @@
+import { InputNumber } from 'antd'
+import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import numberSeparator from '../../../helpers/validating/numberSeparator'
+
 const CartItem = (props) => {
+  const history = useHistory()
+  const {
+    index,
+    productId,
+    productName,
+    productDelete,
+    thumbnail,
+    price,
+    size,
+    quantity,
+    shopId,
+    shopName,
+    shopDelete,
+    shopActive
+  } = props
+
+  const disableShop = shopDelete || !shopActive
+
+  const [edit, setEdit] = useState(false)
+
+  const handleTitleClick = (e) => {
+    history.push(`/product/${productId}`)
+  }
+
+  const handleShopClick = (e) => {
+    history.push(`/shop/${shopId}`)
+  }
+
+  const handleEditClick = (e) => {
+    setEdit(true)
+  }
+
+  const handleSaveClick = (e) => {
+    setEdit(false)
+  }
+
   return (
     <>
-      <tr>
+      <tr style={{ backgroundColor: !(index % 2) && 'whitesmoke' }}>
         <td>
           <figure className="itemside">
+            {/* Thumbnail */}
             <div className="aside">
-              <img src="assets/images/items/1.jpg" className="img-sm" />
+              <img src={thumbnail} className="img-sm" />
             </div>
+
+            {/* Information */}
             <figcaption className="info">
-              <a href="#" className="title text-dark">
-                Some name of item goes here nice
+              <a className="title text-dark" onClick={handleTitleClick}>
+                {productName}
               </a>
-              <p className="text-muted small">
-                Size: XL, Color: blue, <br /> Brand: Gucci
-              </p>
+              <a disabled={disableShop} onClick={handleShopClick}>
+                Shop: {shopName}
+              </a>
+              <p className="text-muted small">Size: {size}</p>
+              {shopDelete || !shopActive ? (
+                <span className="text-danger">Gian hàng hiện không hoạt động</span>
+              ) : productDelete ? (
+                <span className="text-danger">Sản phẩm không còn được bày bán</span>
+              ) : (
+                !quantity && <span className="text-warning">Sản phẩm hiện đang hết hàng</span>
+              )}
             </figcaption>
           </figure>
         </td>
+
+        {/* Quantity */}
         <td>
-          <select className="form-control">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-          </select>
+          <InputNumber className="from-control form-group" type="number" defaultValue={quantity} disabled={!edit} />
         </td>
+
+        {/* Price */}
         <td>
           <div className="price-wrap">
-            <var className="price">$1156.00</var>
-            <small className="text-muted"> $315.20 each </small>
+            <var className="price">₫ {numberSeparator(price * quantity)}</var>
+            <small className="text-muted">₫ {numberSeparator(price)}</small>
           </div>
         </td>
+
+        {/* Action */}
         <td className="text-right">
-          <a data-original-title="Save to Wishlist" title href className="btn btn-light mr-2" data-toggle="tooltip">
-            Sửa
-          </a>
-          <a href className="btn btn-light">
-            Xoá
-          </a>
+          {!edit ? (
+            <button className="btn btn-light mr-2" onClick={handleEditClick}>
+              Sửa
+            </button>
+          ) : (
+            <button className="btn btn-success mr-2" onClick={handleSaveClick}>
+              Lưu
+            </button>
+          )}
+          <button className="btn btn-light">Xoá</button>
         </td>
       </tr>
     </>

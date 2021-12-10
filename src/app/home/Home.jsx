@@ -1,3 +1,8 @@
+import './assets/css/all.min.css'
+import './assets/css/bootstrap.css'
+import './assets/css/responsive.css'
+import './assets/css/ui.css'
+
 import Header from './components/Header'
 import Footer from './components/Footer'
 import ProductItem from './components/ProductItem'
@@ -5,16 +10,21 @@ import { Spin } from 'antd'
 
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { _search } from '../../redux/actions/searchActions'
-import { Link } from 'react-router-dom'
 
 const Home = (props) => {
+  const history = useHistory()
   const dispatch = useDispatch()
   const { items = [], keyword, page, limit, sort, searching } = useSelector((state) => state.search)
 
   useEffect(() => {
-    dispatch(_search(keyword, page, limit, sort))
+    dispatch(_search(keyword.trim(), page, limit, sort))
   }, [])
+
+  const handleMoreClick = (e) => {
+    history.push('/search/')
+  }
 
   return (
     <div className="App">
@@ -35,22 +45,24 @@ const Home = (props) => {
       <section className="section-name padding-y-sm">
         <div className="container">
           <header className="section-heading">
-            <Link to={`/search/${' '}`} className="btn btn-outline-primary float-right">
+            <button className="btn btn-outline-primary float-right" onClick={handleMoreClick}>
               Thêm
-            </Link>
+            </button>
             <h3 className="section-title">Sản phẩm phổ biến</h3>
           </header>
 
-          <div className="row">
-            {items.slice(0, 12).map((item, index) => {
-              const { _id: id, images, name, price } = item
-              return (
-                <>
-                  <ProductItem key={index} id={id} image={images[0]} name={name} price={price} />
-                </>
-              )
-            })}
-          </div>
+          <Spin spinning={searching} size="large">
+            <div className="row">
+              {items.slice(0, 12).map((item, index) => {
+                const { _id: id, images, name, price } = item
+                return (
+                  <>
+                    <ProductItem key={index} id={id} image={images[0]} name={name} price={price} />
+                  </>
+                )
+              })}
+            </div>
+          </Spin>
         </div>
       </section>
 

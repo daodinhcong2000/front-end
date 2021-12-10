@@ -5,7 +5,7 @@ const Footer = (props) => {
         <div className="container">
           <p className="float-md-right">© Copyright 2021 All rights reserved</p>
           <p>
-            <a href="#">Terms and conditions</a>
+            <a href="#">Điều khoản và điều kiện</a>
           </p>
         </div>
       </footer>

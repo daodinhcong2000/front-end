@@ -9,6 +9,11 @@ const userInitialState = {
 
 const userReducer = (state = userInitialState, action) => {
   switch (action.type) {
+    case 'LOAD_USER': {
+      const { loading } = action.payload
+      return { ...state, loading }
+    }
+
     case 'LOG_IN': {
       const { username, fullName, roles } = action.payload
       return { username, fullName, roles, error: '' }
@@ -21,11 +26,6 @@ const userReducer = (state = userInitialState, action) => {
     case 'LOG_STATUS': {
       const { status, error } = action.payload
       return { ...state, status, error }
-    }
-
-    case 'LOAD_USER': {
-      const { loading } = action.payload
-      return { ...state, loading }
     }
 
     default:

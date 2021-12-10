@@ -1,11 +1,31 @@
-import { addToCart } from '../../services/api/customerApi'
+import { addToCart, getCart } from '../../services/api/customerApi'
+
+export const _getMyCart = () => {
+  return (dispatch) => {
+    dispatch({
+      type: 'LOADING_CART'
+    })
+
+    return getCart()
+      .then((res) => {
+        const { data } = res.data
+        dispatch({
+          type: 'SET_CART',
+          payload: { data }
+        })
+      })
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+}
 
 export const _addToCart = (productId, size, quantity) => {
   const payload = { product: productId, size, quantity }
 
   return (dispatch) => {
     dispatch({
-      type: 'LOADING_CART'
+      type: 'LOAD_CART'
     })
 
     return addToCart(payload)

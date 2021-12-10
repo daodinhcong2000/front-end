@@ -18,8 +18,8 @@ const App = () => {
         <Route path="/" exact component={Home} />
         <Route path="/cart" exact component={Cart} />
         <Route path="/shop" component={Shop} />
-        <Route path="/product" component={Product} />
-        <Route path="/search" component={Search} />
+        <Route path="/product/:productId" component={Product} />
+        <Route path="/search/:keyword" component={Search} />
         <Route path="/seller" component={Seller} />
         <Route path="/admin" component={Admin} />
       </Switch>
