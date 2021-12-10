@@ -30,7 +30,7 @@ export const deleteUser = (idUser) => {
 export const getShops = (query) => {
   const queryString = ''
   if (query != null) {
-    queryString = query2string(query)
+    const queryString = query2string(query)
   }
 
   return apiRequest({

@@ -1,12 +1,14 @@
-// import './scss/style.scss'
-
+import 'antd/dist/antd.css'
+import './css_modules/css/all.module.css'
 import { Router, Switch, Route, Redirect } from 'react-router-dom'
 import getHistory from './helpers/rounting/getHistory'
 
 import Home from './app/home/Home'
-import Products from './app/home/Products'
-import Shops from './app/home/Shops'
-// import Cart from './app/home/Cart'
+import Search from './app/home/Search'
+import Product from './app/home/Product'
+import Cart from './app/home/Cart'
+import Shop from './app/home/Shop'
+
 import Seller from './app/seller/Seller'
 import Admin from './app/admin/Admin'
 
@@ -14,11 +16,11 @@ const App = () => {
   return (
     <Router history={getHistory()}>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/shops/:shopId" component={Shops} />
-        <Route path="/products/:productId" component={Products} />
-        {/* <Route exact path="/cart" component={Cart} /> */}
-
+        <Route path="/" exact component={Home} />
+        <Route path="/cart" exact component={Cart} />
+        <Route path="/shop" component={Shop} />
+        <Route path="/product/:productId" component={Product} />
+        <Route path="/search/:keyword" component={Search} />
         <Route path="/seller" component={Seller} />
         <Route path="/admin" component={Admin} />
       </Switch>

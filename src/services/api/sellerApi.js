@@ -9,7 +9,6 @@ const urlStatistics = '/statistics-service/api'
 export const getShops = (...query) => {
   if (query.length != 0) {
     const queryString = query2string(query[0])
-    console.log('query', queryString)
     return apiRequest({
       url: `${url}/shops?${queryString}`,
       method: 'GET'

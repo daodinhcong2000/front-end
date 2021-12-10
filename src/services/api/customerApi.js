@@ -20,7 +20,7 @@ export const addToCart = (payload) => {
 
 export const getCart = () => {
   return apiRequest({
-    url: `${USER_SERVICE_API}/cart-items`,
+    url: `${CUSTOMER_SERVICE_API}/cart-items`,
     method: 'GET'
   })
 }
