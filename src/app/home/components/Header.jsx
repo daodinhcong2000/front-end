@@ -14,6 +14,8 @@ import { _setUser, _logout } from '../../../redux/actions/userActions'
 import { _getMyCart } from '../../../redux/actions/cartActions'
 import { _search } from '../../../redux/actions/searchActions'
 
+import styles from '../../../css_modules/css/all.module.css'
+
 const LogModal = (props) => {
   const { visible, mode } = useSelector((state) => state.logForm)
   const dispatch = useDispatch()
@@ -140,7 +142,10 @@ const Cart = (props) => {
   return (
     <>
       <div className="widget-header mr-3">
-        <button className="icon icon-sm rounded-circle border" onClick={handleCartClick}>
+        <button
+          className={`${styles['icon']} ${styles['icon-sm']} ${styles['rounded-circle']} ${styles['border']}`}
+          onClick={handleCartClick}
+        >
           <i className="fa fa-shopping-cart" />
         </button>
         <span className="badge badge-pill badge-danger notify">
