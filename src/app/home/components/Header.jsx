@@ -6,7 +6,7 @@ import ForgotForm from './ForgotForm'
 
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, Redirect, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { isAuthenticated } from '../../../services/makeApiRequest'
 import { _showLogForm, _hideLogForm } from '../../../redux/actions/logFormActions'
@@ -14,7 +14,7 @@ import { _setUser, _logout } from '../../../redux/actions/userActions'
 import { _getMyCart } from '../../../redux/actions/cartActions'
 import { _search } from '../../../redux/actions/searchActions'
 
-import styles from '../../../css_modules/css/all.module.css'
+import styles from '../css_modules/css/all.module.css'
 
 const LogModal = (props) => {
   const { visible, mode } = useSelector((state) => state.logForm)
@@ -29,12 +29,12 @@ const LogModal = (props) => {
 
   return (
     <>
-      <div className="widget-header icontext">
+      <div className={`${styles['widget-header']} ${styles['icontext']}`}>
         <button
           className={`${styles['icon']} ${styles['icon-sm']} ${styles['rounded-circle']} ${styles['border']}`}
           onClick={showModal}
         >
-          <i className="fa fa-user" />
+          <i className={`${['fa']} ${styles['fa-user']}`} />
         </button>
       </div>
 
@@ -57,7 +57,7 @@ const UserMenu = (props) => {
 
   useEffect(() => {
     if (!username) dispatch(_setUser())
-  }, [])
+  }, [fullName])
 
   const handleMenuClick = (e) => {
     const { key } = e
@@ -114,9 +114,9 @@ const UserMenu = (props) => {
 
   return (
     <Dropdown overlay={menu}>
-      <Button className="border" size="large" shape="round" style={{ height: '48px' }}>
-        <Spin spinning={false}>
-          <i className="fa fa-user">{` ${username}`}</i>
+      <Button className={`${styles['border']}`} size="large" shape="round" style={{ height: '48px' }}>
+        <Spin spinning={false} size="small">
+          <i className={`${styles['fa']} ${styles['fa-user']}`}>{` ${username}`}</i>
         </Spin>
       </Button>
     </Dropdown>
@@ -144,14 +144,14 @@ const Cart = (props) => {
 
   return (
     <>
-      <div className="widget-header mr-3">
+      <div className={`${styles['widget-header']} ${styles['mr-3']}`}>
         <button
           className={`${styles['icon']} ${styles['icon-sm']} ${styles['rounded-circle']} ${styles['border']}`}
           onClick={handleCartClick}
         >
-          <i className="fa fa-shopping-cart" />
+          <i className={`${styles['fa']} ${styles['fa-shopping-cart']}`} />
         </button>
-        <span className="badge badge-pill badge-danger notify">
+        <span className={`${styles['badge']} ${styles['badge-pill']} ${styles['badge-danger']} ${styles['notify']}`}>
           <Spin spinning={false}>{items.length}</Spin>
         </span>
       </div>
@@ -177,33 +177,33 @@ const Header = (props) => {
   }
 
   return (
-    <header className="section-header">
-      <section className="header-main border-bottom">
-        <div className="container">
-          <div className="row align-items-center">
+    <header className={`${styles['section-header']}`}>
+      <section className={`${styles['header-main']} ${styles['border-bottom']}`}>
+        <div className={`${styles['container']}`}>
+          <div className={`${styles['row']} ${styles['align-items-center']}`}>
             <div className="col-lg-2 col-4">
               <a href="/">
                 <img src="/img/acCommerce.png" style={{ height: '6rem' }} />
               </a>
             </div>
 
-            <div className="col-lg-6 col-sm-12">
-              <div className="input-group w-100">
+            <div className={`${styles['col-lg-6']} ${styles['col-sm-12']}`}>
+              <div className={`${styles['input-group']} ${styles['w-100']}`}>
                 <input
                   type="text"
-                  className="form-control"
+                  className={`${styles['form-control']}`}
                   placeholder="Tìm kiếm sản phẩm, loại mặt hàng, ..."
                   onChange={(e) => setKeyword(e.target.value)}
                 />
-                <div className="input-group-append">
+                <div className={`${styles['input-group-append']}`}>
                   {keyword ? (
-                    <button className="btn btn-primary" onClick={handleSearchClick}>
-                      <i className="fa fa-search" />
+                    <button className={`${styles['btn']} ${styles['btn-primary']}`} onClick={handleSearchClick}>
+                      <i className={`${styles['fa']} ${styles['fa-search']}`} />
                     </button>
                   ) : (
                     <a href="/">
-                      <button className="btn btn-primary">
-                        <i className="fa fa-search" />
+                      <button className={`${styles['btn']} ${styles['btn-primary']}`}>
+                        <i className={`${styles['fa']} ${styles['fa-search']}`} />
                       </button>
                     </a>
                   )}
@@ -211,8 +211,8 @@ const Header = (props) => {
               </div>
             </div>
 
-            <div className="col-lg-4 col-sm-6 col-12">
-              <div className="widgets-wrap float-md-right">
+            <div className={`${styles['col-lg-4']} ${styles['col-sm-6']} ${styles['col-12']}`}>
+              <div className={`${styles['widgets-wrap']} ${styles['float-md-right']}`}>
                 <Cart />
                 {!isAuthenticated() ? <LogModal /> : <UserMenu />}
               </div>

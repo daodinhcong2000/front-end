@@ -81,8 +81,10 @@ export const _setUser = () => {
 
 export const _logout = () => {
   removeToken()
-  return (dispatch) =>
+  return (dispatch) => {
     dispatch({
       type: 'LOG_OUT'
     })
+    window.location.href = '/'
+  }
 }
