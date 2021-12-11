@@ -36,6 +36,7 @@ const CommentProduct = ({ productId }) => {
             comment: cmt.comment,
             rating: cmt.rating
           })
+          setRating(cmt.rating)
         }
       })
       setComment(response.data.data)
@@ -54,6 +55,7 @@ const CommentProduct = ({ productId }) => {
           success(respone.data.message)
           setLoading(!loading)
           setOwnComment({ id: '' })
+          setRating(rating)
         })
         .catch((err) => {
           error(err.response.data.message)
@@ -113,7 +115,7 @@ const CommentProduct = ({ productId }) => {
                 </Tooltip>,
                 <Tooltip key="comment-basic-rate" title="Đánh giá">
                   <span>
-                    <Rate disabled defaultValue={cmt.rating} />
+                    <Rate disabled value={cmt.rating} />
                   </span>
                 </Tooltip>
               ]}
@@ -124,7 +126,7 @@ const CommentProduct = ({ productId }) => {
       {userId != '' && ownComment.id == '' ? (
         <>
           <Form.Item>
-            <TextArea rows={4} name="comment" onChange={(e) => handleChange(e)} />
+            <TextArea rows={4} name="comment" value={ownComment.comment} onChange={(e) => handleChange(e)} />
             <span>
               <Rate name="rating" value={rating} onChange={(value) => setRating(value)} />
             </span>
