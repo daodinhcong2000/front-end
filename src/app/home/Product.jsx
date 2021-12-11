@@ -17,6 +17,7 @@ const Product = (props) => {
   const [loading, setLoading] = useState(false)
   const [targetImage, setTargetImage] = useState('')
   const [targetSize, setTargetSize] = useState('')
+
   useEffect(() => {
     setLoading(true)
     getOneProduct(productId)

@@ -2,6 +2,9 @@
  * Font Awesome Free 5.8.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
+a {
+  text-decoration: none !important;
+}
 .fa,
 .fab,
 .fal,
@@ -4334,7 +4337,7 @@
 .fas {
   font-weight: 900;
 }
-@charset "UTF-8";
+/* @charset "UTF-8"; */
 /* ========================
 Bootstrap with custom variables
 =================== */
@@ -14984,7 +14987,7 @@ a.text-gray-light:focus {
 }
 
 /*# sourceMappingURL=responsive.css.map */
-@charset "UTF-8";
+/* @charset "UTF-8"; */
 /* ==== BASE STYLES ====*/
 /* ==================== GLOBAL STYLES ======================= */
 

@@ -24,8 +24,13 @@ const cartReducer = (state = cartInitialState, action) => {
               name: productName,
               images: productImages,
               price,
-              deletedAt: productDelete
+              deletedAt: productDelete,
+              sizes
             } = product
+
+            const buyableSizes = sizes.map((size) => {
+              return { name: size.name, numberInStock: size.numberInStock }
+            })
             const thumbnail = productImages[0]
             return {
               productId,
@@ -34,6 +39,7 @@ const cartReducer = (state = cartInitialState, action) => {
               thumbnail,
               price,
 
+              sizes: buyableSizes,
               size,
               quantity,
 

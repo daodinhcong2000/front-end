@@ -1,5 +1,5 @@
 import 'antd/dist/antd.css'
-import './css_modules/css/all.module.css'
+import './app/home/css_modules/css/all.module.css'
 import { Router, Switch, Route, Redirect } from 'react-router-dom'
 import getHistory from './helpers/rounting/getHistory'
 

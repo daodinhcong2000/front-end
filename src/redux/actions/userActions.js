@@ -49,17 +49,12 @@ export const _login = (username, password) => {
 export const _setUser = () => {
   return (dispatch) => {
     dispatch({
-      type: 'LOAD_USER',
-      payload: { loading: true }
+      type: 'LOADING_USER'
     })
 
     return getUserInformation()
       .then((response) => {
         const { _id, username, firstName, lastName, roles } = response.data.data
-        dispatch({
-          type: 'LOAD_USER',
-          payload: { loading: false }
-        })
         dispatch({
           type: 'LOG_IN',
           payload: { userId: _id, username, fullName: `${firstName} ${lastName}`, roles }
@@ -67,10 +62,6 @@ export const _setUser = () => {
       })
       .catch((e) => {
         const { message } = e.response.data
-        dispatch({
-          type: 'LOAD_USER',
-          payload: { loading: false }
-        })
         dispatch({
           type: 'LOG_STATUS',
           payload: { status: 'error', error: message }
@@ -81,8 +72,10 @@ export const _setUser = () => {
 
 export const _logout = () => {
   removeToken()
-  return (dispatch) =>
+  return (dispatch) => {
     dispatch({
       type: 'LOG_OUT'
     })
+    window.location.href = '/'
+  }
 }

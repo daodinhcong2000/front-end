@@ -1,6 +1,9 @@
+import styles from '../css_modules/css/all.module.css'
+
 import { InputNumber } from 'antd'
+
 import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import numberSeparator from '../../../helpers/validating/numberSeparator'
 
 const CartItem = (props) => {
@@ -20,17 +23,10 @@ const CartItem = (props) => {
     shopActive
   } = props
 
-  const disableShop = shopDelete || !shopActive
+  const shopDisabled = shopDelete || !shopActive
+  const productDisabled = shopDisabled || productDelete
 
   const [edit, setEdit] = useState(false)
-
-  const handleTitleClick = (e) => {
-    history.push(`/product/${productId}`)
-  }
-
-  const handleShopClick = (e) => {
-    history.push(`/shop/${shopId}`)
-  }
 
   const handleEditClick = (e) => {
     setEdit(true)
@@ -44,27 +40,31 @@ const CartItem = (props) => {
     <>
       <tr style={{ backgroundColor: !(index % 2) && 'whitesmoke' }}>
         <td>
-          <figure className="itemside">
+          <figure className={`${styles['itemside']}`}>
             {/* Thumbnail */}
-            <div className="aside">
-              <img src={thumbnail} className="img-sm" />
+            <div className={`${styles['aside']}`}>
+              <img src={thumbnail} className={`${styles['img-sm']}`} />
             </div>
 
             {/* Information */}
-            <figcaption className="info">
-              <a className="title text-dark" onClick={handleTitleClick}>
+            <figcaption className={`${styles['info']}`}>
+              <Link
+                to={`/product/${productId}`}
+                className={`${styles['title']} ${styles['text-dark']}`}
+                style={{ pointerEvents: productDisabled ? 'none' : 'auto' }}
+              >
                 {productName}
-              </a>
-              <a disabled={disableShop} onClick={handleShopClick}>
+              </Link>
+              <Link to={`/shop/${shopId}`} style={{ pointerEvents: shopDisabled ? 'none' : 'auto' }}>
                 Shop: {shopName}
-              </a>
-              <p className="text-muted small">Size: {size}</p>
-              {shopDelete || !shopActive ? (
-                <span className="text-danger">Gian hàng hiện không hoạt động</span>
-              ) : productDelete ? (
-                <span className="text-danger">Sản phẩm không còn được bày bán</span>
+              </Link>
+              <p className={`${styles['text-muted']} ${styles['small']}]}`}>Size: {size}</p>
+              {shopDisabled ? (
+                <span className={`${styles['text-danger']}`}>Gian hàng hiện không hoạt động</span>
+              ) : productDisabled ? (
+                <span className={`${styles['text-danger']}`}>Sản phẩm không còn được bày bán</span>
               ) : (
-                !quantity && <span className="text-warning">Sản phẩm hiện đang hết hàng</span>
+                !quantity && <span className={`${styles['text-warning']}`}>Sản phẩm hiện đang hết hàng</span>
               )}
             </figcaption>
           </figure>
@@ -72,30 +72,38 @@ const CartItem = (props) => {
 
         {/* Quantity */}
         <td>
-          <InputNumber className="from-control form-group" type="number" defaultValue={quantity} disabled={!edit} />
+          <InputNumber
+            className={`${styles['form-control']} ${styles['form-group']}`}
+            type="number"
+            defaultValue={quantity}
+            disabled={!edit}
+          />
         </td>
 
         {/* Price */}
         <td>
-          <div className="price-wrap">
-            <var className="price">₫ {numberSeparator(price * quantity)}</var>
-            <small className="text-muted">₫ {numberSeparator(price)}</small>
+          <div className={`${styles['price-wrap']}`}>
+            <var className={`${styles['price']}`}>₫ {numberSeparator(price * quantity)}</var>
+            <br />
+            <small className={`${styles['text-muted']}`}>₫ {numberSeparator(price)}</small>
           </div>
         </td>
 
         {/* Action */}
-        <td className="text-right">
+        <td className={`${styles['text-right']}`} style={{ textAlign: 'center' }}>
           {!edit ? (
-            <button className="btn btn-light mr-2" onClick={handleEditClick}>
+            <button className={`${styles['btn']} ${styles['btn-light']}`} onClick={handleEditClick}>
               Sửa
             </button>
           ) : (
-            <button className="btn btn-success mr-2" onClick={handleSaveClick}>
+            <button className={`${styles['btn']} ${styles['btn-success']}`} onClick={handleSaveClick}>
               Lưu
             </button>
           )}
-          <button className="btn btn-light">Xoá</button>
+          <br />
+          <button className={`${styles['btn']} ${styles['btn-light']}`}>Xoá</button>
         </td>
+        <td></td>
       </tr>
     </>
   )

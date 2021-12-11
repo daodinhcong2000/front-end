@@ -27,20 +27,19 @@ const Cart = (props) => {
                     <thead className="text-muted">
                       <tr className="small text-uppercase">
                         <th scope="col">Sản phẩm</th>
-                        <th scope="col" width={100}>
+                        <th scope="col" width={120}>
                           Số lượng
                         </th>
                         <th scope="col" width={160}>
                           Thành tiền
                         </th>
-                        <th scope="col" className="text-right" width={180}></th>
+                        <th scope="col" className="text-right" width={100}></th>
                         <th scope="col" width={20}></th>
                       </tr>
                     </thead>
 
                     <tbody>
                       {items.map((item, index) => {
-                        console.log(item)
                         return (
                           <>
                             <CartItem key={index} index={index} {...item} />
