@@ -4,12 +4,12 @@ import { useParams } from 'react-router-dom'
 import { Spin, Radio } from 'antd'
 import Footer from './components/Footer'
 import Header from './components/Header'
-
+import CommentProduct from './components/CommentProduct'
+import PriceChart from './components/PriceChart'
 import classnames from 'classnames'
 import { ToastProvider } from '../../contexts/ToastProvider'
 import numberSeparator from '../../helpers/validating/numberSeparator'
 import { getOneProduct } from '../../services/api/userApi'
-import CommentProduct from './components/CommentProduct'
 
 const Product = (props) => {
   const { productId } = useParams()
@@ -17,7 +17,9 @@ const Product = (props) => {
   const [loading, setLoading] = useState(false)
   const [targetImage, setTargetImage] = useState('')
   const [targetSize, setTargetSize] = useState('')
-
+  {
+    console.log(props)
+  }
   useEffect(() => {
     setLoading(true)
     getOneProduct(productId)
@@ -198,11 +200,16 @@ const Product = (props) => {
                 </div>
               </article>
 
+              <div className="card-body">
+                <ToastProvider>
+                  <PriceChart productId={productId} />
+                </ToastProvider>
+              </div>
               <article className="card mt-5">
                 <div className="card-body">
                   <h5>Bình luận</h5>
                   <ToastProvider>
-                    <CommentProduct id={productId} />
+                    <CommentProduct productId={productId} userId={'61ac6a785c9d792113443962'} />
                   </ToastProvider>
                 </div>
               </article>

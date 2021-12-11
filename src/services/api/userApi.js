@@ -2,7 +2,7 @@ import { makeAuthRequest } from '../makeApiRequest'
 import * as prefix from './prefix'
 import query2string from '../../helpers/validating/query2string'
 const apiRequest = makeAuthRequest(false)
-const { USER_SERVICE_API, COMMON_SERVICE_API } = prefix
+const { USER_SERVICE_API, COMMON_SERVICE_API, STATISTICS_SERVICE_API } = prefix
 
 export const register = (payload) => {
   return apiRequest({
@@ -45,6 +45,14 @@ export const searchStoreProducts = (store, query) => {
 export const getComment = (idProduct) => {
   return apiRequest({
     url: `${COMMON_SERVICE_API}/products/${idProduct}/comments`,
+    method: 'GET'
+  })
+}
+
+export const getFlexPrice = (idProduct, query) => {
+  const queryString = query2string(query)
+  return apiRequest({
+    url: `${STATISTICS_SERVICE_API}/products/${idProduct}/statistics?${queryString}`,
     method: 'GET'
   })
 }
