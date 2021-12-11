@@ -6,7 +6,7 @@ import ForgotForm from './ForgotForm'
 
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, Redirect, useHistory } from 'react-router-dom'
 
 import { isAuthenticated } from '../../../services/makeApiRequest'
 import { _showLogForm, _hideLogForm } from '../../../redux/actions/logFormActions'

@@ -14,8 +14,8 @@ const reducers = combineReducers({
 })
 
 const store = createStore(reducers, applyMiddleware(thunk))
-// store.subscribe(() => {
-//     console.log(JSON.stringify(store.getState()))
-// })
+store.subscribe(() => {
+  console.log(JSON.stringify(store.getState().user))
+})
 
 export default store

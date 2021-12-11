@@ -1,4 +1,4 @@
-import React, { lazy, useState, useEffect } from 'react'
+import React, { lazy } from 'react'
 
 import { CButton, CButtonGroup, CCard, CCardBody, CCardFooter, CCol, CRow } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
@@ -9,7 +9,6 @@ import { cilCloudDownload } from '@coreui/icons'
 const WidgetsDropdown = lazy(() => import('../views/widgets/WidgetsDropdown'))
 
 const Chart = ({ statistics, totalAmount, orderCount, title }) => {
-  console.log('statistics', statistics)
   return (
     <>
       <CCard className="mb-4">
