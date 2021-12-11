@@ -30,7 +30,10 @@ const LogModal = (props) => {
   return (
     <>
       <div className="widget-header icontext">
-        <button className="icon icon-sm rounded-circle border" onClick={showModal}>
+        <button
+          className={`${styles['icon']} ${styles['icon-sm']} ${styles['rounded-circle']} ${styles['border']}`}
+          onClick={showModal}
+        >
           <i className="fa fa-user" />
         </button>
       </div>
