@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import 'antd/dist/antd.css'
 import { Comment, Tooltip, Avatar, Rate } from 'antd'
 import moment from 'moment'
@@ -9,7 +10,8 @@ import { useToast } from '../../../contexts/toast'
 
 const { TextArea } = Input
 
-const CommentProduct = ({ productId, userId }) => {
+const CommentProduct = ({ productId }) => {
+  const { userId } = useSelector((state) => state.user)
   const { error, warn, info, success } = useToast()
   const [comment, setComment] = useState([])
   const [ownComment, setOwnComment] = useState({

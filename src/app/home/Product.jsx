@@ -209,7 +209,7 @@ const Product = (props) => {
                 <div className="card-body">
                   <h5>Bình luận</h5>
                   <ToastProvider>
-                    <CommentProduct productId={productId} userId={'61ac6a785c9d792113443962'} />
+                    <CommentProduct productId={productId} />
                   </ToastProvider>
                 </div>
               </article>
