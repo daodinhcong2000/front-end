@@ -57,7 +57,7 @@ const UserMenu = (props) => {
 
   useEffect(() => {
     if (!username) dispatch(_setUser())
-  }, [fullName])
+  }, [])
 
   const handleMenuClick = (e) => {
     const { key } = e
@@ -115,7 +115,7 @@ const UserMenu = (props) => {
   return (
     <Dropdown overlay={menu}>
       <Button className={`${styles['border']}`} size="large" shape="round" style={{ height: '48px' }}>
-        <Spin spinning={false} size="small">
+        <Spin spinning={loading} size="small">
           <i className={`${styles['fa']} ${styles['fa-user']}`}>{` ${username}`}</i>
         </Spin>
       </Button>

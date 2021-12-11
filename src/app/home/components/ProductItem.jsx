@@ -1,3 +1,5 @@
+import styles from '../css_modules/css/all.module.css'
+
 import { Link } from 'react-router-dom'
 import Loading from 'react-loading'
 
@@ -8,16 +10,15 @@ const ProductItem = (props) => {
   const { id, image, name, price } = props
   return (
     <>
-      <div className="col-md-3">
+      <div className={`${styles['col-md-3']}`}>
         <Link to={`/product/${id}`}>
-          <div href="#" className="card card-product-grid">
-            <a href="#" className="img-wrap">
-              {' '}
-              <img src={image} />{' '}
+          <div href="#" className={`${styles['card']} ${styles['card-product-grid']}`}>
+            <a href="#" className={`${styles['img-wrap']}`}>
+              <img src={image} />
             </a>
-            <figcaption className="info-wrap">
+            <figcaption className={`${styles['info-wrap']}`}>
               <div
-                className="title"
+                className={`${styles['title']}`}
                 style={{
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
@@ -31,7 +32,7 @@ const ProductItem = (props) => {
               >
                 {name}
               </div>
-              <div className="price mt-1" style={{ color: 'red' }}>
+              <div className={`${styles['price']} ${styles['mt-1']}`} style={{ color: 'red' }}>
                 ₫ {numberSeparator(price)}
               </div>
             </figcaption>

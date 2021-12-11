@@ -17,7 +17,7 @@ const Search = (props) => {
   const { items = [], page, limit, sort, searching } = useSelector((state) => state.search)
 
   useEffect(() => {
-    // dispatch(_search(searchKeyword.trim(), page, limit, sort))
+    dispatch(_search(searchKeyword.trim(), page, limit, sort))
   }, [])
 
   return (
