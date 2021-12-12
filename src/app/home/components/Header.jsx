@@ -1,4 +1,4 @@
-import { Modal, Menu, Dropdown, Button, Spin } from 'antd'
+import { Modal, Menu, Dropdown, Button, Spin, message as Message, Affix } from 'antd'
 import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled } from '@ant-design/icons'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
@@ -6,7 +6,7 @@ import ForgotForm from './ForgotForm'
 
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, Redirect, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { isAuthenticated } from '../../../services/makeApiRequest'
 import { _showLogForm, _hideLogForm } from '../../../redux/actions/logFormActions'
@@ -14,7 +14,8 @@ import { _setUser, _logout } from '../../../redux/actions/userActions'
 import { _getMyCart } from '../../../redux/actions/cartActions'
 import { _search } from '../../../redux/actions/searchActions'
 
-import styles from '../../../css_modules/css/all.module.css'
+import styles from '../css_modules/css/all.module.css'
+import { toBeSeller } from '../../../services/api/customerApi'
 
 const LogModal = (props) => {
   const { visible, mode } = useSelector((state) => state.logForm)
@@ -29,12 +30,12 @@ const LogModal = (props) => {
 
   return (
     <>
-      <div className="widget-header icontext">
+      <div className={`${styles['widget-header']} ${styles['icontext']}`}>
         <button
           className={`${styles['icon']} ${styles['icon-sm']} ${styles['rounded-circle']} ${styles['border']}`}
           onClick={showModal}
         >
-          <i className="fa fa-user" />
+          <i className={`${['fa']} ${styles['fa-user']}`} />
         </button>
       </div>
 
@@ -54,6 +55,7 @@ const LogModal = (props) => {
 const UserMenu = (props) => {
   const dispatch = useDispatch()
   const { loading, username, fullName, roles } = useSelector((state) => state.user)
+  const [registeringSeller, setRegisteringSeller] = useState(false)
 
   useEffect(() => {
     if (!username) dispatch(_setUser())
@@ -70,12 +72,39 @@ const UserMenu = (props) => {
         break
       }
 
+      case 'toBeSeller': {
+        setRegisteringSeller(true)
+
+        toBeSeller()
+          .then((res) => {
+            Message.success(`Chúc mừng ${username} đã trở thành người bán hàng!`)
+            setTimeout(() => {
+              setRegisteringSeller(false)
+              window.location.href = '/seller'
+            }, 3000)
+          })
+          .catch((e) => {
+            const { status } = e.response
+            setRegisteringSeller(false)
+
+            if (status >= 500) {
+              return Message.error(`Lỗi hệ thống, vui lòng thử lại sau!`)
+            } else {
+              const { message } = e.response.data
+              return Message.error(message)
+            }
+          })
+
+        break
+      }
+
       case 'setting': {
         break
       }
 
       case 'logout': {
         dispatch(_logout())
+        break
       }
 
       default: {
@@ -87,36 +116,48 @@ const UserMenu = (props) => {
   const menu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="self" icon={<UserOutlined />}>
-        {fullName}
+        <Button type="text" style={{ fontWeight: 'bold' }}>
+          {fullName}
+        </Button>
       </Menu.Item>
 
-      <Menu.Item key="seller" icon={<ShopFilled />}>
-        {roles.includes('seller') ? (
+      {roles.includes('seller') ? (
+        <Menu.Item key="seller" icon={<ShopFilled />}>
           <a href="/seller" style={{ textDecoration: 'none' }}>
-            Kênh bán hàng
+            <Button type="text" style={{ textAlign: 'left' }}>
+              Kênh bán hàng
+            </Button>
           </a>
-        ) : (
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            Đăng ký bán
-          </Link>
-        )}
-      </Menu.Item>
+        </Menu.Item>
+      ) : (
+        <Menu.Item key="toBeSeller" icon={<ShopFilled />}>
+          <Spin spinning={registeringSeller}>
+            <Button type="text" style={{ textAlign: 'left' }}>
+              Đăng ký bán
+            </Button>
+          </Spin>
+        </Menu.Item>
+      )}
 
       <Menu.Item key="setting" icon={<SettingOutlined />}>
-        Cài đặt
+        <Button type="text" style={{ textAlign: 'left' }}>
+          Cài đặt
+        </Button>
       </Menu.Item>
 
       <Menu.Item key="logout" icon={<LogoutOutlined />}>
-        Đăng xuất
+        <Button type="text" style={{ textAlign: 'left' }}>
+          Đăng xuất
+        </Button>
       </Menu.Item>
     </Menu>
   )
 
   return (
     <Dropdown overlay={menu}>
-      <Button className="border" size="large" shape="round" style={{ height: '48px' }}>
-        <Spin spinning={false}>
-          <i className="fa fa-user">{` ${username}`}</i>
+      <Button className={`${styles['border']}`} size="large" shape="round" style={{ height: '48px' }}>
+        <Spin spinning={loading} size="small">
+          <i className={`${styles['fa']} ${styles['fa-user']}`}>{` ${username}`}</i>
         </Spin>
       </Button>
     </Dropdown>
@@ -132,7 +173,7 @@ const Cart = (props) => {
     if (isAuthenticated()) {
       dispatch(_getMyCart())
     }
-  }, [loading, username])
+  }, [])
 
   const handleCartClick = (e) => {
     if (!isAuthenticated()) {
@@ -144,14 +185,14 @@ const Cart = (props) => {
 
   return (
     <>
-      <div className="widget-header mr-3">
+      <div className={`${styles['widget-header']} ${styles['mr-3']}`}>
         <button
           className={`${styles['icon']} ${styles['icon-sm']} ${styles['rounded-circle']} ${styles['border']}`}
           onClick={handleCartClick}
         >
-          <i className="fa fa-shopping-cart" />
+          <i className={`${styles['fa']} ${styles['fa-shopping-cart']}`} />
         </button>
-        <span className="badge badge-pill badge-danger notify">
+        <span className={`${styles['badge']} ${styles['badge-pill']} ${styles['badge-danger']} ${styles['notify']}`}>
           <Spin spinning={false}>{items.length}</Spin>
         </span>
       </div>
@@ -171,56 +212,61 @@ const Header = (props) => {
     }
   }, [username])
 
+  const {} = useSelector((state) => state.cart)
+  useEffect(() => {}, [])
+
   const handleSearchClick = (e) => {
     history.push(`/search/${keyword.trim()}`)
     dispatch(_search(keyword.trim(), 1, 9, '-sold'))
   }
 
   return (
-    <header className="section-header">
-      <section className="header-main border-bottom">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-2 col-4">
-              <a href="/">
-                <img src="/img/acCommerce.png" style={{ height: '6rem' }} />
-              </a>
-            </div>
+    <Affix offsetTop={0}>
+      <header className={`${styles['section-header']}`} style={{ backgroundColor: 'white' }}>
+        <section className={`${styles['header-main']} ${styles['border-bottom']}`}>
+          <div className={`${styles['container']}`}>
+            <div className={`${styles['row']} ${styles['align-items-center']}`}>
+              <div className="col-lg-2 col-4">
+                <a href="/">
+                  <img src="/img/acCommerce.png" style={{ height: '6rem' }} />
+                </a>
+              </div>
 
-            <div className="col-lg-6 col-sm-12">
-              <div className="input-group w-100">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Tìm kiếm sản phẩm, loại mặt hàng, ..."
-                  onChange={(e) => setKeyword(e.target.value)}
-                />
-                <div className="input-group-append">
-                  {keyword ? (
-                    <button className="btn btn-primary" onClick={handleSearchClick}>
-                      <i className="fa fa-search" />
-                    </button>
-                  ) : (
-                    <a href="/">
-                      <button className="btn btn-primary">
-                        <i className="fa fa-search" />
+              <div className={`${styles['col-lg-8']} ${styles['col-sm-12']}`}>
+                <div className={`${styles['input-group']} ${styles['w-100']}`}>
+                  <input
+                    type="text"
+                    className={`${styles['form-control']}`}
+                    placeholder="Tìm kiếm sản phẩm, loại mặt hàng, ..."
+                    onChange={(e) => setKeyword(e.target.value)}
+                  />
+                  <div className={`${styles['input-group-append']}`}>
+                    {keyword ? (
+                      <button className={`${styles['btn']} ${styles['btn-primary']}`} onClick={handleSearchClick}>
+                        <i className={`${styles['fa']} ${styles['fa-search']}`} />
                       </button>
-                    </a>
-                  )}
+                    ) : (
+                      <a href="/">
+                        <button className={`${styles['btn']} ${styles['btn-primary']}`}>
+                          <i className={`${styles['fa']} ${styles['fa-search']}`} />
+                        </button>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className={`${styles['col-lg-2']} ${styles['col-sm-6']} ${styles['col-12']}`}>
+                <div className={`${styles['widgets-wrap']} ${styles['float-md-right']}`}>
+                  <Cart />
+                  {!isAuthenticated() ? <LogModal /> : <UserMenu />}
                 </div>
               </div>
             </div>
-
-            <div className="col-lg-4 col-sm-6 col-12">
-              <div className="widgets-wrap float-md-right">
-                <Cart />
-                {!isAuthenticated() ? <LogModal /> : <UserMenu />}
-              </div>
-            </div>
           </div>
-        </div>
-      </section>
-    </header>
+        </section>
+      </header>
+    </Affix>
   )
 }
 

@@ -2,12 +2,19 @@ import { makeAuthRequest } from '../makeApiRequest'
 import * as prefix from './prefix'
 import query2string from '../../helpers/validating/query2string'
 const apiRequest = makeAuthRequest(true)
-const { USER_SERVICE_API, CUSTOMER_SERVICE_API } = prefix
+const { USER_SERVICE_API, CUSTOMER_SERVICE_API, SELLER_SERVICE_API } = prefix
 
 export const getUserInformation = () => {
   return apiRequest({
     url: `${USER_SERVICE_API}/users/self`,
     method: 'GET'
+  })
+}
+
+export const toBeSeller = () => {
+  return apiRequest({
+    url: `${SELLER_SERVICE_API}/sellers`,
+    method: 'POST'
   })
 }
 
@@ -23,6 +30,14 @@ export const getCart = () => {
   return apiRequest({
     url: `${CUSTOMER_SERVICE_API}/cart-items`,
     method: 'GET'
+  })
+}
+
+export const removeFromCart = (payload) => {
+  return apiRequest({
+    url: `${CUSTOMER_SERVICE_API}/cart-items`,
+    method: 'DELETE',
+    data: payload
   })
 }
 

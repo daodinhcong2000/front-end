@@ -1,29 +1,32 @@
+import styles from '../css_modules/css/all.module.css'
+
 import numberSeparator from '../../../helpers/validating/numberSeparator'
+import { Link } from 'react-router-dom'
 
 const GridItem = (props) => {
   const { _id, images = [], name, price } = props
   return (
     <>
-      <div className="col-md-4">
-        <figure className="card card-product-grid">
-          <div className="img-wrap">
+      <div className={`${styles['col-md-4']}`}>
+        <figure className={`${styles['card']} ${styles['card-product-grid']}`}>
+          <div className={`${styles['img-wrap']}`}>
             <img src={images[0]} />
-            <a className="btn-overlay" href="#">
-              <i className="fa fa-search-plus" /> Xem sản phẩm
-            </a>
+            <Link className={`${styles['btn-overlay']}`} to={`/product/${_id}`}>
+              <i className={`${styles['fa']} ${styles['fa-search-plus']}`} /> Xem sản phẩm
+            </Link>
           </div>
-          <figcaption className="info-wrap">
-            <div className="fix-height">
-              <a href="#" className="title">
+          <figcaption className={`${styles['info-wrap']}`}>
+            <div className={`${styles['fix-height']}`}>
+              <a href="#" className={`${styles['title']}`}>
                 {name}
               </a>
-              <div className="price-wrap mt-2">
-                <span className="price">₫ {numberSeparator(price)}</span>
+              <div className={`${styles['price-wrap']} ${styles['mt-2']}`}>
+                <span className={`${styles['price']}`}>₫ {numberSeparator(price)}</span>
               </div>
             </div>
-            <a href="#" className="btn btn-block btn-primary">
+            <button href="#" className={`${styles['btn']} ${styles['btn-block']} ${styles['btn-primary']}`}>
               Thêm vào giỏ
-            </a>
+            </button>
           </figcaption>
         </figure>
       </div>

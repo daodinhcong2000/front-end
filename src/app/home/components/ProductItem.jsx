@@ -1,3 +1,5 @@
+import styles from '../css_modules/css/all.module.css'
+
 import { Link } from 'react-router-dom'
 import Loading from 'react-loading'
 
@@ -5,20 +7,20 @@ import numberSeparator from '../../../helpers/validating/numberSeparator'
 import CommentProduct from './CommentProduct'
 
 const ProductItem = (props) => {
-  const { id, image, name, price } = props
+  const { _id, images, name, price, originalPrice, sold, views } = props
   return (
     <>
-      <div className="col-md-3">
-        <Link to={`/product/${id}`}>
-          <div href="#" className="card card-product-grid">
-            <a href="#" className="img-wrap">
-              {' '}
-              <img src={image} />{' '}
+      <div className={`${styles['col-md-3']}`}>
+        <Link to={`/product/${_id}`}>
+          <div href="#" className={`${styles['card']} ${styles['card-product-grid']}`}>
+            <a href="#" className={`${styles['img-wrap']}`}>
+              <img src={images[0]} />
             </a>
-            <figcaption className="info-wrap">
+            <figcaption className={`${styles['info-wrap']}`}>
               <div
-                className="title"
+                className={`${styles['title']}`}
                 style={{
+                  fontWeight: 'bold',
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical',
@@ -31,8 +33,23 @@ const ProductItem = (props) => {
               >
                 {name}
               </div>
-              <div className="price mt-1" style={{ color: 'red' }}>
-                ₫ {numberSeparator(price)}
+              <div className={`${styles['row']} ${styles['col-sm-12']}`}>
+                <div className={`${styles['price']} ${styles['mt-1']}`} style={{ color: 'red' }}>
+                  ₫ {numberSeparator(price)}
+                </div>
+                {price !== originalPrice && (
+                  <div className={`${styles['price-old']} ${styles['mt-2']}`}>
+                    <del>₫ {numberSeparator(originalPrice)}</del>
+                  </div>
+                )}
+              </div>
+              <div className={`${styles['row']} ${styles['mt-1']} ${styles['text-dark']}`}>
+                <div className="col-sm-6 text-left">
+                  Đã bán <b>{sold}</b>
+                </div>
+                <div className="col-sm-6 text-right">
+                  <b>{views}</b> lượt xem
+                </div>
               </div>
             </figcaption>
           </div>

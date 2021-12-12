@@ -74,9 +74,16 @@ const RegisterForm = (props) => {
         email ? { email } : {},
         address ? { address } : {}
       )
-      const { success, message } = await _register(vPayload)
-        .then((res) => res.data)
-        .catch((e) => console.log(e.response))
+      const { status, data: response } = await _register(vPayload)
+        .then((res) => res)
+        .catch((e) => e.response)
+
+      if (status >= 500) {
+        setLoading(false)
+        return Message.error('Lỗi hệ thống, vui lòng thử lại sau!')
+      }
+
+      const { success, message } = response
       if (!success) {
         setLoading(false)
         return Message.error(message)
@@ -95,15 +102,15 @@ const RegisterForm = (props) => {
   }
 
   return (
-    <Form
-      name="register"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 14 }}
-      initialValues={{ remember: true }}
-      autoComplete="off"
-      style={{ textAlign: 'center' }}
-    >
-      <Spin spinning={false}>
+    <Spin spinning={loading}>
+      <Form
+        name="register"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 14 }}
+        initialValues={{ remember: true }}
+        autoComplete="off"
+        style={{ textAlign: 'center' }}
+      >
         {/* FIRST NAME */}
         <Form.Item label="Tên" hasFeedback required validateStatus={status.firstName} help={suggest.firstName}>
           <Input name="firstName" allowClear={true} onChange={handleValueChange} onPressEnter={register} />
@@ -193,8 +200,8 @@ const RegisterForm = (props) => {
             </Button>
           </Col>
         </Row>
-      </Spin>
-    </Form>
+      </Form>
+    </Spin>
   )
 }
 
