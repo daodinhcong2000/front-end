@@ -141,16 +141,16 @@ const FormDetail = (recvData) => {
           ></CFormTextarea>
         </div>
         <CCol xs={12}>
-          <CFormLabel htmlFor="inputAddress">Size</CFormLabel>
+          <CFormLabel htmlFor="inputAddress">Phân loại hàng</CFormLabel>
           {sizes.map((size, i) => {
             return (
-              <div className="box" key={i} id="inputSize">
+              <div key={i} id="inputSize">
                 <CRow>
                   <CCol xs>
                     <CFormInput
                       name="name"
                       value={size.name}
-                      placeholder="Nhập tên size"
+                      placeholder="Nhập tên loại hàng"
                       onChange={(e) => handleInputChange(e, i)}
                     />
                   </CCol>

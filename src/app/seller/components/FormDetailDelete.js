@@ -47,10 +47,10 @@ const FormDetailDelete = (recvData) => {
         </div>
 
         <CCol xs={12}>
-          <CFormLabel htmlFor="inputAddress">Sizes</CFormLabel>
+          <CFormLabel htmlFor="inputAddress">Phân loại hàng</CFormLabel>
           {sizes.map((size, i) => {
             return (
-              <div className="box">
+              <div>
                 <CRow>
                   <CCol xs>
                     <CFormInput name="name" value={size.name} disabled />
