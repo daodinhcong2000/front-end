@@ -1,4 +1,4 @@
-import { Modal, Menu, Dropdown, Button, Spin } from 'antd'
+import { Modal, Menu, Dropdown, Button, Spin, message as Message } from 'antd'
 import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled } from '@ant-design/icons'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
@@ -15,6 +15,7 @@ import { _getMyCart } from '../../../redux/actions/cartActions'
 import { _search } from '../../../redux/actions/searchActions'
 
 import styles from '../css_modules/css/all.module.css'
+import { toBeSeller } from '../../../services/api/customerApi'
 
 const LogModal = (props) => {
   const { visible, mode } = useSelector((state) => state.logForm)
@@ -54,6 +55,7 @@ const LogModal = (props) => {
 const UserMenu = (props) => {
   const dispatch = useDispatch()
   const { loading, username, fullName, roles } = useSelector((state) => state.user)
+  const [registeringSeller, setRegisteringSeller] = useState(false)
 
   useEffect(() => {
     if (!username) dispatch(_setUser())
@@ -70,12 +72,39 @@ const UserMenu = (props) => {
         break
       }
 
+      case 'toBeSeller': {
+        setRegisteringSeller(true)
+
+        toBeSeller()
+          .then((res) => {
+            Message.success(`Chúc mừng ${username} đã trở thành người bán hàng!`)
+            setTimeout(() => {
+              setRegisteringSeller(false)
+              window.location.href = '/seller'
+            }, 3000)
+          })
+          .catch((e) => {
+            const { status } = e.response
+            setRegisteringSeller(false)
+
+            if (status >= 500) {
+              return Message.error(`Lỗi hệ thống, vui lòng thử lại sau!`)
+            } else {
+              const { message } = e.response.data
+              return Message.error(message)
+            }
+          })
+
+        break
+      }
+
       case 'setting': {
         break
       }
 
       case 'logout': {
         dispatch(_logout())
+        break
       }
 
       default: {
@@ -87,27 +116,39 @@ const UserMenu = (props) => {
   const menu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="self" icon={<UserOutlined />}>
-        {fullName}
+        <Button type="text" style={{ fontWeight: 'bold' }}>
+          {fullName}
+        </Button>
       </Menu.Item>
 
-      <Menu.Item key="seller" icon={<ShopFilled />}>
-        {roles.includes('seller') ? (
+      {roles.includes('seller') ? (
+        <Menu.Item key="seller" icon={<ShopFilled />}>
           <a href="/seller" style={{ textDecoration: 'none' }}>
-            Kênh bán hàng
+            <Button type="text" style={{ textAlign: 'left' }}>
+              Kênh bán hàng
+            </Button>
           </a>
-        ) : (
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            Đăng ký bán
-          </Link>
-        )}
-      </Menu.Item>
+        </Menu.Item>
+      ) : (
+        <Menu.Item key="toBeSeller" icon={<ShopFilled />}>
+          <Spin spinning={registeringSeller}>
+            <Button type="text" style={{ textAlign: 'left' }}>
+              Đăng ký bán
+            </Button>
+          </Spin>
+        </Menu.Item>
+      )}
 
       <Menu.Item key="setting" icon={<SettingOutlined />}>
-        Cài đặt
+        <Button type="text" style={{ textAlign: 'left' }}>
+          Cài đặt
+        </Button>
       </Menu.Item>
 
       <Menu.Item key="logout" icon={<LogoutOutlined />}>
-        Đăng xuất
+        <Button type="text" style={{ textAlign: 'left' }}>
+          Đăng xuất
+        </Button>
       </Menu.Item>
     </Menu>
   )
