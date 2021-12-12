@@ -5,9 +5,6 @@ import numberSeparator from '../../../helpers/validating/numberSeparator'
 
 const ListItem = (props) => {
   const { _id, name, rating, description, images = [], price = 0, originalPrice = 0 } = props
-  console.log(props)
-  console.log(price)
-  console.log(typeof price)
   return (
     <>
       <article className={`${styles['card']} ${styles['card-product-list']}`}>

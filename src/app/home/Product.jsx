@@ -1,22 +1,28 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { Spin, Radio } from 'antd'
+import { Spin, Radio, InputNumber, message as Message } from 'antd'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import CommentProduct from './components/CommentProduct'
 import PriceChart from './components/PriceChart'
-import classnames from 'classnames'
 import { ToastProvider } from '../../contexts/ToastProvider'
 import numberSeparator from '../../helpers/validating/numberSeparator'
 import { getOneProduct } from '../../services/api/userApi'
+import { _addToCart } from '../../redux/actions/cartActions'
+import { useSelector } from 'react-redux'
 
 const Product = (props) => {
+  const dispatch = useDispatch()
   const { productId } = useParams()
   const [product, setProduct] = useState({})
   const [loading, setLoading] = useState(false)
   const [targetImage, setTargetImage] = useState('')
   const [targetSize, setTargetSize] = useState('')
+  const [targetStock, setTargetStock] = useState(0)
+  const [quantity, setQuantity] = useState(1)
+
+  const { loading: cartLoading, error: cartError } = useSelector((state) => state.cart)
 
   useEffect(() => {
     setLoading(true)
@@ -25,15 +31,17 @@ const Product = (props) => {
         const { data } = res.data
         setProduct(data)
         setTargetImage(product.images[0])
+        setLoading(false)
       })
       .catch((e) => {
         console.log(e.response)
+        setLoading(false)
       })
-
-    setLoading(false)
   }, [productId])
 
-  const handleAddToCart = (e) => {}
+  const handleAddToCart = (e) => {
+    dispatch(_addToCart(productId, targetSize, quantity))
+  }
 
   const handleBuy = (e) => {}
 
@@ -75,9 +83,6 @@ const Product = (props) => {
                     <main className="col-md-6">
                       <article>
                         {/* Category */}
-                        <a href="#" className="text-primary btn-link">
-                          {product.category}
-                        </a>
 
                         {/* Name */}
                         <h3 className="title">{product.name}</h3>
@@ -105,9 +110,12 @@ const Product = (props) => {
                             {' '}
                             <i className="fa fa-heart" /> Thích{' '}
                           </a>
-                          <a className="btn-link text-muted">
+                          <a className="btn-link text-muted mr-3">
                             {' '}
                             <i className="fa fa-book-open" /> So sánh{' '}
+                          </a>
+                          <a href="#" className="text-primary btn-link">
+                            #{product.category}
                           </a>
                         </div>
                         <hr />
@@ -122,26 +130,51 @@ const Product = (props) => {
                         <div className="form-group">
                           <label className="text-muted">Size</label>
                           <div>
-                            <Radio.Group>
-                              {product.sizes.map((size, index) => {
-                                const { name, numberInStock } = size
-                                return (
-                                  <Radio.Button
-                                    value={name}
-                                    className="rounded"
-                                    disabled={numberInStock === 0}
-                                    onClick={(e) => {
-                                      setTargetSize(name)
-                                    }}
-                                    style={{ margin: '3px' }}
-                                  >
-                                    {name}
-                                  </Radio.Button>
-                                )
-                              })}
+                            <Radio.Group
+                              onChange={(e) => {
+                                const { value: sizeName, stock } = e.target
+                                console.log(sizeName, stock)
+                                setTargetSize(sizeName)
+                                setTargetStock(stock)
+                              }}
+                            >
+                              {product.sizes
+                                .sort((a, b) => a.name - b.name)
+                                .map((size, index) => {
+                                  const { name, numberInStock } = size
+                                  return (
+                                    <Radio.Button
+                                      key={index}
+                                      value={name}
+                                      className="rounded"
+                                      disabled={numberInStock === 0}
+                                      style={{ margin: '3px' }}
+                                      stock={numberInStock}
+                                    >
+                                      {name}
+                                    </Radio.Button>
+                                  )
+                                })}
                             </Radio.Group>
+                            <br />
+                            <span>{targetSize && `${targetStock} sản phẩm có sẵn`}</span>
                           </div>
                         </div>
+
+                        {/* Quantity */}
+                        <div className="form-group">
+                          <label className="text-muted">Số lượng</label>
+                          <div>
+                            <InputNumber
+                              defaultValue={1}
+                              min={1}
+                              max={targetStock || 1}
+                              onChange={(value) => setQuantity(value)}
+                            />
+                          </div>
+                        </div>
+
+                        {/* Price */}
                         <div className="mb-3">
                           <var className="price h4" style={{ color: 'red' }}>
                             ₫ {numberSeparator(product.price)}
@@ -156,7 +189,7 @@ const Product = (props) => {
                             Mua ngay
                           </button>
                           <button className="btn btn-light" onClick={handleAddToCart}>
-                            Thêm vào giỏ
+                            <Spin spinning={cartLoading}>Thêm vào giỏ</Spin>
                           </button>
                         </div>
                       </article>
@@ -165,38 +198,7 @@ const Product = (props) => {
                 </div>
               </article>
 
-              <article className="card mt-5">
-                <div className="card-body">
-                  <div className="row">
-                    <aside className="col-md-6">
-                      <h5>Parameters</h5>
-                      <dl className="row">
-                        <dt className="col-sm-3">Display</dt>
-                        <dd className="col-sm-9">13.3-inch LED-backlit display with IPS</dd>
-                        <dt className="col-sm-3">Processor</dt>
-                        <dd className="col-sm-9">2.3GHz dual-core Intel Core i5</dd>
-                        <dt className="col-sm-3">Camera</dt>
-                        <dd className="col-sm-9">720p FaceTime HD camera</dd>
-                        <dt className="col-sm-3">Memory</dt>
-                        <dd className="col-sm-9">8 GB RAM or 16 GB RAM</dd>
-                        <dt className="col-sm-3">Graphics</dt>
-                        <dd className="col-sm-9">Intel Iris Plus Graphics 640</dd>
-                      </dl>
-                    </aside>
-                    <aside className="col-md-6">
-                      <h5>Features</h5>
-                      <ul className="list-check">
-                        <li>Best performance of battery</li>
-                        <li>5 years warranty for this product</li>
-                        <li>Amazing features and high quality</li>
-                        <li>Best performance of battery</li>
-                        <li>5 years warranty for this product</li>
-                      </ul>
-                    </aside>
-                  </div>
-                  <hr />
-                </div>
-              </article>
+              <article className="card mt-5"></article>
 
               <div className="card-body">
                 <ToastProvider>

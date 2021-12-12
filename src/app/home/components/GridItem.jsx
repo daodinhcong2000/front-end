@@ -1,6 +1,7 @@
 import styles from '../css_modules/css/all.module.css'
 
 import numberSeparator from '../../../helpers/validating/numberSeparator'
+import { Link } from 'react-router-dom'
 
 const GridItem = (props) => {
   const { _id, images = [], name, price } = props
@@ -10,9 +11,9 @@ const GridItem = (props) => {
         <figure className={`${styles['card']} ${styles['card-product-grid']}`}>
           <div className={`${styles['img-wrap']}`}>
             <img src={images[0]} />
-            <a className={`${styles['btn-overlay']}`} href="#">
+            <Link className={`${styles['btn-overlay']}`} to={`/product/${_id}`}>
               <i className={`${styles['fa']} ${styles['fa-search-plus']}`} /> Xem sản phẩm
-            </a>
+            </Link>
           </div>
           <figcaption className={`${styles['info-wrap']}`}>
             <div className={`${styles['fix-height']}`}>
@@ -23,9 +24,9 @@ const GridItem = (props) => {
                 <span className={`${styles['price']}`}>₫ {numberSeparator(price)}</span>
               </div>
             </div>
-            <a href="#" className={`${styles['btn']} ${styles['btn-block']} ${styles['btn-primary']}`}>
+            <button href="#" className={`${styles['btn']} ${styles['btn-block']} ${styles['btn-primary']}`}>
               Thêm vào giỏ
-            </a>
+            </button>
           </figcaption>
         </figure>
       </div>

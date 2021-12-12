@@ -1,4 +1,5 @@
 const cartInitialState = {
+  edit: 0,
   loading: false,
   data: [],
   shops: [],
@@ -8,8 +9,8 @@ const cartInitialState = {
 
 const cartReducer = (state = cartInitialState, action) => {
   switch (action.type) {
-    case 'LOADING_CART': {
-      return { ...state, loading: true }
+    case 'LOAD_CART': {
+      return { ...state, loading: true, error: '' }
     }
 
     case 'SET_CART': {
@@ -28,20 +29,18 @@ const cartReducer = (state = cartInitialState, action) => {
               sizes
             } = product
 
-            const buyableSizes = sizes.map((size) => {
-              return { name: size.name, numberInStock: size.numberInStock }
-            })
             const thumbnail = productImages[0]
             return {
               productId,
               productName,
               productDelete: !!productDelete,
               thumbnail,
+              sizes,
               price,
 
-              sizes: buyableSizes,
               size,
               quantity,
+              cartItemId,
 
               shopId,
               shopName,
@@ -51,8 +50,7 @@ const cartReducer = (state = cartInitialState, action) => {
           })
         })
         .flat()
-      console.log(items)
-      return { ...state, data, items }
+      return { ...state, data, items, loading: false }
     }
 
     case 'ADD_TO_CART': {
@@ -63,9 +61,9 @@ const cartReducer = (state = cartInitialState, action) => {
       return { ...state, items: newItems, loading: false }
     }
 
-    case 'ADD_CART_FAIL': {
+    case 'CART_ERROR': {
       const { error } = action.payload
-      return { ...state, error }
+      return { ...state, error, loading: false }
     }
 
     default:
