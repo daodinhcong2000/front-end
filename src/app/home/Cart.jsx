@@ -1,15 +1,24 @@
-import { useSelector } from 'react-redux'
-
-import { Affix } from 'antd'
+import { Affix, Spin } from 'antd'
+import { Redirect } from 'react-router-dom'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import CartItem from './components/CartItem'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { isAuthenticated } from '../../services/makeApiRequest'
+import { _getMyCart } from '../../redux/actions/cartActions'
+
 const Cart = (props) => {
-  const { items } = useSelector((state) => state.cart)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(_getMyCart())
+  }, [])
+  const { items, loading } = useSelector((state) => state.cart)
 
   return (
     <>
+      {!isAuthenticated() && <Redirect to="/" />}
       <Header />
       <div>
         <section className="section-pagetop bg">
@@ -23,31 +32,35 @@ const Cart = (props) => {
             <div className="row">
               <main className="col-md-9">
                 <div className="card">
-                  <table className="table table-borderless table-shopping-cart">
-                    <thead className="text-muted">
-                      <tr className="small text-uppercase">
-                        <th scope="col">Sản phẩm</th>
-                        <th scope="col" width={120}>
-                          Số lượng
-                        </th>
-                        <th scope="col" width={160}>
-                          Thành tiền
-                        </th>
-                        <th scope="col" className="text-right" width={100}></th>
-                        <th scope="col" width={20}></th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      {items.map((item, index) => {
-                        return (
-                          <>
-                            <CartItem key={index} index={index} {...item} />
-                          </>
-                        )
-                      })}
-                    </tbody>
-                  </table>
+                  <Spin spinning={loading} size="large">
+                    <table className="table table-borderless table-shopping-cart">
+                      <thead className="text-muted">
+                        <tr className="small text-uppercase">
+                          <th scope="col">Sản phẩm</th>
+                          <th scope="col" width={120}>
+                            Size
+                          </th>
+                          <th scope="col" width={120}>
+                            Số lượng
+                          </th>
+                          <th scope="col" width={160}>
+                            Thành tiền
+                          </th>
+                          <th scope="col" className="text-right" width={100}></th>
+                          <th scope="col" width={20}></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {items.map((item, index) => {
+                          return (
+                            <>
+                              <CartItem key={index} index={index} {...item} />
+                            </>
+                          )
+                        })}
+                      </tbody>
+                    </table>
+                  </Spin>
 
                   <div
                     className="card-body border-top"
@@ -67,23 +80,24 @@ const Cart = (props) => {
                   </p>
                 </div>
               </main>
-              <aside className="col-md-3">
-                <div className="card mb-3">
-                  <div className="card-body">
-                    <form>
-                      <div className="form-group">
-                        <div className="input-group">
-                          <input type="text" className="form-control" name placeholder="Mã giảm giá" />
-                          <span className="input-group-append">
-                            <button className="btn btn-primary">Kích hoạt</button>
-                          </span>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
 
-                <Affix offsetTop={10}>
+              <aside className="col-md-3">
+                <Affix offsetTop={131}>
+                  <div className="card mb-3">
+                    <div className="card-body">
+                      <form>
+                        <div className="form-group">
+                          <div className="input-group">
+                            <input type="text" className="form-control" name placeholder="Mã giảm giá" />
+                            <span className="input-group-append">
+                              <button className="btn btn-primary">Kích hoạt</button>
+                            </span>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
                   <div className="card">
                     <div className="card-body">
                       <dl className="dlist-align">

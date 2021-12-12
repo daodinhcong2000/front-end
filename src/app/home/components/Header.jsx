@@ -1,4 +1,4 @@
-import { Modal, Menu, Dropdown, Button, Spin, message as Message } from 'antd'
+import { Modal, Menu, Dropdown, Button, Spin, message as Message, Affix } from 'antd'
 import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled } from '@ant-design/icons'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
@@ -173,7 +173,7 @@ const Cart = (props) => {
     if (isAuthenticated()) {
       dispatch(_getMyCart())
     }
-  }, [loading, username])
+  }, [])
 
   const handleCartClick = (e) => {
     if (!isAuthenticated()) {
@@ -212,56 +212,61 @@ const Header = (props) => {
     }
   }, [username])
 
+  const {} = useSelector((state) => state.cart)
+  useEffect(() => {}, [])
+
   const handleSearchClick = (e) => {
     history.push(`/search/${keyword.trim()}`)
     dispatch(_search(keyword.trim(), 1, 9, '-sold'))
   }
 
   return (
-    <header className={`${styles['section-header']}`}>
-      <section className={`${styles['header-main']} ${styles['border-bottom']}`}>
-        <div className={`${styles['container']}`}>
-          <div className={`${styles['row']} ${styles['align-items-center']}`}>
-            <div className="col-lg-2 col-4">
-              <a href="/">
-                <img src="/img/acCommerce.png" style={{ height: '6rem' }} />
-              </a>
-            </div>
+    <Affix offsetTop={0}>
+      <header className={`${styles['section-header']}`} style={{ backgroundColor: 'white' }}>
+        <section className={`${styles['header-main']} ${styles['border-bottom']}`}>
+          <div className={`${styles['container']}`}>
+            <div className={`${styles['row']} ${styles['align-items-center']}`}>
+              <div className="col-lg-2 col-4">
+                <a href="/">
+                  <img src="/img/acCommerce.png" style={{ height: '6rem' }} />
+                </a>
+              </div>
 
-            <div className={`${styles['col-lg-6']} ${styles['col-sm-12']}`}>
-              <div className={`${styles['input-group']} ${styles['w-100']}`}>
-                <input
-                  type="text"
-                  className={`${styles['form-control']}`}
-                  placeholder="Tìm kiếm sản phẩm, loại mặt hàng, ..."
-                  onChange={(e) => setKeyword(e.target.value)}
-                />
-                <div className={`${styles['input-group-append']}`}>
-                  {keyword ? (
-                    <button className={`${styles['btn']} ${styles['btn-primary']}`} onClick={handleSearchClick}>
-                      <i className={`${styles['fa']} ${styles['fa-search']}`} />
-                    </button>
-                  ) : (
-                    <a href="/">
-                      <button className={`${styles['btn']} ${styles['btn-primary']}`}>
+              <div className={`${styles['col-lg-8']} ${styles['col-sm-12']}`}>
+                <div className={`${styles['input-group']} ${styles['w-100']}`}>
+                  <input
+                    type="text"
+                    className={`${styles['form-control']}`}
+                    placeholder="Tìm kiếm sản phẩm, loại mặt hàng, ..."
+                    onChange={(e) => setKeyword(e.target.value)}
+                  />
+                  <div className={`${styles['input-group-append']}`}>
+                    {keyword ? (
+                      <button className={`${styles['btn']} ${styles['btn-primary']}`} onClick={handleSearchClick}>
                         <i className={`${styles['fa']} ${styles['fa-search']}`} />
                       </button>
-                    </a>
-                  )}
+                    ) : (
+                      <a href="/">
+                        <button className={`${styles['btn']} ${styles['btn-primary']}`}>
+                          <i className={`${styles['fa']} ${styles['fa-search']}`} />
+                        </button>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className={`${styles['col-lg-2']} ${styles['col-sm-6']} ${styles['col-12']}`}>
+                <div className={`${styles['widgets-wrap']} ${styles['float-md-right']}`}>
+                  <Cart />
+                  {!isAuthenticated() ? <LogModal /> : <UserMenu />}
                 </div>
               </div>
             </div>
-
-            <div className={`${styles['col-lg-4']} ${styles['col-sm-6']} ${styles['col-12']}`}>
-              <div className={`${styles['widgets-wrap']} ${styles['float-md-right']}`}>
-                <Cart />
-                {!isAuthenticated() ? <LogModal /> : <UserMenu />}
-              </div>
-            </div>
           </div>
-        </div>
-      </section>
-    </header>
+        </section>
+      </header>
+    </Affix>
   )
 }
 

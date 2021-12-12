@@ -49,10 +49,9 @@ const Home = (props) => {
           <Spin spinning={searching} size="large">
             <div className="row">
               {items.slice(0, 12).map((item, index) => {
-                const { _id: id, images, name, price } = item
                 return (
                   <>
-                    <ProductItem key={index} id={id} image={images[0]} name={name} price={price} />
+                    <ProductItem key={index} {...item} />
                   </>
                 )
               })}

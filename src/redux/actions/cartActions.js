@@ -1,9 +1,9 @@
-import { addToCart, getCart } from '../../services/api/customerApi'
+import { addToCart, getCart, removeFromCart } from '../../services/api/customerApi'
 
 export const _getMyCart = () => {
   return (dispatch) => {
     dispatch({
-      type: 'LOADING_CART'
+      type: 'LOAD_CART'
     })
 
     return getCart()
@@ -15,7 +15,23 @@ export const _getMyCart = () => {
         })
       })
       .catch((e) => {
-        console.log(e)
+        const { status } = e.response
+        if (status >= 500) {
+          dispatch({
+            type: 'CART_ERROR',
+            payload: {
+              error: 'Lỗi hệ thống, vui lòng thử lại sau!'
+            }
+          })
+        } else {
+          const { message } = e.response.data
+          dispatch({
+            type: 'CART_ERROR',
+            payload: {
+              error: message
+            }
+          })
+        }
       })
   }
 }
@@ -30,17 +46,12 @@ export const _addToCart = (productId, size, quantity) => {
 
     return addToCart(payload)
       .then((res) => {
-        dispatch({
-          type: 'ADD_TO_CART',
-          payload: {
-            cartItem: payload
-          }
-        })
+        dispatch(_getMyCart())
       })
       .catch((e) => {
         const { eMessage, message } = e.response.data
         dispatch({
-          type: 'ADD_CART_FAIL',
+          type: 'CART_ERROR',
           payload: {
             error: message
           }
@@ -49,6 +60,40 @@ export const _addToCart = (productId, size, quantity) => {
         if (eMessage.includes('not authorized as customer')) {
           dispatch({
             type: 'SHOW_LOG_FORM'
+          })
+        }
+      })
+  }
+}
+
+export const _editCartItem = () => {}
+
+export const _deleteCartItems = (cartItemIds) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'LOAD_CART'
+    })
+
+    return removeFromCart({ cartItemIds })
+      .then((res) => {
+        dispatch(_getMyCart())
+      })
+      .catch((e) => {
+        const { status } = e.response
+        if (status >= 500) {
+          dispatch({
+            type: 'CART_ERROR',
+            payload: {
+              error: 'Lỗi hệ thống, vui lòng thử lại sau!'
+            }
+          })
+        } else {
+          const { message } = e.response.data
+          dispatch({
+            type: 'CART_ERROR',
+            payload: {
+              error: message
+            }
           })
         }
       })

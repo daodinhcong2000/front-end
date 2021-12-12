@@ -32,6 +32,14 @@ export const getCart = () => {
   })
 }
 
+export const removeFromCart = (payload) => {
+  return apiRequest({
+    url: `${CUSTOMER_SERVICE_API}/cart-items`,
+    method: 'DELETE',
+    data: payload
+  })
+}
+
 export const postComment = (payload) => {
   return apiRequest({
     url: `${CUSTOMER_SERVICE_API}/comments`,
