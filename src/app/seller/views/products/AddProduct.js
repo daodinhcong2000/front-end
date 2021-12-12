@@ -159,20 +159,21 @@ const AddProduct = () => {
             rows="3"
             name="description"
             onChange={(e) => handleChange(e)}
+            placeholder="Mô tả chi tiết về sản phẩm của bạn"
             value={data.description}
           ></CFormTextarea>
         </div>
         <CCol xs={12}>
-          <CFormLabel htmlFor="inputAddress">Kích thước</CFormLabel>
+          <CFormLabel htmlFor="inputAddress">Phân loại hàng</CFormLabel>
           {sizes.map((size, i) => {
             return (
-              <div className="box" key={i} id="inputSize">
+              <div key={i} id="inputSize">
                 <CRow>
                   <CCol xs>
                     <CFormInput
                       name="name"
                       value={size.name}
-                      placeholder="Nhập kích thước"
+                      placeholder="Nhập tên loại hàng"
                       onChange={(e) => handleInputChange(e, i)}
                     />
                   </CCol>
@@ -180,7 +181,7 @@ const AddProduct = () => {
                     <CFormInput
                       name="numberInStock"
                       value={size.numberInStock}
-                      placeholder="Nhập số lượng"
+                      placeholder="Nhập số lượng hàng"
                       onChange={(e) => handleInputChange(e, i)}
                     />
                   </CCol>
@@ -215,16 +216,7 @@ const AddProduct = () => {
         <CCol xs={12} id="imageShow">
           {images &&
             images.map((image, index) => {
-              return (
-                <CImage
-                  fluid
-                  src={image}
-                  width={150}
-                  //height={150}
-                  onClick={() => deleteFile(index)}
-                  key={index}
-                />
-              )
+              return <CImage fluid src={image} width={150} onClick={() => deleteFile(index)} key={index} />
             })}
         </CCol>
         <div className="mb-3">
@@ -236,6 +228,7 @@ const AddProduct = () => {
                   aria-label="Amount (to the nearest dollar)"
                   name="price"
                   onChange={(e) => handleChange(e)}
+                  placeholder="Nhập giá gốc sản phẩm của bạn"
                   value={data.price}
                 />
                 <CInputGroupText>VNĐ</CInputGroupText>
