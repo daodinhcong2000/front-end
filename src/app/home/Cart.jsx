@@ -1,5 +1,5 @@
 import { Affix, Spin } from 'antd'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import CartItem from './components/CartItem'
@@ -69,9 +69,9 @@ const Cart = (props) => {
                     <a href="#" className="btn btn-primary float-md-right">
                       Thanh toán <i className="fa fa-chevron-right" />
                     </a>
-                    <a href="#" className="btn btn-light">
+                    <Link to={`/search/?keyword=`} className="btn btn-light">
                       <i className="fa fa-chevron-left" /> Mua thêm
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="alert alert-success mt-3">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { Spin, Radio, InputNumber, message as Message } from 'antd'
+import { Spin, Radio, InputNumber } from 'antd'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import CommentProduct from './components/CommentProduct'

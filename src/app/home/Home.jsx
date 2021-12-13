@@ -5,7 +5,7 @@ import ProductItem from './components/ProductItem'
 
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { _search } from '../../redux/actions/searchActions'
 
 const Home = (props) => {
@@ -16,10 +16,6 @@ const Home = (props) => {
   useEffect(() => {
     dispatch(_search(keyword.trim(), page, limit, sort))
   }, [])
-
-  const handleMoreClick = (e) => {
-    history.push('/search/')
-  }
 
   return (
     <div className="App">
@@ -40,9 +36,9 @@ const Home = (props) => {
       <section className="section-name padding-y-sm">
         <div className="container">
           <header className="section-heading">
-            <button className="btn btn-outline-primary float-right" onClick={handleMoreClick}>
-              Thêm
-            </button>
+            <Link to={`/search/?keyword=`}>
+              <button className="btn btn-outline-primary float-right">Thêm</button>
+            </Link>
             <h3 className="section-title">Sản phẩm phổ biến</h3>
           </header>
 

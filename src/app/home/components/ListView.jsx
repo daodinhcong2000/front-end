@@ -11,7 +11,7 @@ const ListView = (props) => {
   return (
     <>
       <main className={`${styles['col-md-9']}`}>
-        <header className={`${styles['border-bottom']} ${styles['mb-4 pb-3']}`}>
+        <header className={`${styles['mb-4 pb-3']}`}>
           <div className={`${styles['form-inline']}`}>
             <span className={`${styles['mr-md-auto']}`}>{list.length} sản phẩm</span>
             {/* <select className="mr-2 form-control">
@@ -39,6 +39,7 @@ const ListView = (props) => {
             </div>
           </div>
         </header>
+        <hr />
 
         <Spin spinning={searching}>
           {list.map((item, index) => {

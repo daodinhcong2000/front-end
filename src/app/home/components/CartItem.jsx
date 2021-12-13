@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import numberSeparator from '../../../helpers/validating/numberSeparator'
-import { _addToCart, _deleteCartItems } from '../../../redux/actions/cartActions'
+import { _deleteCartItems, _editCartItem } from '../../../redux/actions/cartActions'
 
 const CartItem = (props) => {
   const dispatch = useDispatch()
@@ -53,7 +53,7 @@ const CartItem = (props) => {
 
   const handleSaveClick = (e) => {
     setEdited(false)
-    dispatch(_addToCart(productId, selectedSize, selectedQuantity))
+    dispatch(_editCartItem(cartItemId, selectedSize, selectedQuantity))
   }
 
   return (
@@ -73,7 +73,7 @@ const CartItem = (props) => {
                 className={`${styles['title']} ${styles['text-dark']}`}
                 style={{ pointerEvents: productDisabled ? 'none' : 'auto' }}
               >
-                {productName}
+                <b>{productName}</b>
               </Link>
               <Link to={`/shop/${shopId}`} style={{ pointerEvents: shopDisabled ? 'none' : 'auto' }}>
                 Shop: {shopName}
@@ -98,13 +98,15 @@ const CartItem = (props) => {
             disabled={productDisabled}
             onChange={(value) => setSelectedSize(value)}
           >
-            {sizes.map((item, index) => {
-              return (
-                <Select.Option key={index} value={item.name} disabled={item.numberInStock === 0}>
-                  {item.name}
-                </Select.Option>
-              )
-            })}
+            {sizes
+              .sort((a, b) => a.name - b.name)
+              .map((item, index) => {
+                return (
+                  <Select.Option key={index} value={item.name} disabled={item.numberInStock === 0}>
+                    {item.name}
+                  </Select.Option>
+                )
+              })}
           </Select>
         </td>
 

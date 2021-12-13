@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Sider from './components/Sider'
@@ -11,13 +11,24 @@ import { _search } from '../../redux/actions/searchActions'
 
 const Search = (props) => {
   const [view, setView] = useState('list')
-  const { keyword: searchKeyword = '' } = useParams()
+  const { search } = useLocation()
+  const query = search
+    .replace('?', '')
+    .split('&')
+    .map((item) => {
+      const [key, value] = item.split('=')
+      return { [key]: value }
+    })
+    .reduce((prev, next) => {
+      return { ...prev, ...next }
+    })
+  const { keyword: searchKeyword } = query
 
   const dispatch = useDispatch()
   const { items = [], page, limit, sort, searching } = useSelector((state) => state.search)
 
   useEffect(() => {
-    dispatch(_search(searchKeyword.trim(), page, limit, sort))
+    dispatch(_search(searchKeyword, page, limit, sort))
   }, [])
 
   return (
