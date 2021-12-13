@@ -1,5 +1,6 @@
 import { makeAuthRequest } from '../makeApiRequest'
 import * as prefix from './prefix'
+import query2string from '../../helpers/validating/query2string'
 const apiRequest = makeAuthRequest(true)
 const { USER_SERVICE_API, CUSTOMER_SERVICE_API, SELLER_SERVICE_API } = prefix
 
@@ -61,5 +62,27 @@ export const deleteComment = (idComment) => {
   return apiRequest({
     url: `${CUSTOMER_SERVICE_API}/comments/${idComment}`,
     method: 'DELETE'
+  })
+}
+
+export const getOrder = (query) => {
+  const queryString = query2string(query)
+  return apiRequest({
+    url: `${CUSTOMER_SERVICE_API}/orders?${queryString}`,
+    method: 'GET'
+  })
+}
+
+export const cancelOrder = (idOrder) => {
+  return apiRequest({
+    url: `${CUSTOMER_SERVICE_API}/orders/${idOrder}/status/cancel`,
+    method: 'PUT'
+  })
+}
+
+export const confirmOrder = (idOrder) => {
+  return apiRequest({
+    url: `${CUSTOMER_SERVICE_API}/orders/${idOrder}/status/confirm-received`,
+    method: 'PUT'
   })
 }

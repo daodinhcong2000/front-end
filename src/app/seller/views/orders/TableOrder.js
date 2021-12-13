@@ -51,6 +51,7 @@ const TableOrder = () => {
   const [listOrder, setListOrder] = useState([])
   const [shopId, setShopId] = useState('0')
   const [details, setDetails] = useState([])
+  const [loading, setLoading] = useState(true)
   const { error, warn, info, success } = useToast()
 
   useEffect(() => {
@@ -65,6 +66,7 @@ const TableOrder = () => {
           data.idOrder = data._id
         })
         setListOrder(response.data.data)
+        setLoading(false)
       })
     }
   }, [shopId])
@@ -119,7 +121,13 @@ const TableOrder = () => {
   return (
     <div>
       <div className="mb-3">
-        <CFormSelect aria-label="Default select example" onChange={(e) => setShopId(e.target.value)}>
+        <CFormSelect
+          aria-label="Default select example"
+          onChange={(e) => {
+            setShopId(e.target.value)
+            setLoading(true)
+          }}
+        >
           <option value="0">Chọn shop</option>
           {listShop.map((shop) => {
             return (
@@ -138,6 +146,7 @@ const TableOrder = () => {
           columns={columns}
           columnFilter
           columnSorter
+          loading={loading}
           items={listOrder}
           itemsPerPageSelect
           itemsPerPage={5}

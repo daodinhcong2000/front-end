@@ -25,9 +25,11 @@ const TableShop = () => {
   ]
   const [listShop, setListShop] = useState([])
   const [status, setStatus] = useState('approved')
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     getShops({ approvalStatus: status }).then((response) => {
       setListShop(response.data.data)
+      setLoading(false)
     })
   }, [status])
 
@@ -56,7 +58,13 @@ const TableShop = () => {
         <CCol xs></CCol> */}
           <CCol xs="3">
             <CFormLabel htmlFor="exampleFormControlInput1">Trạng thái đang xem</CFormLabel>
-            <CFormSelect aria-label="Default select example" onChange={(e) => setStatus(e.target.value)}>
+            <CFormSelect
+              aria-label="Default select example"
+              onChange={(e) => {
+                setStatus(e.target.value)
+                setLoading(true)
+              }}
+            >
               <option value="approved">approved</option>
               <option value="pending">pending</option>
               <option value="rejected">rejected</option>
@@ -71,6 +79,7 @@ const TableShop = () => {
         columns={columns}
         noItemsLabel="Chưa có cửa hàng nào"
         columnSorter
+        loading={loading}
         items={listShop}
         itemsPerPageSelect
         itemsPerPage={5}
