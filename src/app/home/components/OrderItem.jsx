@@ -1,6 +1,9 @@
 import { CSmartTable } from '@coreui/react-pro'
 import { CImage, CRow, CCol } from '@coreui/react-pro'
 import numberSeparator from '../../../helpers/validating/numberSeparator'
+import { Typography } from 'antd'
+
+const { Title } = Typography
 
 const OrderItem = (props) => {
   const { shopName, itemData } = props
@@ -34,9 +37,9 @@ const OrderItem = (props) => {
                   <CImage rounded thumbnail src={item.product.images[0]} width={100} height={100} />
                 </CCol>
                 <CCol sm={10}>
-                  <h4 id="traffic" className="card-title mb-0">
+                  <Title id="traffic" className="card-title mb-0" level={4}>
                     {item.product.name}
-                  </h4>
+                  </Title>
                   <div className="small text-medium-emphasis">Phân loại hàng: {item.size}</div>
                   <div className=" text-medium">x{item.quantity}</div>
                 </CCol>
