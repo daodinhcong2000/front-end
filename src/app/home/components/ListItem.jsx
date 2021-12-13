@@ -4,15 +4,18 @@ import { Link } from 'react-router-dom'
 import numberSeparator from '../../../helpers/validating/numberSeparator'
 
 const ListItem = (props) => {
-  const { _id, name, rating, description, images = [], price = 0, originalPrice = 0 } = props
+  const { _id: productId, name, rating, description, images = [], price = 0, originalPrice = 0, createdAt } = props
+  const created = new Date(createdAt).getTime()
+
   return (
     <>
       <article className={`${styles['card']} ${styles['card-product-list']}`}>
         <div className={`${styles['row']} ${styles['no-gutters']}`}>
           <aside className={`${styles['col-md-3']}`}>
-            <a href="#" className={`${styles['img-wrap']}`}>
+            <div className={`${styles['img-wrap']}`}>
+              {Date.now() - created <= 7 * 24 * 60 * 60 * 1000 && <span class="badge badge-danger"> NEW </span>}
               <img src={images[0]} />
-            </a>
+            </div>
           </aside>
 
           <div className={`${styles['col-md-6']}`}>
@@ -66,7 +69,7 @@ const ListItem = (props) => {
               <p className={`${styles['text-success']}`}>Miễn phí giao hàng</p>
               <br />
               <p>
-                <Link to={`/product/${_id}`}>
+                <Link to={`/product/${productId}`}>
                   <button className={`${styles['btn']} ${styles['btn-primary']} ${styles['btn-block']}`}>
                     Xem sản phẩm
                   </button>

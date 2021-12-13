@@ -33,6 +33,15 @@ export const getCart = () => {
   })
 }
 
+export const editCartItem = (payload) => {
+  const { cartItemId, ...data } = payload
+  return apiRequest({
+    url: `${CUSTOMER_SERVICE_API}/cart-items/${cartItemId}`,
+    method: 'PUT',
+    data
+  })
+}
+
 export const removeFromCart = (payload) => {
   return apiRequest({
     url: `${CUSTOMER_SERVICE_API}/cart-items`,

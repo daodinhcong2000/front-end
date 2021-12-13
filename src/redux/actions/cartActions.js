@@ -1,4 +1,4 @@
-import { addToCart, getCart, removeFromCart } from '../../services/api/customerApi'
+import { addToCart, getCart, removeFromCart, editCartItem } from '../../services/api/customerApi'
 
 export const _getMyCart = () => {
   return (dispatch) => {
@@ -66,7 +66,29 @@ export const _addToCart = (productId, size, quantity) => {
   }
 }
 
-export const _editCartItem = () => {}
+export const _editCartItem = (cartItemId, size, quantity) => {
+  const payload = { cartItemId, size, quantity }
+
+  return (dispatch) => {
+    dispatch({
+      type: 'LOAD_CART'
+    })
+
+    return editCartItem(payload)
+      .then((res) => {
+        dispatch(_getMyCart())
+      })
+      .catch((e) => {
+        const { eMessage, message } = e.response.data
+        dispatch({
+          type: 'CART_ERROR',
+          payload: {
+            error: message
+          }
+        })
+      })
+  }
+}
 
 export const _deleteCartItems = (cartItemIds) => {
   return (dispatch) => {

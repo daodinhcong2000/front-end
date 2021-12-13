@@ -1,12 +1,12 @@
 import { Modal, Menu, Dropdown, Button, Spin, message as Message, Affix } from 'antd'
-import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled } from '@ant-design/icons'
+import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled, SecurityScanOutlined } from '@ant-design/icons'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 import ForgotForm from './ForgotForm'
 
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { isAuthenticated } from '../../../services/makeApiRequest'
 import { _showLogForm, _hideLogForm } from '../../../redux/actions/logFormActions'
@@ -121,6 +121,16 @@ const UserMenu = (props) => {
         </Button>
       </Menu.Item>
 
+      {roles.includes('admin') && (
+        <Menu.Item key="admin" icon={<SecurityScanOutlined />}>
+          <a href="/admin" style={{ textDecoration: 'none' }}>
+            <Button type="text" style={{ textAlign: 'left' }}>
+              Quản trị
+            </Button>
+          </a>
+        </Menu.Item>
+      )}
+
       {roles.includes('seller') ? (
         <Menu.Item key="seller" icon={<ShopFilled />}>
           <a href="/seller" style={{ textDecoration: 'none' }}>
@@ -167,8 +177,7 @@ const UserMenu = (props) => {
 const Cart = (props) => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { loading, items } = useSelector((state) => state.cart)
-  const { username } = useSelector((state) => state.user)
+  const { items } = useSelector((state) => state.cart)
   useEffect(() => {
     if (isAuthenticated()) {
       dispatch(_getMyCart())
@@ -216,8 +225,14 @@ const Header = (props) => {
   useEffect(() => {}, [])
 
   const handleSearchClick = (e) => {
-    history.push(`/search/${keyword.trim()}`)
+    history.push(`/search/?keyword=${keyword.trim()}`)
     dispatch(_search(keyword.trim(), 1, 9, '-sold'))
+  }
+
+  const handlePressEnter = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchClick(e)
+    }
   }
 
   return (
@@ -232,13 +247,14 @@ const Header = (props) => {
                 </a>
               </div>
 
-              <div className={`${styles['col-lg-8']} ${styles['col-sm-12']}`}>
+              <div className={`${styles['col-lg-7']} ${styles['col-sm-12']}`}>
                 <div className={`${styles['input-group']} ${styles['w-100']}`}>
                   <input
                     type="text"
                     className={`${styles['form-control']}`}
                     placeholder="Tìm kiếm sản phẩm, loại mặt hàng, ..."
                     onChange={(e) => setKeyword(e.target.value)}
+                    onKeyPress={handlePressEnter}
                   />
                   <div className={`${styles['input-group-append']}`}>
                     {keyword ? (
@@ -256,7 +272,7 @@ const Header = (props) => {
                 </div>
               </div>
 
-              <div className={`${styles['col-lg-2']} ${styles['col-sm-6']} ${styles['col-12']}`}>
+              <div className={`${styles['col-lg-3']} ${styles['col-sm-6']} ${styles['col-12']}`}>
                 <div className={`${styles['widgets-wrap']} ${styles['float-md-right']}`}>
                   <Cart />
                   {!isAuthenticated() ? <LogModal /> : <UserMenu />}

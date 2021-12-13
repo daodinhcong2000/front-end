@@ -4,7 +4,7 @@ const Sider = (props) => {
   return (
     <>
       <aside className="col-md-3">
-        <Affix offsetTop={10}>
+        <Affix offsetTop={131}>
           <div className="card">
             <article className="filter-group">
               <header className="card-header">
