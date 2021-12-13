@@ -1,5 +1,5 @@
 import { Modal, Menu, Dropdown, Button, Spin, message as Message, Affix } from 'antd'
-import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled } from '@ant-design/icons'
+import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled, SecurityScanOutlined } from '@ant-design/icons'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 import ForgotForm from './ForgotForm'
@@ -120,6 +120,16 @@ const UserMenu = (props) => {
           {fullName}
         </Button>
       </Menu.Item>
+
+      {roles.includes('admin') && (
+        <Menu.Item key="admin" icon={<SecurityScanOutlined />}>
+          <a href="/admin" style={{ textDecoration: 'none' }}>
+            <Button type="text" style={{ textAlign: 'left' }}>
+              Quản trị
+            </Button>
+          </a>
+        </Menu.Item>
+      )}
 
       {roles.includes('seller') ? (
         <Menu.Item key="seller" icon={<ShopFilled />}>
