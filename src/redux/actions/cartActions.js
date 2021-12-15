@@ -1,4 +1,4 @@
-import { addToCart, getCart, removeFromCart, editCartItem } from '../../services/api/customerApi'
+import { addToCart, getCart, removeFromCart, editCartItem, order } from '../../services/api/customerApi'
 
 export const _getMyCart = () => {
   return (dispatch) => {
@@ -15,6 +15,7 @@ export const _getMyCart = () => {
         })
       })
       .catch((e) => {
+        console.log(e)
         const { status } = e.response
         if (status >= 500) {
           dispatch({
@@ -71,7 +72,7 @@ export const _editCartItem = (cartItemId, size, quantity) => {
 
   return (dispatch) => {
     dispatch({
-      type: 'LOAD_CART'
+      type: 'EDIT_CART'
     })
 
     return editCartItem(payload)
@@ -118,6 +119,29 @@ export const _deleteCartItems = (cartItemIds) => {
             }
           })
         }
+      })
+  }
+}
+
+export const _order = (cartItems, address) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'LOAD_CART'
+    })
+
+    return order({ cartItems, receivingAddress: address })
+      .then((res) => {
+        dispatch(_getMyCart())
+      })
+      .catch((e) => {
+        console.log(e)
+        const { message } = e.response.data
+        dispatch({
+          type: 'CART_ERROR',
+          payload: {
+            error: message
+          }
+        })
       })
   }
 }

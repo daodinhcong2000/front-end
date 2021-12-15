@@ -12,8 +12,8 @@ const ProductItem = (props) => {
     <>
       <div className={`${styles['col-md-3']}`}>
         <Link to={`/product/${_id}`}>
-          <div href="#" className={`${styles['card']} ${styles['card-product-grid']}`}>
-            <a href="#" className={`${styles['img-wrap']}`}>
+          <div className={`${styles['card']} ${styles['card-product-grid']}`}>
+            <a className={`${styles['img-wrap']}`}>
               <img src={images[0]} />
             </a>
             <figcaption className={`${styles['info-wrap']}`}>

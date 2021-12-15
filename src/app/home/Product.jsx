@@ -1,16 +1,17 @@
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
-import { Spin, Radio, InputNumber } from 'antd'
+import { Spin, Radio, InputNumber, message as Message } from 'antd'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import CommentProduct from './components/CommentProduct'
 import PriceChart from './components/PriceChart'
 import { ToastProvider } from '../../contexts/ToastProvider'
+
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useParams } from 'react-router-dom'
+
 import numberSeparator from '../../helpers/validating/numberSeparator'
 import { getOneProduct } from '../../services/api/userApi'
 import { _addToCart } from '../../redux/actions/cartActions'
-import { useSelector } from 'react-redux'
 
 const Product = (props) => {
   const dispatch = useDispatch()
@@ -40,7 +41,11 @@ const Product = (props) => {
   }, [productId])
 
   const handleAddToCart = (e) => {
-    dispatch(_addToCart(productId, targetSize, quantity))
+    if (!targetSize) {
+      return Message.error('Vui lòng chọn size!')
+    } else {
+      dispatch(_addToCart(productId, targetSize, quantity))
+    }
   }
 
   const handleBuy = (e) => {}
@@ -114,16 +119,16 @@ const Product = (props) => {
                             {' '}
                             <i className="fa fa-book-open" /> So sánh{' '}
                           </a>
-                          <a href="#" className="text-primary btn-link">
+                          <Link to={`/search?keyword=${product.category}`} className="text-primary btn-link">
                             #{product.category}
-                          </a>
+                          </Link>
                         </div>
                         <hr />
 
                         {/* Descroption */}
                         <div className="mb-3">
                           <h6>Mô tả</h6>
-                          <text>{product.description}</text>
+                          {product.description}
                         </div>
 
                         {/* Sizes */}
@@ -133,7 +138,6 @@ const Product = (props) => {
                             <Radio.Group
                               onChange={(e) => {
                                 const { value: sizeName, stock } = e.target
-                                console.log(sizeName, stock)
                                 setTargetSize(sizeName)
                                 setTargetStock(stock)
                               }}
