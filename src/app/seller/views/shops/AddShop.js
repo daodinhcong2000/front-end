@@ -4,6 +4,7 @@ import { CButton, CCol, CForm, CFormInput, CFormLabel } from '@coreui/react'
 import { useToast } from '../../../../contexts/toast'
 
 const AddShop = () => {
+  const style = { color: 'red' }
   const [data, setData] = useState({
     name: '',
     email: '',
@@ -31,7 +32,9 @@ const AddShop = () => {
   return (
     <CForm className="row g-3">
       <div className="mb-3">
-        <CFormLabel htmlFor="exampleFormControlInput1">Tên của hàng </CFormLabel>
+        <CFormLabel htmlFor="exampleFormControlInput1">
+          Tên của hàng <span style={style}>*</span>
+        </CFormLabel>
         <CFormInput
           type="text"
           id="exampleFormControlInput1"
@@ -41,7 +44,9 @@ const AddShop = () => {
         />
       </div>
       <div className="mb-3">
-        <CFormLabel htmlFor="exampleFormControlTextarea1">Email cửa hàng</CFormLabel>
+        <CFormLabel htmlFor="exampleFormControlTextarea1">
+          Email cửa hàng <span style={style}>*</span>
+        </CFormLabel>
         <CFormInput
           id="exampleFormControlTextarea1"
           placeholder="Nhập email của cửa hàng"
@@ -50,7 +55,9 @@ const AddShop = () => {
         ></CFormInput>
       </div>
       <div className="mb-3">
-        <CFormLabel htmlFor="exampleFormControlInput1">Địa chỉ cửa hàng</CFormLabel>
+        <CFormLabel htmlFor="exampleFormControlInput1">
+          Địa chỉ cửa hàng <span style={style}>*</span>
+        </CFormLabel>
         <CFormInput
           type="text"
           placeholder="Nhập địa chỉ cửa hàng"
