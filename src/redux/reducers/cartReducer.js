@@ -1,5 +1,5 @@
 const cartInitialState = {
-  edit: 0,
+  editing: false,
   loading: false,
   data: [],
   shops: [],
@@ -11,6 +11,10 @@ const cartReducer = (state = cartInitialState, action) => {
   switch (action.type) {
     case 'LOAD_CART': {
       return { ...state, loading: true, error: '' }
+    }
+
+    case 'EDIT_CART': {
+      return { ...state, editing: true, error: '' }
     }
 
     case 'SET_CART': {
@@ -50,7 +54,7 @@ const cartReducer = (state = cartInitialState, action) => {
           })
         })
         .flat()
-      return { ...state, data, items, loading: false }
+      return { ...state, data, items, loading: false, editing: false }
     }
 
     case 'ADD_TO_CART': {
@@ -63,7 +67,7 @@ const cartReducer = (state = cartInitialState, action) => {
 
     case 'CART_ERROR': {
       const { error } = action.payload
-      return { ...state, error, loading: false }
+      return { ...state, error, loading: false, editing: false }
     }
 
     default:

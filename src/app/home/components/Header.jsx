@@ -1,12 +1,19 @@
 import { Modal, Menu, Dropdown, Button, Spin, message as Message, Affix } from 'antd'
-import { UserOutlined, SettingOutlined, LogoutOutlined, ShopFilled, SecurityScanOutlined } from '@ant-design/icons'
+import {
+  UserOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+  ShopFilled,
+  SecurityScanOutlined,
+  ShoppingCartOutlined
+} from '@ant-design/icons'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 import ForgotForm from './ForgotForm'
 
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 
 import { isAuthenticated } from '../../../services/makeApiRequest'
 import { _showLogForm, _hideLogForm } from '../../../redux/actions/logFormActions'
@@ -64,14 +71,6 @@ const UserMenu = (props) => {
   const handleMenuClick = (e) => {
     const { key } = e
     switch (key) {
-      case 'self': {
-        break
-      }
-
-      case 'seller': {
-        break
-      }
-
       case 'toBeSeller': {
         setRegisteringSeller(true)
 
@@ -98,10 +97,6 @@ const UserMenu = (props) => {
         break
       }
 
-      case 'setting': {
-        break
-      }
-
       case 'logout': {
         dispatch(_logout())
         break
@@ -119,6 +114,14 @@ const UserMenu = (props) => {
         <Button type="text" style={{ fontWeight: 'bold' }}>
           {fullName}
         </Button>
+      </Menu.Item>
+
+      <Menu.Item key="bought" icon={<ShoppingCartOutlined />}>
+        <Link to="/order">
+          <Button type="text" style={{ textAlign: 'left' }}>
+            Đã mua
+          </Button>
+        </Link>
       </Menu.Item>
 
       {roles.includes('admin') && (
@@ -177,12 +180,13 @@ const UserMenu = (props) => {
 const Cart = (props) => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const { items } = useSelector((state) => state.cart)
+  const { items, loading } = useSelector((state) => state.cart)
+  const { fullName } = useSelector((state) => state.user)
   useEffect(() => {
     if (isAuthenticated()) {
       dispatch(_getMyCart())
     }
-  }, [])
+  }, [fullName])
 
   const handleCartClick = (e) => {
     if (!isAuthenticated()) {
@@ -202,7 +206,7 @@ const Cart = (props) => {
           <i className={`${styles['fa']} ${styles['fa-shopping-cart']}`} />
         </button>
         <span className={`${styles['badge']} ${styles['badge-pill']} ${styles['badge-danger']} ${styles['notify']}`}>
-          <Spin spinning={false}>{items.length}</Spin>
+          <Spin spinning={loading}>{items.length}</Spin>
         </span>
       </div>
     </>

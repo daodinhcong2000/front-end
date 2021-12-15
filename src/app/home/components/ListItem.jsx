@@ -13,16 +13,16 @@ const ListItem = (props) => {
         <div className={`${styles['row']} ${styles['no-gutters']}`}>
           <aside className={`${styles['col-md-3']}`}>
             <div className={`${styles['img-wrap']}`}>
-              {Date.now() - created <= 7 * 24 * 60 * 60 * 1000 && <span class="badge badge-danger"> NEW </span>}
+              {Date.now() - created <= 7 * 24 * 60 * 60 * 1000 && <span className="badge badge-danger"> NEW </span>}
               <img src={images[0]} />
             </div>
           </aside>
 
           <div className={`${styles['col-md-6']}`}>
             <div className={`${styles['info-main']}`}>
-              <a href="#" className={`${styles['h5']} ${styles['title']}`}>
+              <Link to={`/product/${productId}`} className={`${styles['h5']} ${styles['title']}`}>
                 {name}
-              </a>
+              </Link>
               <div className={`${styles['rating-wrap']} ${styles['mb-3']}`}>
                 <ul className={`${styles['rating-stars']}`}>
                   <li className={`${styles['stars-active']} ${styles['w-80']}`}>

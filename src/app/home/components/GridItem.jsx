@@ -11,7 +11,7 @@ const GridItem = (props) => {
       <div className={`${styles['col-md-4']}`}>
         <figure className={`${styles['card']} ${styles['card-product-grid']}`}>
           <div className={`${styles['img-wrap']}`}>
-            {Date.now() - created <= 7 * 24 * 60 * 60 * 1000 && <span class="badge badge-danger"> NEW </span>}
+            {Date.now() - created <= 7 * 24 * 60 * 60 * 1000 && <span className="badge badge-danger"> NEW </span>}
             <img src={images[0]} />
             <Link className={`${styles['btn-overlay']}`} to={`/product/${productId}`}>
               <i className={`${styles['fa']} ${styles['fa-search-plus']}`} /> Xem sản phẩm

@@ -65,6 +65,17 @@ export const deleteComment = (idComment) => {
   })
 }
 
+export const order = ({ cartItems, receivingAddress }) => {
+  return apiRequest({
+    url: `${CUSTOMER_SERVICE_API}/orders`,
+    method: 'POST',
+    data: {
+      cartItems,
+      receivingAddress
+    }
+  })
+}
+
 export const getOrder = (query) => {
   const queryString = query2string(query)
   return apiRequest({
