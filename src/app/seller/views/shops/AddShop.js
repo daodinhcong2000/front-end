@@ -33,7 +33,7 @@ const AddShop = () => {
     <CForm className="row g-3">
       <div className="mb-3">
         <CFormLabel htmlFor="exampleFormControlInput1">
-          Tên của hàng <span style={style}>*</span>
+          Tên cửa hàng <span style={style}>*</span>
         </CFormLabel>
         <CFormInput
           type="text"

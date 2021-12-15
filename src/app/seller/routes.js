@@ -12,6 +12,8 @@ const AddShop = React.lazy(() => import('./views/shops/AddShop'))
 const TableOrder = React.lazy(() => import('./views/orders/TableOrder'))
 const WaitingOrder = React.lazy(() => import('./views/orders/WaitingOrder'))
 
+const Statistic = React.lazy(() => import('./views/statistic/Statistic'))
+
 const routes = [
   { path: '/seller', name: 'Tổng quan', exact: true, component: Dashboard },
   { path: '/seller/add-product', name: 'Thêm sản phẩm', component: AddProduct },
@@ -20,7 +22,8 @@ const routes = [
   { path: '/seller/orders', name: 'Danh sách đơn hàng', component: TableOrder },
   { path: '/seller/waiting-orders', name: 'Đơn hàng chờ xác nhận', component: WaitingOrder },
   { path: '/seller/shops', name: 'Danh sách cửa hàng', component: TableShop },
-  { path: '/seller/register-shop', name: 'Thêm của hàng', component: AddShop }
+  { path: '/seller/register-shop', name: 'Thêm của hàng', component: AddShop },
+  { path: '/seller/statistics', name: 'Thống kê', component: Statistic }
 ]
 
 export default routes

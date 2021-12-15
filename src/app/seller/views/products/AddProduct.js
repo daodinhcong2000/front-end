@@ -239,7 +239,7 @@ const AddProduct = () => {
                   aria-label="Amount (to the nearest dollar)"
                   name="price"
                   onChange={(e) => handleChange(e)}
-                  placeholder="Nhập giá gốc sản phẩm của bạn"
+                  placeholder="Nhập giá bán sản phẩm của bạn"
                   value={data.price}
                 />
                 <CInputGroupText>VNĐ</CInputGroupText>

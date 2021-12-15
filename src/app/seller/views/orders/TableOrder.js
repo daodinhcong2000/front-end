@@ -58,6 +58,7 @@ const TableOrder = () => {
     getShops({}).then((response) => {
       setListShop(response.data.data)
     })
+    setLoading(false)
   }, [])
   useEffect(() => {
     if (shopId != '0') {
