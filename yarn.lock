@@ -2519,10 +2519,10 @@ accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.7:
     mime-types "~2.1.24"
     negotiator "0.6.2"
 
-accommerce-helpers@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/accommerce-helpers/-/accommerce-helpers-1.2.0.tgz#08ad2c1cc74e6535af761b0cdd8e535d5ec55e90"
-  integrity sha512-dMnr89w0MdiJbWkoPYhaceHhXz1RbqL+ksR7CRLdj0MVtFiiS41SAMRh9dMjVRD6X2XoGWT1/xBpvRbKbt0BkQ==
+accommerce-helpers@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/accommerce-helpers/-/accommerce-helpers-1.2.2.tgz#fd2791612456c13ad69e069e5644bfc57f9764f3"
+  integrity sha512-n9yWrxOb/RIxLCR680U/cAKOaNuUS/IX/z8MYROtdDV3G38I7E6I1QWiHaKDl/IOocj0ynYl/DZTVqtfRyXrsw==
 
 acorn-globals@^6.0.0:
   version "6.0.0"
