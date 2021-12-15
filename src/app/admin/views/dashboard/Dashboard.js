@@ -1,16 +1,17 @@
 import React, { lazy, useState, useEffect } from 'react'
-
 import { CButton, CButtonGroup, CCard, CCardBody, CCardFooter, CCol, CRow } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
 import { getStyle, hexToRgba } from '@coreui/utils'
-import CIcon from '@coreui/icons-react'
 import { cilCloudDownload } from '@coreui/icons'
-import { getUserInformation } from '../../../../services/api/customerApi'
-import { getRevenue, getRevenueShop, getRevenueSeller, getShops, getUsers } from '../../../../services/api/adminApi'
+import { getRevenue } from '../../../../services/api/adminApi'
+import { Typography } from 'antd'
 
-import { CFormSelect } from '@coreui/react'
+import numberSeparator from '../../../../helpers/validating/numberSeparator'
+import CIcon from '@coreui/icons-react'
 import moment from 'moment'
+
 const WidgetsDropdown = lazy(() => import('../widgets/WidgetsDropdown.js'))
+const { Title } = Typography
 
 const Dashboard = () => {
   const [statistics, setStatistics] = useState([])
@@ -31,10 +32,8 @@ const Dashboard = () => {
         <CCardBody>
           <CRow>
             <CCol sm={5}>
-              <h4 id="traffic" className="card-title mb-0">
-                Doanh thu bán hàng
-              </h4>
-              <div className="small text-medium-emphasis">Tổng doanh thu: {totalAmount} VNĐ</div>
+              <Title level={3}>Giá trị giao dịch</Title>
+              <div className="small text-medium-emphasis">Tổng giá trị: {numberSeparator(totalAmount)} VNĐ</div>
             </CCol>
             <CCol sm={7} className="d-none d-md-block">
               <CButton color="primary" className="float-end">
@@ -108,9 +107,7 @@ const Dashboard = () => {
         <CCardBody>
           <CRow>
             <CCol sm={5}>
-              <h4 id="traffic" className="card-title mb-0">
-                Số lượng đơn hàng
-              </h4>
+              <Title level={3}>Số lượng đơn hàng</Title>
               <div className="small text-medium-emphasis">Tổng đơn hàng: {orderCount}</div>
             </CCol>
             <CCol sm={7} className="d-none d-md-block">

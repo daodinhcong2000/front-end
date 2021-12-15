@@ -6,10 +6,8 @@ import { getStyle, hexToRgba } from '@coreui/utils'
 import CIcon from '@coreui/icons-react'
 import { cilCloudDownload } from '@coreui/icons'
 import { getUserInformation } from '../../../../services/api/customerApi'
-import { getRevenue, getRevenueShop } from '../../../../services/api/sellerApi'
-
-import { CFormSelect } from '@coreui/react'
-import { getShops } from '../../../../services/api/sellerApi'
+import { getRevenue } from '../../../../services/api/sellerApi'
+import numberSeparator from '../../../../helpers/validating/numberSeparator'
 import moment from 'moment'
 const WidgetsDropdown = lazy(() => import('../widgets/WidgetsDropdown.js'))
 
@@ -17,33 +15,16 @@ const Dashboard = () => {
   const [statistics, setStatistics] = useState([])
   const [totalAmount, setTotalAmount] = useState([])
   const [orderCount, setOrderCount] = useState([])
-  const [listShop, setListShop] = useState([])
-  const [shopId, setShopId] = useState('')
+
   useEffect(() => {
-    if (shopId == '' || shopId == 1) {
-      getUserInformation().then((respone) => {
-        getRevenue(respone.data.data._id, { from: moment().subtract(7, 'day'), to: moment() }).then((respone) => {
-          setTotalAmount(respone.data.data.totalAmount)
-          setOrderCount(respone.data.data.orderCount)
-          setStatistics(respone.data.data.statistics)
-        })
-      })
-    }
-  }, [shopId])
-  useEffect(() => {
-    getShops({}).then((response) => {
-      setListShop(response.data.data)
-    })
-  }, [])
-  useEffect(() => {
-    if (shopId != '' && shopId != 1) {
-      getRevenueShop(shopId, { from: moment().subtract(7, 'day'), to: moment() }).then((respone) => {
+    getUserInformation().then((respone) => {
+      getRevenue(respone.data.data._id, { from: moment().subtract(7, 'day'), to: moment() }).then((respone) => {
         setTotalAmount(respone.data.data.totalAmount)
         setOrderCount(respone.data.data.orderCount)
         setStatistics(respone.data.data.statistics)
       })
-    }
-  }, [shopId])
+    })
+  }, [])
 
   return (
     <>
@@ -54,7 +35,7 @@ const Dashboard = () => {
               <h4 id="traffic" className="card-title mb-0">
                 Doanh thu bán hàng
               </h4>
-              <div className="small text-medium-emphasis">Tổng doanh thu: {totalAmount} VNĐ</div>
+              <div className="small text-medium-emphasis">Tổng doanh thu: {numberSeparator(totalAmount)} VNĐ</div>
             </CCol>
             <CCol sm={7} className="d-none d-md-block">
               <CButton color="primary" className="float-end">
@@ -200,19 +181,6 @@ const Dashboard = () => {
         </CCardBody>
         <CCardFooter></CCardFooter>
       </CCard>
-
-      <div className="mb-3" id="changeProduct">
-        <CFormSelect aria-label="Default select example" onChange={(e) => setShopId(e.target.value)}>
-          <option value="1">Chọn shop để xem</option>
-          {listShop.map((shop) => {
-            return (
-              <option value={shop._id} key={shop._id}>
-                {shop.name}
-              </option>
-            )
-          })}
-        </CFormSelect>
-      </div>
       <WidgetsDropdown />
     </>
   )

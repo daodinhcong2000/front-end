@@ -7,6 +7,8 @@ import { useToast } from '../../../../contexts/toast'
 const ListUsersDetail = () => {
   const { error, warn, info, success } = useToast()
   const [details, setDetails] = useState([])
+  const [loading, setLoading] = useState(true)
+
   const columns = [
     {
       label: 'Tên tài khoản',
@@ -42,8 +44,9 @@ const ListUsersDetail = () => {
         data.idUser = data._id
       })
       setListUsers(response.data.data.users)
+      setLoading(false)
     })
-  }, [])
+  }, [loading])
 
   const getBadge = (role) => {
     switch (role) {
@@ -75,7 +78,7 @@ const ListUsersDetail = () => {
     deleteUser(idUser)
       .then((respone) => {
         success(respone.data.message)
-        setTimeout(window.location.reload(false), 3000)
+        setLoading(false)
       })
       .catch((err) => {
         error(err.response.data.message)
@@ -88,7 +91,7 @@ const ListUsersDetail = () => {
     putActiveUser(user.idUser, status)
       .then((respone) => {
         success(respone.data.message)
-        setTimeout(window.location.reload(false), 3000)
+        setLoading(false)
       })
       .catch((err) => {
         error(err.response.data.message)
@@ -104,6 +107,7 @@ const ListUsersDetail = () => {
         columnFilter
         noItemsLabel="Không có người dùng nào"
         columnSorter
+        loading={loading}
         items={listUsers}
         itemsPerPageSelect
         itemsPerPage={5}
@@ -173,7 +177,14 @@ const ListUsersDetail = () => {
                       </CCol>
                       <CCol xs>
                         {item.roles[item.roles.length - 1] != 'admin' ? (
-                          <CButton color="info" variant="outline" onClick={() => changeStatus(item)}>
+                          <CButton
+                            color="info"
+                            variant="outline"
+                            onClick={() => {
+                              setLoading(true)
+                              changeStatus(item)
+                            }}
+                          >
                             Đổi trạng thái
                           </CButton>
                         ) : (
@@ -184,7 +195,14 @@ const ListUsersDetail = () => {
                   </div>
                   <div className="mb-3">
                     {item.roles[item.roles.length - 1] != 'admin' ? (
-                      <CButton color="danger" shape="rounded-pill" onClick={() => handleDelete(item.idUser)}>
+                      <CButton
+                        color="danger"
+                        shape="rounded-pill"
+                        onClick={() => {
+                          setLoading(true)
+                          handleDelete(item.idUser)
+                        }}
+                      >
                         Xóa
                       </CButton>
                     ) : (

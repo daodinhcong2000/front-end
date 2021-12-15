@@ -57,6 +57,7 @@ const WaitingOrder = () => {
   useEffect(() => {
     getShops({}).then((response) => {
       setListShop(response.data.data)
+      setLoading(false)
     })
   }, [])
   useEffect(() => {
