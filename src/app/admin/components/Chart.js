@@ -3,10 +3,13 @@ import React, { lazy } from 'react'
 import { CButton, CButtonGroup, CCard, CCardBody, CCardFooter, CCol, CRow } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs'
 import { getStyle, hexToRgba } from '@coreui/utils'
-import CIcon from '@coreui/icons-react'
 import { cilCloudDownload } from '@coreui/icons'
+import { Typography } from 'antd'
 
+import CIcon from '@coreui/icons-react'
+import numberSeparator from '../../../helpers/validating/numberSeparator'
 const WidgetsDropdown = lazy(() => import('../views/widgets/WidgetsDropdown'))
+const { Title } = Typography
 
 const Chart = ({ statistics, totalAmount, orderCount, title }) => {
   return (
@@ -15,11 +18,9 @@ const Chart = ({ statistics, totalAmount, orderCount, title }) => {
         <CCardBody>
           <CRow>
             <CCol sm={5}>
-              <h4 id="traffic" className="card-title mb-0">
-                {title ? title[0] : 'Doanh thu bán hàng'}
-              </h4>
+              <Title level={3}> {title ? title[0] : 'Doanh thu bán hàng'}</Title>
               <div className="small text-medium-emphasis">
-                {title ? title[1] : 'Tổng doanh thu:'} {totalAmount}VNĐ
+                {title ? title[1] : 'Tổng doanh thu:'} {numberSeparator(totalAmount)} VNĐ
               </div>
             </CCol>
             <CCol sm={7} className="d-none d-md-block">
@@ -94,9 +95,7 @@ const Chart = ({ statistics, totalAmount, orderCount, title }) => {
         <CCardBody>
           <CRow>
             <CCol sm={5}>
-              <h4 id="traffic" className="card-title mb-0">
-                Số lượng đơn hàng
-              </h4>
+              <Title level={3}>Số lượng đơn hàng</Title>
               <div className="small text-medium-emphasis">Tổng đơn hàng: {orderCount}</div>
             </CCol>
             <CCol sm={7} className="d-none d-md-block">

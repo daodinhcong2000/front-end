@@ -7,6 +7,7 @@ import { useToast } from '../../../../contexts/toast'
 const ListUsersDetail = () => {
   const { error, warn, info, success } = useToast()
   const [details, setDetails] = useState([])
+  const [loading, setLoading] = useState(true)
   const columns = [
     {
       label: 'Tên cửa hàng',
@@ -42,8 +43,9 @@ const ListUsersDetail = () => {
         data.idShop = data._id
       })
       setListShops(response.data.data)
+      setLoading(false)
     })
-  }, [])
+  }, [loading])
 
   const getBadge = (role) => {
     switch (role) {
@@ -77,7 +79,7 @@ const ListUsersDetail = () => {
     putApproved(idShop, approvalStatus)
       .then((respone) => {
         success(respone.data.message)
-        setTimeout(window.location.reload(false), 3000)
+        setLoading(false)
       })
       .catch((err) => {
         error(err.response.data.message)
@@ -91,19 +93,18 @@ const ListUsersDetail = () => {
     putActiveShop(shop.idShop, status)
       .then((respone) => {
         success(respone.data.message)
-        setTimeout(window.location.reload(false), 3000)
+        setLoading(false)
       })
       .catch((err) => {
         error(err.response.data.message)
       })
-    //info('Tính năng đang hoàn thiện')
   }
 
   const handleDelete = (idShop) => {
     deleteShop(idShop)
       .then((respone) => {
         success(respone.data.message)
-        setTimeout(window.location.reload(false), 3000)
+        setLoading(false)
       })
       .catch((err) => {
         error(err.response.data.message)
@@ -118,6 +119,7 @@ const ListUsersDetail = () => {
         columns={columns}
         columnFilter
         columnSorter
+        loading={loading}
         noItemsLabel="Chưa có cửa hàng nào"
         items={listShops}
         itemsPerPageSelect
@@ -179,7 +181,14 @@ const ListUsersDetail = () => {
                         )}
                       </CCol>
                       <CCol xs>
-                        <CButton color="info" variant="outline" onClick={() => changeStatus(item)}>
+                        <CButton
+                          color="info"
+                          variant="outline"
+                          onClick={() => {
+                            setLoading(true)
+                            changeStatus(item)
+                          }}
+                        >
                           Đổi trạng thái
                         </CButton>
                       </CCol>
@@ -192,7 +201,10 @@ const ListUsersDetail = () => {
                           <CButton
                             color="success"
                             shape="rounded-pill"
-                            onClick={() => handleApproved(item.idShop, 'approved')}
+                            onClick={() => {
+                              setLoading(true)
+                              handleApproved(item.idShop, 'approved')
+                            }}
                           >
                             Phê duyệt
                           </CButton>
@@ -201,7 +213,10 @@ const ListUsersDetail = () => {
                           <CButton
                             color="danger"
                             shape="rounded-pill"
-                            onClick={() => handleApproved(item.idShop, 'rejected')}
+                            onClick={() => {
+                              setLoading(true)
+                              handleApproved(item.idShop, 'rejected')
+                            }}
                           >
                             Từ chối
                           </CButton>
