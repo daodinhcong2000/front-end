@@ -74,12 +74,12 @@ const Order = (props) => {
         <div className="container">
           <Tabs defaultActiveKey="" onChange={callback}>
             <TabPane tab="Tất cả" key=""></TabPane>
-            <TabPane tab={ORDER_STATUSES_MAPPING['Delivered']} key="Delivered"></TabPane>
             <TabPane
               tab={ORDER_STATUSES_MAPPING['Waiting for seller confirm']}
               key="Waiting for seller confirm"
             ></TabPane>
             <TabPane tab={ORDER_STATUSES_MAPPING['In transit']} key="In transit"></TabPane>
+            <TabPane tab={ORDER_STATUSES_MAPPING['Delivered']} key="Delivered"></TabPane>
             <TabPane tab={ORDER_STATUSES_MAPPING['Cancelled by customer']} key="Cancelled by customer"></TabPane>
             <TabPane tab={ORDER_STATUSES_MAPPING['Cancelled by seller']} key="Cancelled by seller"></TabPane>
           </Tabs>

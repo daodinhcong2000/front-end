@@ -25,7 +25,7 @@ const ListUsersDetail = () => {
       sorter: false,
       _style: { width: '20%' }
     },
-    { label: 'Trạng thái phê duyệt', filter: false, key: 'approvalStatus', _style: { width: '20%' } },
+    { label: 'Trạng thái phê duyệt', filter: true, key: 'approvalStatus', _style: { width: '20%' } },
     {
       key: 'show_details',
       label: '',

@@ -17,6 +17,7 @@ import {
 import { useToast } from '../../../../contexts/toast'
 
 const AddProduct = () => {
+  const style = { color: 'red' }
   const initData = {
     name: '',
     description: '',
@@ -132,7 +133,9 @@ const AddProduct = () => {
       </div>
       <CForm className="row g-3">
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput1">Tên sản phẩm</CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput1">
+            Tên sản phẩm <span style={style}>*</span>
+          </CFormLabel>
           <CFormInput
             type="text"
             id="exampleFormControlInput1"
@@ -142,7 +145,9 @@ const AddProduct = () => {
           />
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlInput1">Loại sản phẩm</CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlInput1">
+            Loại sản phẩm <span style={style}>*</span>
+          </CFormLabel>
           <CFormInput
             type="text"
             id="exampleFormControlInput1"
@@ -153,7 +158,9 @@ const AddProduct = () => {
           />
         </div>
         <div className="mb-3">
-          <CFormLabel htmlFor="exampleFormControlTextarea1">Mô tả sản phẩm</CFormLabel>
+          <CFormLabel htmlFor="exampleFormControlTextarea1">
+            Mô tả sản phẩm <span style={style}>*</span>
+          </CFormLabel>
           <CFormTextarea
             id="exampleFormControlTextarea1"
             rows="3"
@@ -164,7 +171,9 @@ const AddProduct = () => {
           ></CFormTextarea>
         </div>
         <CCol xs={12}>
-          <CFormLabel htmlFor="inputAddress">Phân loại hàng</CFormLabel>
+          <CFormLabel htmlFor="inputAddress">
+            Phân loại hàng <span style={style}>*</span>
+          </CFormLabel>
           {sizes.map((size, i) => {
             return (
               <div key={i} id="inputSize">
@@ -210,7 +219,7 @@ const AddProduct = () => {
             style={{ display: 'none' }}
           />
           <CButton onClick={onButtonClick} color="secondary" shape="rounded-pill">
-            Thêm ảnh
+            Thêm ảnh <span style={style}>*</span>
           </CButton>
         </CCol>
         <CCol xs={12} id="imageShow">
@@ -222,7 +231,9 @@ const AddProduct = () => {
         <div className="mb-3">
           <CRow>
             <CCol xs>
-              <CFormLabel htmlFor="exampleFormControlInput1">Giá bán</CFormLabel>
+              <CFormLabel htmlFor="exampleFormControlInput1">
+                Giá bán <span style={style}>*</span>
+              </CFormLabel>
               <CInputGroup>
                 <CFormInput
                   aria-label="Amount (to the nearest dollar)"
@@ -235,7 +246,9 @@ const AddProduct = () => {
               </CInputGroup>
             </CCol>
             <CCol xs>
-              <CFormLabel htmlFor="exampleFormControlInput1">Giá gốc</CFormLabel>
+              <CFormLabel htmlFor="exampleFormControlInput1">
+                Giá gốc <span style={style}>*</span>
+              </CFormLabel>
               <CInputGroup>
                 <CFormInput
                   type="text"
