@@ -126,7 +126,7 @@ const CommentProduct = ({ productId }) => {
       {userId != '' && ownComment.id == '' ? (
         <>
           <Form.Item>
-            <TextArea rows={4} name="comment" value={ownComment.comment} onChange={(e) => handleChange(e)} />
+            <TextArea rows={4} name="comment" onChange={(e) => handleChange(e)} />
             <span>
               <Rate name="rating" value={rating} onChange={(value) => setRating(value)} />
             </span>
