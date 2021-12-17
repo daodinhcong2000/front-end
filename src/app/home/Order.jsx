@@ -32,6 +32,7 @@ const Order = (props) => {
       })
       .catch((err) => {
         message.error(err.response.data.message)
+        setLoading(true)
       })
   }
 
@@ -43,6 +44,7 @@ const Order = (props) => {
       })
       .catch((err) => {
         message.error(err.response.data.message)
+        setLoading(true)
       })
   }
   const getBadge = (status) => {
@@ -74,11 +76,10 @@ const Order = (props) => {
       okType: 'danger',
       cancelText: 'Quay lại',
       onOk() {
+        setLoading(true)
         delOrder(orderId)
       },
-      onCancel() {
-        setLoading(true)
-      }
+      onCancel() {}
     })
   }
 

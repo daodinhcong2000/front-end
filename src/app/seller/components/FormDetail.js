@@ -12,47 +12,38 @@ import {
   CFormTextarea,
   CInputGroupText,
   CImage,
-  CRow
+  CRow,
+  CSpinner
 } from '@coreui/react'
 import { useToast } from '../../../contexts/toast'
 
 const FormDetail = (recvData) => {
   const { error, warn, info, success } = useToast()
   const inputFile = useRef(null)
-  const [data, setData] = useState(recvData.data)
+  const [data, setData] = useState({
+    name: recvData.data.name,
+    description: recvData.data.description,
+    category: recvData.data.category,
+    sizes: recvData.data.sizes,
+    images: recvData.data.images,
+    price: recvData.data.price,
+    originalPrice: recvData.data.originalPrice
+  })
   const [sizes, setSizes] = useState(data.sizes)
   const [imageUrls, setImageUrls] = useState(data.images)
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    delete data.views
-    delete data._id
-    delete data.rating
-    delete data.createdAt
-    delete data.sold
-    delete data.updatedAt
-    delete data.__v
-    var idProduct
-    var idShop
-    data.images = imageUrls
-
-    //console.log(data);
-    if (idProduct == null) {
-      idProduct = data.idProduct
-      delete data.idProduct
-    }
-    if (idShop == null) {
-      idShop = data.shop._id
-      delete data.shop
-    }
-    // console.log(data);
-    updateProduct(idShop, idProduct, data)
+    setLoading(true)
+    updateProduct(recvData.data.shop._id, recvData.data.idProduct, data)
       .then((respone) => {
         success(respone.data.message)
         window.location.reload(false)
       })
       .catch((err) => {
         error(err.response.data.message)
+        setLoading(false)
       })
   }
   const handleChange = (e) => setData({ ...data, [e.target.name]: e.target.value })
@@ -89,7 +80,7 @@ const FormDetail = (recvData) => {
     setSizes(list)
     data.sizes.splice(index, 1)
   }
-  //console.log(data);
+
   // handle click event of the Add button
   const handleAddClick = () => {
     if (sizes[sizes.length - 1].name == '' || sizes[sizes.length - 1].name == '') {
@@ -101,7 +92,6 @@ const FormDetail = (recvData) => {
   const deleteFile = (e) => {
     const s = imageUrls.filter((image, index) => index !== e)
     setImageUrls(s)
-    //console.log(s);
   }
   const onButtonClick = () => {
     inputFile.current.click()
@@ -225,7 +215,8 @@ const FormDetail = (recvData) => {
           </CRow>
         </div>
         <CCol xs={12}>
-          <CButton onClick={handleSubmit} type="submit">
+          <CButton disabled={loading} onClick={handleSubmit} type="submit">
+            {!loading ? '' : <CSpinner component="span" size="sm" aria-hidden="true" />}
             Lưu
           </CButton>
         </CCol>
