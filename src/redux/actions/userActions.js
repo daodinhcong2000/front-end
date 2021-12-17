@@ -54,10 +54,10 @@ export const _setUser = () => {
 
     return getUserInformation()
       .then((response) => {
-        const { _id, username, firstName, lastName, roles } = response.data.data
+        const { _id, username, firstName, lastName, roles, address } = response.data.data
         dispatch({
           type: 'LOG_IN',
-          payload: { userId: _id, username, fullName: `${firstName} ${lastName}`, roles }
+          payload: { userId: _id, username, fullName: `${firstName} ${lastName}`, address, roles }
         })
       })
       .catch((e) => {

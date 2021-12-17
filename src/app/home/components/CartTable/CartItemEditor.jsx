@@ -1,15 +1,14 @@
 import styles from '../../css_modules/css/all.module.css'
 
-import { Button, Select, InputNumber, Row, Col, Spin } from 'antd'
+import { Button, Select, InputNumber } from 'antd'
 
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { _deleteCartItems, _editCartItem, _hideEditForm, _showEditForm } from '../../../../redux/actions/cartActions'
 
 const CartItemActions = (props) => {
   const dispatch = useDispatch()
   const { cartItemId, sizes, size, quantity } = props
-  const { editing } = useSelector((state) => state.cart)
 
   const [showEdit, setShowEdit] = useState(false)
   const [editSize, setEditSize] = useState(size)
@@ -30,7 +29,12 @@ const CartItemActions = (props) => {
 
   return (
     <div className={`${styles['row']}`}>
-      <Button size="large" className={`${styles['btn']} ${styles['btn-danger']}`} onClick={handleDelete}>
+      <Button
+        size="large"
+        className={`${styles['btn']} ${styles['btn-danger']}`}
+        onClick={handleDelete}
+        style={{ marginLeft: '1rem' }}
+      >
         <i className={`${styles['fa']} ${styles['fa-trash']}`} />
       </Button>
 
@@ -38,6 +42,7 @@ const CartItemActions = (props) => {
         size="large"
         className={`${styles['btn']} ${!showEdit ? styles['btn-light'] : styles['btn-primary']}`}
         onClick={handleEditClick}
+        style={{ marginLeft: '1rem' }}
       >
         <i className={`${styles['fa']} ${styles['fa-pen']}`} />
       </Button>
@@ -47,6 +52,7 @@ const CartItemActions = (props) => {
           className={`${styles['btn']} ${styles['btn-success']}`}
           disabled={!isEdited()}
           onClick={handleEditCartItem}
+          style={{ marginLeft: '1rem' }}
         >
           <i className={`${styles['fa']} ${styles['fa-check']}`} />
         </Button>
@@ -58,38 +64,34 @@ const CartItemActions = (props) => {
             Loại hàng:{' '}
           </label>
           <div className={`${styles['col']}`}>
-            <Spin spinning={editing}>
-              <Select
-                id="size"
-                value={!editSize ? size : editSize}
-                onChange={(value) => setEditSize(value)}
-                style={{ width: '100%' }}
-              >
-                {sizes
-                  .sort((a, b) => a.name - b.name)
-                  .map((item, index) => {
-                    return (
-                      <Select.Option key={index} value={item.name} disabled={item.numberInStock === 0}>
-                        {item.name}
-                      </Select.Option>
-                    )
-                  })}
-              </Select>
-            </Spin>
+            <Select
+              id="size"
+              value={!editSize ? size : editSize}
+              onChange={(value) => setEditSize(value)}
+              style={{ width: '100%' }}
+            >
+              {sizes
+                .sort((a, b) => a.name - b.name)
+                .map((item, index) => {
+                  return (
+                    <Select.Option key={index} value={item.name} disabled={item.numberInStock === 0}>
+                      {item.name}
+                    </Select.Option>
+                  )
+                })}
+            </Select>
           </div>
 
           <label htmlFor="size" className="col-sm-1" style={{ marginTop: '5px' }}>
             Số lượng:{' '}
           </label>
           <div className="col">
-            <Spin spinning={editing}>
-              <InputNumber
-                type="number"
-                value={!editQuantity ? quantity : editQuantity}
-                onChange={(value) => setEditQuantity(value)}
-                min={1}
-              />
-            </Spin>
+            <InputNumber
+              type="number"
+              value={!editQuantity ? quantity : editQuantity}
+              onChange={(value) => setEditQuantity(value)}
+              min={1}
+            />
           </div>
         </>
       )}

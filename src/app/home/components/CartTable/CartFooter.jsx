@@ -3,16 +3,17 @@ import styles from '../../css_modules/css/all.module.css'
 import { Button, Form, Input, message as Message } from 'antd'
 
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import numberSeparator from '../../../../helpers/validating/numberSeparator'
 import { _deleteCartItems, _order } from '../../../../redux/actions/cartActions'
 
 const CartFooter = (props) => {
   const dispatch = useDispatch()
+  const { address: initialAddress } = useSelector((state) => state.user)
   const { selectedItems, discount } = props
-  const [showAddress, setShowAddress] = useState(false)
-  const [address, setAddress] = useState('')
+  const [address, setAddress] = useState(initialAddress)
+  console.log({ address, initialAddress })
 
   const orderPrice = (items) => {
     let sum = 0
@@ -36,15 +37,25 @@ const CartFooter = (props) => {
   }
 
   const handleOrder = (e) => {
-    if (!showAddress) {
-      setShowAddress(true)
+    if (selectedItems.length === 0) {
+      Message.error('Chọn ít nhất một món hàng!')
+    } else if (orderShops > 2) {
+      Message.warning(`Mỗi lần mua hàng chỉ đặt của một shop`)
     } else {
-      if (orderShops > 2) {
-        Message.warning(`Mỗi lần mua hàng chỉ đặt của một shop`)
-      } else {
-        const cartItems = selectedItems.map((item) => item.cartItemId)
-        dispatch(_order(cartItems, address))
-      }
+      const cartItems = selectedItems.map((item) => item.cartItemId)
+      _order(cartItems, address)
+        .then((res) => {
+          Message.success('Đặt hàng thành công!')
+        })
+        .catch((e) => {
+          const { status, data } = e.response
+          if (status >= 500) {
+            Message.error('Lỗi hệ thống, vui lòng thử lại sau!')
+          } else {
+            const { message } = data
+            Message.error(message)
+          }
+        })
     }
   }
 
@@ -77,39 +88,41 @@ const CartFooter = (props) => {
           <dd className="text-right">₫ {numberSeparator(orderPrice(selectedItems))}</dd>
         </dl>
         <dl className="dlist-align">
+          <dt>Phí vận chuyển</dt>
+          <dd className="text-right">₫ {numberSeparator(orderItems(selectedItems) * 1000)}</dd>
+        </dl>
+        <dl className="dlist-align">
           <dt>Giảm</dt>
           <dd className="text-right">₫ {numberSeparator(discount)}</dd>
         </dl>
         <dl className="dlist-align">
           <dt>Thành tiền</dt>
           <dd className="text-right  h5">
-            <strong>₫ {numberSeparator(orderPrice(selectedItems) - discount)}</strong>
+            <strong>
+              ₫ {numberSeparator(orderPrice(selectedItems) - discount + orderItems(selectedItems) * 1000)}
+            </strong>
           </dd>
         </dl>
         <hr />
       </div>
 
-      {showAddress && (
-        <>
-          <Form
-            name="register"
-            labelCol={{ span: 4 }}
-            wrapperCol={{ span: 20 }}
-            initialValues={{ remember: true }}
-            autoComplete="off"
-            style={{ textAlign: 'center' }}
-          >
-            <Form.Item
-              label="Địa chỉ nhận hàng"
-              hasFeedback
-              required
-              help={!address ? 'Cần nhập địa chỉ nhận hàng' : ''}
-            >
-              <Input allowClear={true} onChange={(e) => setAddress(e.target.value)} />
-            </Form.Item>
-          </Form>
-        </>
-      )}
+      <Form
+        name="register"
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 20 }}
+        initialValues={{ remember: true }}
+        autoComplete="off"
+        style={{ textAlign: 'center' }}
+      >
+        <Form.Item
+          label="Địa chỉ nhận hàng"
+          hasFeedback
+          required
+          help={!(address || initialAddress) ? 'Cần nhập địa chỉ nhận hàng' : ''}
+        >
+          <Input allowClear={true} onChange={(e) => setAddress(e.target.value)} />
+        </Form.Item>
+      </Form>
 
       <div className="cart-footer row">
         <div className="col-sm-4">
@@ -119,7 +132,6 @@ const CartFooter = (props) => {
         </div>
         <div className="col-sm-4" style={{ textAlign: 'center' }}>
           <Button
-            disabled={selectedItems.length === 0 || (showAddress && !address)}
             size="large"
             className={`${styles['btn']} ${styles['btn-success']}`}
             data-toggle="tooltip"

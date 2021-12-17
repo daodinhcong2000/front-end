@@ -89,12 +89,10 @@ const RegisterForm = (props) => {
         return Message.error(message)
       } else {
         Message.success(`Người dùng ${firstName} ${lastName} đã đăng ký tài khoản ${username} thành công`)
-        setTimeout(() => {
-          setLoading(false)
-          setPayload(initial)
-          setStatus(initial)
-          dispatch(_changeLogForm('login'))
-        }, 3000)
+        setLoading(false)
+        setPayload(initial)
+        setStatus(initial)
+        dispatch(_changeLogForm('login'))
       }
     } else {
       setLoading(false)

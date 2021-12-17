@@ -10,11 +10,6 @@ const searchInitialState = {
 
 const searchReducer = (state = searchInitialState, action) => {
   switch (action.type) {
-    case 'SET_KEYWORD': {
-      const { keyword } = action.payload
-      return { ...state, keyword }
-    }
-
     case 'SEARCHING': {
       return { ...state, searching: true }
     }
@@ -25,8 +20,8 @@ const searchReducer = (state = searchInitialState, action) => {
     }
 
     case 'PAGINATION': {
-      const { page, limit, sort } = action.payload
-      return { ...state, page, limit, sort }
+      const { page, limit, sort, keyword } = action.payload
+      return { ...state, page, limit, sort, keyword }
     }
 
     default:

@@ -11,7 +11,9 @@ import { Link, useParams } from 'react-router-dom'
 
 import numberSeparator from '../../helpers/validating/numberSeparator'
 import { getOneProduct } from '../../services/api/userApi'
-import { _addToCart } from '../../redux/actions/cartActions'
+import { addToCart } from '../../services/api/customerApi'
+import Paragraph from 'antd/lib/skeleton/Paragraph'
+import { _getMyCart } from '../../redux/actions/cartActions'
 
 const Product = (props) => {
   const dispatch = useDispatch()
@@ -31,20 +33,50 @@ const Product = (props) => {
       .then((res) => {
         const { data } = res.data
         setProduct(data)
-        setTargetImage(product.images[0])
         setLoading(false)
       })
       .catch((e) => {
-        console.log(e.response)
+        const { status, data } = e.response
+        if (status >= 500) {
+          Message.error('Lỗi hệ thống, vui lòng thử lại sau!')
+        } else {
+          const { message } = data
+          Message.error(message)
+        }
         setLoading(false)
       })
   }, [productId])
 
-  const handleAddToCart = (e) => {
+  useEffect(() => {
+    if (cartError) {
+      Message.error(cartError)
+    }
+  }, [cartError])
+
+  const handleAddToCart = async (e) => {
+    setLoading(true)
     if (!targetSize) {
-      return Message.error('Vui lòng chọn size!')
+      Message.error('Vui lòng chọn size!')
+    } else if (!quantity) {
+      Message.error('Vui lòng nhập số lượng muốn mua!')
     } else {
-      dispatch(_addToCart(productId, targetSize, quantity))
+      addToCart({ product: productId, size: targetSize, quantity })
+        .then((res) => {
+          Message.success(`Thêm ${quantity} sản phẩm vào giỏ thành công!`)
+          setLoading(false)
+          dispatch(_getMyCart())
+        })
+        .catch((e) => {
+          const { status, data } = e.response
+          if (status >= 500) {
+            Message.error('Lỗi hệ thống, vui lòng thử lại sau!')
+          } else {
+            const { message } = data
+            Message.error(message)
+          }
+
+          setLoading(false)
+        })
     }
   }
 
@@ -65,7 +97,7 @@ const Product = (props) => {
                     <aside className="col-md-6">
                       <article className="gallery-wrap">
                         <div className="card img-big-wrap">
-                          <img className="card img-big-wrap" src={targetImage} />
+                          <img className="card img-big-wrap" src={targetImage || product.images[0]} />
                         </div>
 
                         <div className="thumbs-wrap">
@@ -92,6 +124,13 @@ const Product = (props) => {
                         {/* Name */}
                         <h3 className="title">{product.name}</h3>
 
+                        <Link
+                          to={`/search?keyword=${product.category}`}
+                          className="btn-link text-warning"
+                          style={{ fontSize: '120%' }}
+                        >
+                          <i className="fa fa-store" /> {product.shop.name}
+                        </Link>
                         {/* Rating */}
                         <div>
                           <ul className="rating-stars">
@@ -127,13 +166,19 @@ const Product = (props) => {
 
                         {/* Descroption */}
                         <div className="mb-3">
-                          <h6>Mô tả</h6>
-                          {product.description}
+                          <h6 style={{ fontWeight: 'bold' }}>Mô tả</h6>
+                          <>
+                            {product.description.split('\n').map((paragraph, index) => {
+                              return <p key={index}>{paragraph}</p>
+                            })}
+                          </>
                         </div>
 
                         {/* Sizes */}
                         <div className="form-group">
-                          <label className="text-muted">Size</label>
+                          <label className="text-dark" style={{ fontWeight: 'bold' }}>
+                            Loại hàng
+                          </label>
                           <div>
                             <Radio.Group
                               onChange={(e) => {
@@ -167,10 +212,12 @@ const Product = (props) => {
 
                         {/* Quantity */}
                         <div className="form-group">
-                          <label className="text-muted">Số lượng</label>
+                          <label className="text-dark" style={{ fontWeight: 'bold' }}>
+                            Số lượng
+                          </label>
                           <div>
                             <InputNumber
-                              defaultValue={1}
+                              value={quantity}
                               min={1}
                               max={targetStock || 1}
                               onChange={(value) => setQuantity(value)}
