@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { getOrder, confirmOrder, cancelOrder } from '../../services/api/customerApi'
+import { CBadge, CRow, CCol, CButton } from '@coreui/react-pro'
+import { ORDER_STATUSES_MAPPING } from 'accommerce-helpers'
+import { message, Tabs, Spin, Typography, Modal } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
+
 import OrderItem from './components/OrderItem'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import { CBadge, CRow, CCol, CButton } from '@coreui/react-pro'
-import { ORDER_STATUSES_MAPPING } from 'accommerce-helpers'
-import { message, Tabs, Spin, Typography } from 'antd'
 import numberSeparator from '../../helpers/validating/numberSeparator'
 
+const { confirm } = Modal
 const { TabPane } = Tabs
 const { Title } = Typography
 const Order = (props) => {
@@ -21,7 +24,7 @@ const Order = (props) => {
     })
   }, [loading])
 
-  const confirm = (orderId) => {
+  const confirmOd = (orderId) => {
     confirmOrder(orderId)
       .then((respone) => {
         message.success(respone.data.message)
@@ -62,6 +65,23 @@ const Order = (props) => {
     setStatus(key)
     setLoading(true)
   }
+
+  const showDeleteConfirm = (orderId) => {
+    confirm({
+      title: 'Bạn chắc chắn muốn hủy đơn hàng này?',
+      icon: <ExclamationCircleOutlined />,
+      okText: 'Đồng ý',
+      okType: 'danger',
+      cancelText: 'Quay lại',
+      onOk() {
+        delOrder(orderId)
+      },
+      onCancel() {
+        setLoading(true)
+      }
+    })
+  }
+
   return (
     <>
       <Header />
@@ -107,7 +127,7 @@ const Order = (props) => {
                                   color="danger"
                                   shape="rounded-pill"
                                   onClick={() => {
-                                    delOrder(order._id)
+                                    showDeleteConfirm(order._id)
                                   }}
                                 >
                                   Hủy đơn hàng
@@ -122,7 +142,7 @@ const Order = (props) => {
                                   color="success"
                                   shape="rounded-pill"
                                   onClick={() => {
-                                    confirm(order._id)
+                                    confirmOd(order._id)
                                   }}
                                 >
                                   Đã nhận hàng
