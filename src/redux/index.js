@@ -15,7 +15,7 @@ const reducers = combineReducers({
 
 const store = createStore(reducers, applyMiddleware(thunk))
 // store.subscribe(() => {
-//   console.log(JSON.stringify(store.getState().user))
+//   console.log(JSON.stringify(store.getState().search.sort))
 // })
 
 export default store

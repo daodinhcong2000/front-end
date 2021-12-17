@@ -45,11 +45,7 @@ const Home = (props) => {
           <Spin spinning={searching} size="large">
             <div className="row">
               {items.slice(0, 12).map((item, index) => {
-                return (
-                  <>
-                    <ProductItem key={index} {...item} />
-                  </>
-                )
+                return <ProductItem key={index} {...item} />
               })}
             </div>
           </Spin>

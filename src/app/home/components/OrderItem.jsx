@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { CSmartTable } from '@coreui/react-pro'
 import { CImage, CRow, CCol } from '@coreui/react-pro'
 import numberSeparator from '../../../helpers/validating/numberSeparator'
@@ -38,7 +39,7 @@ const OrderItem = (props) => {
                 </CCol>
                 <CCol sm={10}>
                   <Title id="traffic" className="card-title mb-0" level={4}>
-                    {item.product.name}
+                    <Link to={`/product/${item.product._id}`}>{item.product.name}</Link>
                   </Title>
                   <div className="small text-medium-emphasis">Phân loại hàng: {item.size}</div>
                   <div className=" text-medium">x{item.quantity}</div>

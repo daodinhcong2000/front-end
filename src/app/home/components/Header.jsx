@@ -80,7 +80,7 @@ const UserMenu = (props) => {
             setTimeout(() => {
               setRegisteringSeller(false)
               window.location.href = '/seller'
-            }, 3000)
+            }, 1000)
           })
           .catch((e) => {
             const { status } = e.response
@@ -119,7 +119,7 @@ const UserMenu = (props) => {
       <Menu.Item key="bought" icon={<ShoppingCartOutlined />}>
         <Link to="/order">
           <Button type="text" style={{ textAlign: 'left' }}>
-            Đã mua
+            Đơn hàng
           </Button>
         </Link>
       </Menu.Item>

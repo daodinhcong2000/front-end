@@ -4,6 +4,7 @@ const userInitialState = {
   userId: '',
   username: '',
   fullName: '',
+  address: '',
   roles: ['customer'],
   error: ''
 }
@@ -15,8 +16,8 @@ const userReducer = (state = userInitialState, action) => {
     }
 
     case 'LOG_IN': {
-      const { userId, username, fullName, roles } = action.payload
-      return { loading: false, userId, username, fullName, roles, error: '' }
+      const { userId, username, fullName, roles, address } = action.payload
+      return { loading: false, userId, username, fullName, roles, address, error: '' }
     }
 
     case 'LOG_OUT': {

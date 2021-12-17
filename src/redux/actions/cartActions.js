@@ -72,7 +72,7 @@ export const _editCartItem = (cartItemId, size, quantity) => {
 
   return (dispatch) => {
     dispatch({
-      type: 'EDIT_CART'
+      type: 'LOAD_CART'
     })
 
     return editCartItem(payload)

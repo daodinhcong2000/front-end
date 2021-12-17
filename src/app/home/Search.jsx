@@ -51,7 +51,7 @@ const Search = (props) => {
       <section className="section-content padding-y">
         <div className="container">
           <div className="row">
-            <Sider />
+            {/* <Sider /> */}
             {view === 'list' ? (
               <ListView list={items} changeView={(e) => setView('grid')} />
             ) : (
