@@ -1,15 +1,21 @@
-import React, { useState, useEffect, Suspense } from 'react'
-import { CSmartTable, CBadge, CButton, CCollapse, CCardBody } from '@coreui/react-pro'
+import React, { useState } from 'react'
+import { CSmartTable, CButton, CCollapse, CCardBody, CSpinner } from '@coreui/react-pro'
+import { deleteProduct } from '../../../services/api/sellerApi'
+import { useToast } from '../../../contexts/toast'
+import { Modal } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import ReactStars from 'react-rating-stars-component'
 import FormDetail from './FormDetail'
 import FormDetailDelete from './FormDetailDelete'
-import { deleteProduct } from '../../../services/api/sellerApi'
-import { useToast } from '../../../contexts/toast'
+import numberSeparator from '../../../helpers/validating/numberSeparator'
 
+const { confirm } = Modal
 const TableProduct = ({ columns, usersData, type }) => {
   const { error, warn, info, success } = useToast()
   const [details, setDetails] = useState([])
   const [idDelete, setIdDelete] = useState([])
+  const [loading, setLoading] = useState(false)
+
   const idProduct = []
   const idDeleteProduct = {
     productIds: []
@@ -20,6 +26,7 @@ const TableProduct = ({ columns, usersData, type }) => {
   })
 
   const handleDelete = () => {
+    setLoading(true)
     idDelete.map((id, i) => (idDeleteProduct.productIds[i] = idProduct[id]))
     if (idDeleteProduct.productIds.length == 0) {
       warn('Vui lòng chọn sản phẩm cần xóa')
@@ -59,87 +66,104 @@ const TableProduct = ({ columns, usersData, type }) => {
       }
     })
   }
-
+  const showDeleteConfirm = () => {
+    if (idDelete.length == 0) {
+      warn('Vui lòng chọn sản phẩm cần xóa')
+    } else {
+      confirm({
+        title: 'Bạn chắc chắn xóa sản phẩm này?',
+        icon: <ExclamationCircleOutlined />,
+        style: { top: 200 },
+        okText: 'Đồng ý',
+        okType: 'danger',
+        cancelText: 'Quay lại',
+        onOk() {
+          handleDelete()
+        },
+        onCancel() {
+          setLoading(false)
+        }
+      })
+    }
+  }
   return (
     <div>
-      <Suspense fallback={<h1>Loading posts...</h1>}>
-        <CSmartTable
-          activePage={3}
-          cleaner
-          clickableRows
-          columns={columns}
-          columnFilter
-          columnSorter
-          loading={false}
-          items={usersData}
-          itemsPerPageSelect
-          itemsPerPage={5}
-          pagination
-          scopedColumns={{
-            rating: (item) => (
-              <td>
-                <ReactStars size="30" value={item.rating} edit={false} disable />
+      <CSmartTable
+        activePage={3}
+        cleaner
+        clickableRows
+        columns={columns}
+        columnFilter
+        columnSorter
+        loading={false}
+        items={usersData}
+        itemsPerPageSelect
+        itemsPerPage={5}
+        pagination
+        scopedColumns={{
+          rating: (item) => (
+            <td>
+              <ReactStars size="30" value={item.rating} edit={false} disable />
+            </td>
+          ),
+          price: (item) => <td>{numberSeparator(item.price)} VNĐ</td>,
+          show_details: (item) => {
+            return (
+              <td className="py-2">
+                <div>
+                  <CButton
+                    color="primary"
+                    variant="outline"
+                    shape="square"
+                    size="sm"
+                    onClick={() => {
+                      toggleDetails(item._id)
+                    }}
+                  >
+                    {details.includes(item._id) ? 'Hide' : 'Show'}
+                  </CButton>
+                  {type === 'fix' ? (
+                    ''
+                  ) : (
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      idDelete={idDelete.includes(item._id)}
+                      onChange={() => handleCheck(item._id)}
+                      id="checkProduct"
+                    ></input>
+                  )}
+                </div>
               </td>
-            ),
-            show_details: (item) => {
-              return (
-                <td className="py-2">
-                  <div>
-                    <CButton
-                      color="primary"
-                      variant="outline"
-                      shape="square"
-                      size="sm"
-                      onClick={() => {
-                        toggleDetails(item._id)
-                      }}
-                    >
-                      {details.includes(item._id) ? 'Hide' : 'Show'}
-                    </CButton>
-                    {type === 'fix' ? (
-                      ''
-                    ) : (
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        idDelete={idDelete.includes(item._id)}
-                        onChange={() => handleCheck(item._id)}
-                        id="checkProduct"
-                      ></input>
-                    )}
-                  </div>
-                </td>
-              )
-            },
-            details: (item) => {
-              return (
-                <CCollapse visible={details.includes(item._id)}>
-                  <CCardBody>
-                    {type === 'fix' ? <FormDetail data={item} /> : <FormDetailDelete data={item} />}
-                  </CCardBody>
-                </CCollapse>
-              )
-            }
-          }}
-          sorterValue={{ column: 'name', state: 'asc' }}
-          tableFilter
-          tableHeadProps={{
-            color: 'none'
-          }}
-          tableProps={{
-            striped: true,
-            hover: true
-          }}
-        />
+            )
+          },
+          details: (item) => {
+            return (
+              <CCollapse visible={details.includes(item._id)}>
+                <CCardBody>{type === 'fix' ? <FormDetail data={item} /> : <FormDetailDelete data={item} />}</CCardBody>
+              </CCollapse>
+            )
+          }
+        }}
+        sorterValue={{ column: 'name', state: 'asc' }}
+        tableFilter
+        tableHeadProps={{
+          color: 'none'
+        }}
+        tableProps={{
+          striped: true,
+          hover: true
+        }}
+      />
+      <>
         {type === 'fix' ? (
           ''
         ) : (
-          <CButton onClick={handleDelete} color="danger">
-            {' '}
-            Xóa{' '}
+          <CButton disabled={loading} onClick={showDeleteConfirm} color="danger">
+            {!loading ? '' : <CSpinner component="span" size="sm" aria-hidden="true" />} Xóa{' '}
           </CButton>
         )}
-      </Suspense>
+      </>
     </div>
   )
 }

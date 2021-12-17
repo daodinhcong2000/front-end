@@ -11,6 +11,7 @@ import {
   CImage,
   CRow
 } from '@coreui/react'
+import numberSeparator from '../../../helpers/validating/numberSeparator'
 
 const FormDetailDelete = (recvData) => {
   const [data, setData] = useState(recvData.data)
@@ -33,7 +34,7 @@ const FormDetailDelete = (recvData) => {
         </div>
         <div className="mb-3">
           <CFormLabel htmlFor="exampleFormControlInput1">Loại sản phẩm</CFormLabel>
-          <CFormInput disabled type="text" id="exampleFormControlInput1" name="category" value={data.description} />
+          <CFormInput disabled type="text" id="exampleFormControlInput1" name="category" value={data.category} />
         </div>
         <div className="mb-3">
           <CFormLabel htmlFor="exampleFormControlTextarea1">Mô tả sản phẩm</CFormLabel>
@@ -74,7 +75,12 @@ const FormDetailDelete = (recvData) => {
             <CCol xs>
               <CFormLabel htmlFor="exampleFormControlInput1">Giá bán</CFormLabel>
               <CInputGroup className="mb-3">
-                <CFormInput aria-label="Amount (to the nearest dollar)" name="price" disabled value={data.price} />
+                <CFormInput
+                  aria-label="Amount (to the nearest dollar)"
+                  name="price"
+                  disabled
+                  value={numberSeparator(data.price)}
+                />
                 <CInputGroupText>VNĐ</CInputGroupText>
               </CInputGroup>
             </CCol>
@@ -85,7 +91,7 @@ const FormDetailDelete = (recvData) => {
                   aria-label="Amount (to the nearest dollar)"
                   name="originalPrice"
                   disabled
-                  value={data.originalPrice}
+                  value={numberSeparator(data.originalPrice)}
                 />
                 <CInputGroupText>VNĐ</CInputGroupText>
               </CInputGroup>

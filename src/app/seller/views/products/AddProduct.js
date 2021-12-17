@@ -12,7 +12,8 @@ import {
   CInputGroupText,
   CImage,
   CRow,
-  CFormSelect
+  CFormSelect,
+  CSpinner
 } from '@coreui/react'
 import { useToast } from '../../../../contexts/toast'
 
@@ -35,6 +36,8 @@ const AddProduct = () => {
   const [images, setImages] = useState([])
   const [shopId, setShopId] = useState('0')
   const [listShop, setListShop] = useState([])
+  const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     getShops({}).then((response) => {
       setListShop(response.data.data)
@@ -62,9 +65,14 @@ const AddProduct = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    setLoading(true)
     data.images = images
     if (shopId == 0) {
       warn('Vui lòng chọn cửa hàng')
+      setLoading(false)
+    } else if (data.sizes.length == 0) {
+      warn('Sản phẩm cần tối thiểu một loại hàng')
+      setLoading(false)
     } else {
       postProduct(shopId, data)
         .then((respone) => {
@@ -77,6 +85,7 @@ const AddProduct = () => {
         })
         .catch((err) => {
           error(err.response.data.message)
+          setLoading(false)
         })
     }
   }
@@ -264,7 +273,8 @@ const AddProduct = () => {
           </CRow>
         </div>
         <CCol xs={12}>
-          <CButton onClick={handleSubmit} type="submit" color="primary">
+          <CButton disabled={loading} onClick={handleSubmit} type="submit" color="primary">
+            {!loading ? '' : <CSpinner component="span" size="sm" aria-hidden="true" />}
             Đăng sản phẩm
           </CButton>
         </CCol>

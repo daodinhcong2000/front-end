@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { postShop } from '../../../../services/api/sellerApi'
-import { CButton, CCol, CForm, CFormInput, CFormLabel } from '@coreui/react'
+import { CButton, CCol, CForm, CFormInput, CFormLabel, CSpinner } from '@coreui/react'
 import { useToast } from '../../../../contexts/toast'
 
 const AddShop = () => {
@@ -11,22 +11,20 @@ const AddShop = () => {
     address: ''
   })
   const { error, warn, info, success } = useToast()
+  const [loading, setLoading] = useState(false)
+
   const handleChange = (e) => setData({ ...data, [e.target.name]: e.target.value })
   const handleSubmit = (event) => {
     event.preventDefault()
-
+    setLoading(true)
     postShop(data)
       .then((respone) => {
-        if (respone.data.success == true) {
-          window.location.reload()
-          success(respone.data.message)
-          setTimeout(setData([]), 3000)
-        } else {
-          error(respone.data.message)
-        }
+        success(respone.data.message)
+        window.location.reload(false)
       })
       .catch((err) => {
         error(err.response.data.message)
+        setLoading(false)
       })
   }
   return (
@@ -67,7 +65,10 @@ const AddShop = () => {
         />
       </div>
       <CCol xs={12}>
-        <CButton onClick={handleSubmit}>Gửi</CButton>
+        <CButton disabled={loading} onClick={handleSubmit}>
+          {!loading ? '' : <CSpinner component="span" size="sm" aria-hidden="true" />}
+          Gửi
+        </CButton>
       </CCol>
     </CForm>
   )
