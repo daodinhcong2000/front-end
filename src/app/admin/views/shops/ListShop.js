@@ -3,7 +3,10 @@ import { getShops, putApproved, putActiveShop, deleteShop } from '../../../../se
 import { CSmartTable, CBadge, CButton, CCollapse, CCardBody } from '@coreui/react-pro'
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react'
 import { useToast } from '../../../../contexts/toast'
+import { Modal } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 
+const { confirm } = Modal
 const ListUsersDetail = () => {
   const { error, warn, info, success } = useToast()
   const [details, setDetails] = useState([])
@@ -83,6 +86,7 @@ const ListUsersDetail = () => {
       })
       .catch((err) => {
         error(err.response.data.message)
+        setLoading(false)
       })
   }
 
@@ -97,6 +101,7 @@ const ListUsersDetail = () => {
       })
       .catch((err) => {
         error(err.response.data.message)
+        setLoading(false)
       })
   }
 
@@ -108,7 +113,44 @@ const ListUsersDetail = () => {
       })
       .catch((err) => {
         error(err.response.data.message)
+        setLoading(false)
       })
+  }
+
+  const showDeleteConfirm = (idShop) => {
+    confirm({
+      title: 'Bạn chắc chắn muốn xóa cửa hàng này?',
+      icon: <ExclamationCircleOutlined />,
+      style: { top: 200 },
+      okText: 'Đồng ý',
+      okType: 'danger',
+      cancelText: 'Quay lại',
+      onOk() {
+        handleDelete(idShop)
+        setLoading(true)
+      },
+      onCancel() {
+        setLoading(false)
+      }
+    })
+  }
+
+  const showRejectConfirm = (idShop) => {
+    confirm({
+      title: 'Bạn chắc chắn muốn từ chối cửa hàng này?',
+      icon: <ExclamationCircleOutlined />,
+      style: { top: 200 },
+      okText: 'Đồng ý',
+      okType: 'danger',
+      cancelText: 'Quay lại',
+      onOk() {
+        handleApproved(idShop, 'rejected')
+        setLoading(true)
+      },
+      onCancel() {
+        setLoading(false)
+      }
+    })
   }
   return (
     <div>
@@ -184,6 +226,7 @@ const ListUsersDetail = () => {
                         <CButton
                           color="info"
                           variant="outline"
+                          disabled={loading}
                           onClick={() => {
                             setLoading(true)
                             changeStatus(item)
@@ -200,6 +243,7 @@ const ListUsersDetail = () => {
                         <CCol xs>
                           <CButton
                             color="success"
+                            disabled={loading}
                             shape="rounded-pill"
                             onClick={() => {
                               setLoading(true)
@@ -211,11 +255,11 @@ const ListUsersDetail = () => {
                         </CCol>
                         <CCol xs>
                           <CButton
+                            disabled={loading}
                             color="danger"
                             shape="rounded-pill"
                             onClick={() => {
-                              setLoading(true)
-                              handleApproved(item.idShop, 'rejected')
+                              showRejectConfirm(item.idShop)
                             }}
                           >
                             Từ chối
@@ -229,7 +273,12 @@ const ListUsersDetail = () => {
                   <div className="mb-3">
                     {item.approvalStatus == 'approved' ? (
                       <CCol xs>
-                        <CButton color="danger" shape="rounded-pill" onClick={() => handleDelete(item.idShop)}>
+                        <CButton
+                          disabled={loading}
+                          color="danger"
+                          shape="rounded-pill"
+                          onClick={() => showDeleteConfirm(item.idShop)}
+                        >
                           Xóa cửa hàng
                         </CButton>
                       </CCol>

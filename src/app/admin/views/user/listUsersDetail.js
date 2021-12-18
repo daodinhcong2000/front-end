@@ -3,7 +3,10 @@ import { getUsers, deleteUser, putActiveUser } from '../../../../services/api/ad
 import { CSmartTable, CBadge, CButton, CCollapse, CCardBody } from '@coreui/react-pro'
 import { CCol, CFormInput, CFormLabel, CRow } from '@coreui/react'
 import { useToast } from '../../../../contexts/toast'
+import { Modal } from 'antd'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 
+const { confirm } = Modal
 const ListUsersDetail = () => {
   const { error, warn, info, success } = useToast()
   const [details, setDetails] = useState([])
@@ -74,7 +77,6 @@ const ListUsersDetail = () => {
   }
 
   const handleDelete = (idUser) => {
-    //console.log(idUser)
     deleteUser(idUser)
       .then((respone) => {
         success(respone.data.message)
@@ -82,6 +84,7 @@ const ListUsersDetail = () => {
       })
       .catch((err) => {
         error(err.response.data.message)
+        setLoading(false)
       })
   }
   const changeStatus = (user) => {
@@ -95,7 +98,26 @@ const ListUsersDetail = () => {
       })
       .catch((err) => {
         error(err.response.data.message)
+        setLoading(false)
       })
+  }
+
+  const showDeleteConfirm = (idUser) => {
+    confirm({
+      title: 'Bạn chắc chắn muốn xóa người dùng này?',
+      icon: <ExclamationCircleOutlined />,
+      style: { top: 200 },
+      okText: 'Đồng ý',
+      okType: 'danger',
+      cancelText: 'Quay lại',
+      onOk() {
+        handleDelete(idUser)
+        setLoading(true)
+      },
+      onCancel() {
+        setLoading(false)
+      }
+    })
   }
   return (
     <div>
@@ -199,8 +221,7 @@ const ListUsersDetail = () => {
                         color="danger"
                         shape="rounded-pill"
                         onClick={() => {
-                          setLoading(true)
-                          handleDelete(item.idUser)
+                          showDeleteConfirm(item.idUser)
                         }}
                       >
                         Xóa

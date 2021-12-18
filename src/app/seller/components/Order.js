@@ -20,6 +20,7 @@ import {
 import { useToast } from '../../../contexts/toast'
 import { Modal } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import numberSeparator from '../../../helpers/validating/numberSeparator'
 
 const { confirm } = Modal
 
@@ -225,7 +226,7 @@ const Order = ({ getStatus }) => {
                             <CTableDataCell>{data.product.name}</CTableDataCell>
                             <CTableDataCell>{data.size}</CTableDataCell>
                             <CTableDataCell>{data.quantity}</CTableDataCell>
-                            <CTableDataCell>{data.price} VNĐ</CTableDataCell>
+                            <CTableDataCell>{numberSeparator(data.price)} VNĐ</CTableDataCell>
                           </CTableRow>
                         </CTableBody>
                       )
@@ -240,14 +241,18 @@ const Order = ({ getStatus }) => {
                       <CCol xs>
                         <CFormLabel htmlFor="exampleFormControlInput1">Giá vận chuyển</CFormLabel>
                         <CInputGroup>
-                          <CFormInput type="text" disabled value={item.shippingCost} />
+                          <CFormInput type="text" disabled value={numberSeparator(item.shippingCost)} />
                           <CInputGroupText>VNĐ</CInputGroupText>
                         </CInputGroup>
                       </CCol>
                       <CCol xs>
                         <CFormLabel htmlFor="exampleFormControlInput1">Tổng giá trị đơn hàng</CFormLabel>
                         <CInputGroup>
-                          <CFormInput type="text" disabled value={item.shippingCost + item.totalPrice} />
+                          <CFormInput
+                            type="text"
+                            disabled
+                            value={numberSeparator(item.shippingCost + item.totalPrice)}
+                          />
                           <CInputGroupText>VNĐ</CInputGroupText>
                         </CInputGroup>
                       </CCol>
