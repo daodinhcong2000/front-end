@@ -12,15 +12,13 @@ const { TextArea } = Input
 
 const CommentProduct = ({ productId }) => {
   const { userId } = useSelector((state) => state.user)
-  const { error, warn, info, success } = useToast()
+  const { error, warn, success } = useToast()
   const [comment, setComment] = useState([])
-  const [ownComment, setOwnComment] = useState({
-    id: '',
-    comment: '',
-    rating: 0
-  })
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [loadingbtn, setLoadingBtn] = useState(false)
   const [rating, setRating] = useState()
+  const [commentText, setCommentText] = useState('')
+  const [commentId, setCommentId] = useState()
   const [newComment, setNewComment] = useState({
     product: productId,
     comment: '',
@@ -31,55 +29,65 @@ const CommentProduct = ({ productId }) => {
     getComment(productId).then((response) => {
       response.data.data.map((cmt) => {
         if (userId == cmt.author._id) {
-          setOwnComment({
-            id: cmt._id,
-            comment: cmt.comment,
-            rating: cmt.rating
-          })
           setRating(cmt.rating)
+          setCommentId(cmt._id)
+          setCommentText(cmt.comment)
         }
       })
       setComment(response.data.data)
+      setLoading(false)
     })
   }, [loading])
 
   const addComment = () => {
+    setLoadingBtn(true)
     newComment.rating = rating
     if (newComment.comment == '') {
       warn('Bạn chưa nhập nội dung bình luận')
+      setLoadingBtn(false)
     } else if (rating == null) {
       warn('Bạn vui lòng đánh giá sản phẩm')
+      setLoadingBtn(false)
     } else {
       postComment(newComment)
         .then((respone) => {
           success(respone.data.message)
-          setLoading(!loading)
-          setOwnComment({ id: '' })
+          setLoading(true)
+          setLoadingBtn(false)
           setRating(rating)
         })
         .catch((err) => {
           error(err.response.data.message)
+          setLoading(true)
+          setLoadingBtn(false)
         })
     }
   }
 
   const deleteCmt = () => {
-    deleteComment(ownComment.id)
+    deleteComment(commentId)
       .then((respone) => {
         success(respone.data.message)
-        setOwnComment({ id: '' })
-        setLoading(!loading)
+        setNewComment({
+          ...newComment,
+          comment: '',
+          rating: 0
+        })
+        setLoading(true)
+        setCommentId(null)
       })
       .catch((err) => {
         error(err.response.data.message)
+        setLoading(true)
       })
   }
   const actionDelete = () => {
+    setLoading(true)
     deleteCmt()
   }
 
   const actionChange = () => {
-    setOwnComment({ id: '' })
+    setCommentId(null)
   }
 
   const actions = [
@@ -101,13 +109,13 @@ const CommentProduct = ({ productId }) => {
         return (
           <div key={index}>
             <Comment
-              actions={ownComment.id != '' ? actions : []}
+              actions={commentId != null ? actions : []}
               author={
                 <a>
                   {cmt.author.lastName} {cmt.author.firstName}{' '}
                 </a>
               }
-              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="avt accommerce" />}
               content={<p>{cmt.comment}</p>}
               datetime={[
                 <Tooltip title={'Đánh giá lần cuối'}>
@@ -123,7 +131,7 @@ const CommentProduct = ({ productId }) => {
           </div>
         )
       })}
-      {userId != '' && ownComment.id == '' ? (
+      {userId != '' && commentId == null ? (
         <>
           <Form.Item>
             <TextArea rows={4} name="comment" onChange={(e) => handleChange(e)} />
@@ -133,7 +141,7 @@ const CommentProduct = ({ productId }) => {
           </Form.Item>
 
           <Form.Item>
-            <Button onClick={addComment} type="primary">
+            <Button onClick={addComment} type="primary" loading={loadingbtn}>
               Bình luận
             </Button>
           </Form.Item>
