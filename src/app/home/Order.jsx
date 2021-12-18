@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { getOrder, confirmOrder, cancelOrder } from '../../services/api/customerApi'
 import { CBadge, CRow, CCol, CButton } from '@coreui/react-pro'
 import { ORDER_STATUSES_MAPPING } from 'accommerce-helpers'
@@ -14,9 +15,11 @@ const { confirm } = Modal
 const { TabPane } = Tabs
 const { Title } = Typography
 const Order = (props) => {
+  const history = useHistory()
+  console.log({ props, history })
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState(history.location.state || '')
   useEffect(() => {
     getOrder({ status: status }).then((response) => {
       setOrders(response.data.data)
@@ -93,7 +96,7 @@ const Order = (props) => {
           </div>
         </section>
         <div className="container">
-          <Tabs defaultActiveKey="" onChange={callback}>
+          <Tabs defaultActiveKey={history.location.state || ''} onChange={callback}>
             <TabPane tab="Tất cả" key=""></TabPane>
             <TabPane
               tab={ORDER_STATUSES_MAPPING['Waiting for seller confirm']}

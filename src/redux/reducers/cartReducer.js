@@ -9,7 +9,8 @@ const cartInitialState = {
 const cartReducer = (state = cartInitialState, action) => {
   switch (action.type) {
     case 'LOAD_CART': {
-      return { ...state, loading: true, error: '' }
+      const { loading = true } = action.payload || {}
+      return { ...state, loading, error: '' }
     }
 
     case 'SET_CART': {

@@ -33,16 +33,37 @@ const CartItemProduct = (props) => {
             >
               Shop: {shopName}
             </Link>
-            <div className={`${styles['col']}`}>Loại hàng: {size} </div>
+            <div className="col row">
+              <div className="col-sm-3">Đơn giá: </div>
+              <div className="col text-right">₫ {numberSeparator(price)}</div>
+            </div>
           </div>
 
           <div className="row">
-            <div className="col">Số lượng: {quantity} </div>
-            <div className="col">Đơn giá: {numberSeparator(price)} ₫ </div>
+            <div className={`${styles['col']}`}>Loại hàng: {size} </div>
+            <div className="col row">
+              <div className="col-sm-3">Số lượng: </div>
+              <div className="col text-right">{quantity}</div>
+            </div>
           </div>
 
-          <div className="price" style={{ textAlign: 'center', color: 'red' }}>
-            ₫ {numberSeparator(price * quantity)}
+          <div className="row">
+            <div className={`${styles['col']}`}>
+              {shopDisabled ? (
+                <span className={`${styles['text-danger']}`}>Gian hàng hiện không hoạt động</span>
+              ) : productDisabled ? (
+                <span className={`${styles['text-danger']}`}>Sản phẩm không còn được bày bán</span>
+              ) : (
+                !quantity && <span className={`${styles['text-warning']}`}>Sản phẩm hiện đang hết hàng</span>
+              )}
+            </div>
+
+            <div className="col row">
+              <div className="col-sm-3">Thành tiền: </div>
+              <div className="col text-right" style={{ color: 'red' }}>
+                ₫ {numberSeparator(price * quantity)}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -54,14 +75,6 @@ const CartItemProduct = (props) => {
         
 
          */}
-      <br />
-      {shopDisabled ? (
-        <span className={`${styles['text-danger']}`}>Gian hàng hiện không hoạt động</span>
-      ) : productDisabled ? (
-        <span className={`${styles['text-danger']}`}>Sản phẩm không còn được bày bán</span>
-      ) : (
-        !quantity && <span className={`${styles['text-warning']}`}>Sản phẩm hiện đang hết hàng</span>
-      )}
       {/* </figcaption> */}
     </figure>
   )

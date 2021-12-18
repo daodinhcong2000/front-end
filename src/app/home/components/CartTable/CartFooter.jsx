@@ -1,19 +1,28 @@
 import styles from '../../css_modules/css/all.module.css'
 
-import { Button, Form, Input, message as Message } from 'antd'
+import { Button, Form, Input, message as Message, Spin } from 'antd'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
+import { Promise } from 'bluebird'
+import { ORDER_STATUSES } from 'accommerce-helpers'
 import numberSeparator from '../../../../helpers/validating/numberSeparator'
-import { _deleteCartItems, _order } from '../../../../redux/actions/cartActions'
+import { _deleteCartItems, _getMyCart, _order } from '../../../../redux/actions/cartActions'
+import { order } from '../../../../services/api/customerApi'
 
 const CartFooter = (props) => {
+  const history = useHistory()
   const dispatch = useDispatch()
-  const { address: initialAddress } = useSelector((state) => state.user)
   const { selectedItems, discount } = props
-  const [address, setAddress] = useState(initialAddress)
-  console.log({ address, initialAddress })
+  const [address, setAddress] = useState('')
+  const { loading, address: initialAddress } = useSelector((state) => state.user)
+  useEffect(() => {
+    if (initialAddress) {
+      setAddress(initialAddress)
+    }
+  }, [initialAddress])
 
   const orderPrice = (items) => {
     let sum = 0
@@ -31,21 +40,59 @@ const CartFooter = (props) => {
     return sum
   }
 
-  const orderShops = (items) => {
+  const orderShops = (items = {}) => {
     const shops = new Set(items.map((i) => i.shopId))
-    return shops.size
+    const shopItems = []
+
+    shops.forEach((shop) => {
+      const tmp = []
+      items.forEach((item) => {
+        if (item.shopId === shop) {
+          tmp.push(item.cartItemId)
+        }
+      })
+      shopItems.push(tmp)
+    })
+
+    console.log(shopItems)
+
+    return shopItems
+  }
+
+  const orderMultipleShops = async (shops, address) => {
+    return Promise.map(shops, async (items) => order({ cartItems: items, receivingAddress: address }))
   }
 
   const handleOrder = (e) => {
     if (selectedItems.length === 0) {
       Message.error('Chọn ít nhất một món hàng!')
-    } else if (orderShops > 2) {
-      Message.warning(`Mỗi lần mua hàng chỉ đặt của một shop`)
+    } else if (orderShops(selectedItems).length > 1) {
+      Message.warning(`Mua hàng của ${orderShops(selectedItems).length} cửa hàng`)
+
+      dispatch({
+        type: 'LOAD_CART'
+      })
+      const shops = orderShops(selectedItems)
+      orderMultipleShops(shops, address)
+        .then((res) => {
+          console.log(res)
+          dispatch(_getMyCart())
+          history.push('/order', ORDER_STATUSES.WAITING_FOR_SELLER_CONFIRM)
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     } else {
+      dispatch({
+        type: 'LOAD_CART'
+      })
+
       const cartItems = selectedItems.map((item) => item.cartItemId)
-      _order(cartItems, address)
+      order({ cartItems, receivingAddress: address })
         .then((res) => {
           Message.success('Đặt hàng thành công!')
+          dispatch(_getMyCart())
+          history.push('/order', ORDER_STATUSES.WAITING_FOR_SELLER_CONFIRM)
         })
         .catch((e) => {
           const { status, data } = e.response
@@ -55,6 +102,13 @@ const CartFooter = (props) => {
             const { message } = data
             Message.error(message)
           }
+
+          dispatch({
+            type: 'LOAD_CART',
+            payload: {
+              loading: false
+            }
+          })
         })
     }
   }
@@ -79,8 +133,8 @@ const CartFooter = (props) => {
         <dl className="dlist-align">
           <dt>Số lượng</dt>
           <dd className="text-right">
-            {orderItems(selectedItems)} món hàng / {selectedItems.length} sản phẩm / {orderShops(selectedItems)} gian
-            hàng
+            {orderItems(selectedItems)} món hàng / {selectedItems.length} sản phẩm / {orderShops(selectedItems).length}{' '}
+            gian hàng
           </dd>
         </dl>
         <dl className="dlist-align">
@@ -114,13 +168,16 @@ const CartFooter = (props) => {
         autoComplete="off"
         style={{ textAlign: 'center' }}
       >
-        <Form.Item
-          label="Địa chỉ nhận hàng"
-          hasFeedback
-          required
-          help={!(address || initialAddress) ? 'Cần nhập địa chỉ nhận hàng' : ''}
-        >
-          <Input allowClear={true} onChange={(e) => setAddress(e.target.value)} />
+        <Form.Item label="Địa chỉ nhận hàng" hasFeedback required help={!address ? 'Cần nhập địa chỉ nhận hàng' : ''}>
+          <Spin spinning={loading}>
+            <Input
+              allowClear={true}
+              placeholder={address}
+              className={`${styles['float-left']}`}
+              onChange={(e) => setAddress(e.target.value)}
+              style={{ width: '85%' }}
+            />
+          </Spin>
         </Form.Item>
       </Form>
 
@@ -130,6 +187,7 @@ const CartFooter = (props) => {
             <img src="assets/images/misc/payments.png" height={26} />
           </p>
         </div>
+
         <div className="col-sm-4" style={{ textAlign: 'center' }}>
           <Button
             size="large"
@@ -139,7 +197,7 @@ const CartFooter = (props) => {
             onClick={handleOrder}
             icon={<i className="fa fa-shopping-cart" style={{ marginRight: '5px' }} />}
           >
-            Đặt hàng
+            Đặt hàng ({selectedItems.length})
           </Button>
         </div>
 
@@ -153,7 +211,7 @@ const CartFooter = (props) => {
             onClick={handleDelete}
             icon={<i className="fa fa-trash" style={{ marginRight: '5px' }} />}
           >
-            Xoá các sản phẩm
+            Xoá các sản phẩm ({selectedItems.length})
           </Button>
         </div>
       </div>

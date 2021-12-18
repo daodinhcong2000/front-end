@@ -12,7 +12,6 @@ import { Link, useParams } from 'react-router-dom'
 import numberSeparator from '../../helpers/validating/numberSeparator'
 import { getOneProduct } from '../../services/api/userApi'
 import { addToCart } from '../../services/api/customerApi'
-import Paragraph from 'antd/lib/skeleton/Paragraph'
 import { _getMyCart } from '../../redux/actions/cartActions'
 
 const Product = (props) => {
@@ -57,13 +56,16 @@ const Product = (props) => {
     setLoading(true)
     if (!targetSize) {
       Message.error('Vui lòng chọn size!')
+      setLoading(false)
     } else if (!quantity) {
       Message.error('Vui lòng nhập số lượng muốn mua!')
+      setLoading(false)
     } else {
       addToCart({ product: productId, size: targetSize, quantity })
         .then((res) => {
           Message.success(`Thêm ${quantity} sản phẩm vào giỏ thành công!`)
           setLoading(false)
+          setQuantity(1)
           dispatch(_getMyCart())
         })
         .catch((e) => {
@@ -195,7 +197,6 @@ const Product = (props) => {
                                     <Radio.Button
                                       key={index}
                                       value={name}
-                                      className="rounded"
                                       disabled={numberInStock === 0}
                                       style={{ margin: '3px' }}
                                       stock={numberInStock}
@@ -240,7 +241,7 @@ const Product = (props) => {
                             Mua ngay
                           </button>
                           <button className="btn btn-light" onClick={handleAddToCart}>
-                            <Spin spinning={cartLoading}>Thêm vào giỏ</Spin>
+                            Thêm vào giỏ
                           </button>
                         </div>
                       </article>
