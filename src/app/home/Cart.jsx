@@ -74,10 +74,6 @@ const Cart = (props) => {
                     dataSource={tableData}
                     rowSelection={{
                       type: 'checkbox',
-                      getCheckboxProps: (record) => {
-                        const { productDisabled, shopDisabled, quantity } = record
-                        return { disabled: shopDisabled || productDisabled || !quantity }
-                      },
                       onChange: (items) => {
                         selectedItems = items
                       }

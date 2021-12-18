@@ -15,7 +15,6 @@ export const _getMyCart = () => {
         })
       })
       .catch((e) => {
-        console.log(e)
         const { status } = e.response
         if (status >= 500) {
           dispatch({
@@ -134,7 +133,6 @@ export const _order = (cartItems, address) => {
         dispatch(_getMyCart())
       })
       .catch((e) => {
-        console.log(e)
         const { message } = e.response.data
         dispatch({
           type: 'CART_ERROR',
