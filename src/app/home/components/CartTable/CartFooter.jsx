@@ -80,7 +80,8 @@ const CartFooter = (props) => {
           history.push('/order', ORDER_STATUSES.WAITING_FOR_SELLER_CONFIRM)
         })
         .catch((e) => {
-          console.log(e)
+          Message.error(e)
+          dispatch(_getMyCart())
         })
     } else {
       dispatch({
@@ -103,12 +104,7 @@ const CartFooter = (props) => {
             Message.error(message)
           }
 
-          dispatch({
-            type: 'LOAD_CART',
-            payload: {
-              loading: false
-            }
-          })
+          dispatch(_getMyCart())
         })
     }
   }
