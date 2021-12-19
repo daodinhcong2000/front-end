@@ -24,6 +24,8 @@ const userReducer = (state = userInitialState, action) => {
         loading: false,
         userId,
         username,
+        firstName,
+        lastName,
         fullName: `${firstName} ${lastName}`,
         roles,
         address,

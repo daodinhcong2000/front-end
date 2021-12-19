@@ -107,8 +107,8 @@ export const changePassword = ({ oldPassword, newPassword }) => {
   })
 }
 
-export const changeInformation = ({ firstName, lastName, phoneNumber, email }) => {
-  const payload = { firstName, lastName, phoneNumber, email }
+export const changeInformation = ({ firstName, lastName, phoneNumber, email, address }) => {
+  const payload = { firstName, lastName, phoneNumber, email, address }
   return apiRequest({
     url: `${USER_SERVICE_API}/users/self`,
     method: 'PUT',
