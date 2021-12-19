@@ -97,3 +97,21 @@ export const confirmOrder = (idOrder) => {
     method: 'PUT'
   })
 }
+
+export const changePassword = ({ oldPassword, newPassword }) => {
+  const payload = { oldPassword, newPassword }
+  return apiRequest({
+    url: `${USER_SERVICE_API}/users/self/password`,
+    method: 'PUT',
+    data: payload
+  })
+}
+
+export const changeInformation = ({ firstName, lastName, phoneNumber, email }) => {
+  const payload = { firstName, lastName, phoneNumber, email }
+  return apiRequest({
+    url: `${USER_SERVICE_API}/users/self`,
+    method: 'PUT',
+    data: payload
+  })
+}

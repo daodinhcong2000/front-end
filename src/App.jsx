@@ -9,6 +9,7 @@ import Product from './app/home/Product'
 import Cart from './app/home/Cart'
 import Order from './app/home/Order'
 import Shop from './app/home/Shop'
+import User from './app/home/User'
 
 import Seller from './app/seller/Seller'
 import Admin from './app/admin/Admin'
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/shop/:shopId" component={Shop} />
         <Route path="/order" exact component={Order} />
         <Route path="/product/:productId" component={Product} />
+        <Route path="/self" exact component={User} />
         <Route path="/search" component={Search} />
         <Route path="/seller" component={Seller} />
         <Route path="/admin" component={Admin} />
