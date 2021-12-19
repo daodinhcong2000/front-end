@@ -112,7 +112,7 @@ const UserMenu = (props) => {
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="self" icon={<UserOutlined />}>
         <Button type="text" style={{ fontWeight: 'bold' }}>
-          {fullName}
+          <Link to="/self">{fullName}</Link>
         </Button>
       </Menu.Item>
 
@@ -151,12 +151,6 @@ const UserMenu = (props) => {
           </Spin>
         </Menu.Item>
       )}
-
-      <Menu.Item key="setting" icon={<SettingOutlined />}>
-        <Button type="text" style={{ textAlign: 'left' }}>
-          Cài đặt
-        </Button>
-      </Menu.Item>
 
       <Menu.Item key="logout" icon={<LogoutOutlined />}>
         <Button type="text" style={{ textAlign: 'left' }}>
