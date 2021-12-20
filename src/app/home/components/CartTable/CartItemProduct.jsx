@@ -5,8 +5,19 @@ import { Link } from 'react-router-dom'
 import numberSeparator from '../../../../helpers/validating/numberSeparator'
 
 const CartItemProduct = (props) => {
-  const { thumbnail, productId, productName, productDisabled, shopId, shopName, shopDisabled, quantity, size, price } =
-    props
+  const {
+    thumbnail,
+    productId,
+    productName,
+    productDisabled,
+    shopId,
+    shopName,
+    shopDisabled,
+    quantity,
+    size,
+    sizeDisabled,
+    price
+  } = props
   return (
     <figure className={`${styles['itemside']}`} style={{ width: '100%' }}>
       {/* Thumbnail */}
@@ -51,6 +62,8 @@ const CartItemProduct = (props) => {
             <div className={`${styles['col']}`}>
               {shopDisabled ? (
                 <span className={`${styles['text-danger']}`}>Gian hàng hiện không hoạt động</span>
+              ) : sizeDisabled ? (
+                <span className={`${styles['text-danger']}`}>Loại hàng này không còn được sử dụng</span>
               ) : productDisabled ? (
                 <span className={`${styles['text-danger']}`}>Sản phẩm không còn được bày bán</span>
               ) : (

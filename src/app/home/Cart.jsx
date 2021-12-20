@@ -41,7 +41,8 @@ const Cart = (props) => {
     } = item
 
     const shopDisabled = shopDelete || !shopActive
-    const productDisabled = shopDisabled || productDelete
+    const sizeDisabled = !sizes.includes(size)
+    const productDisabled = shopDisabled || productDelete || !sizeDisabled
 
     return {
       key: { cartItemId, shopId, quantity, price },
@@ -55,6 +56,7 @@ const Cart = (props) => {
       shopDisabled,
       size,
       sizes,
+      sizeDisabled,
       quantity,
       price
     }
