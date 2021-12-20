@@ -56,3 +56,19 @@ export const getFlexPrice = (idProduct, query) => {
     method: 'GET'
   })
 }
+
+export const getShopInfo = (id) => {
+  return apiRequest({
+    url: `${COMMON_SERVICE_API}/shops/${id}`,
+    method: 'GET'
+  })
+}
+
+export const getShopProducts = (shopId, search, page, limit) => {
+  const payload = { search, page, limit, sort: '-createdAt' }
+  const query = query2string(payload)
+  return apiRequest({
+    url: `${COMMON_SERVICE_API}/shops/${shopId}/products?${query}`,
+    method: 'GET'
+  })
+}

@@ -26,7 +26,8 @@ const CartItemActions = (props) => {
       quantity: editQuantity || quantity
     })
       .then((res) => {
-        Message.success('Sửa đơn hàng thành công!')
+        const { message } = res.data
+        Message.success(message)
         dispatch(_getMyCart())
       })
       .catch((e) => {

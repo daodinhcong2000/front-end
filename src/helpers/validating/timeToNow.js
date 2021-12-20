@@ -1,4 +1,4 @@
-const datesToNow = (date) => {
+const timeToNow = (date) => {
   const created = new Date(date).getTime()
   const dates = Math.floor((Date.now() - created) / 1000 / 60 / 60 / 24)
   if (dates < 30) {
@@ -14,4 +14,4 @@ const datesToNow = (date) => {
   }
 }
 
-console.log(datesToNow('2021-11-13T18:00:29.591Z'))
+export default timeToNow

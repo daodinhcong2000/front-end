@@ -1,3 +1,5 @@
+import styles from './css_modules/css/all.module.css'
+
 import { Spin, Radio, InputNumber, message as Message } from 'antd'
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -127,11 +129,11 @@ const Product = (props) => {
                         <h3 className="title">{product.name}</h3>
 
                         <Link
-                          to={`/search?keyword=${product.category}`}
+                          to={`/shop/${product.shop._id}`}
                           className="btn-link text-warning"
                           style={{ fontSize: '120%' }}
                         >
-                          <i className="fa fa-store" /> {product.shop.name}
+                          <i className={`${styles['fa']} ${styles['fa-store']}`} /> {product.shop.name}
                         </Link>
                         {/* Rating */}
                         <div>
@@ -158,7 +160,7 @@ const Product = (props) => {
                           </a>
                           <a className="btn-link text-muted mr-3">
                             {' '}
-                            <i className="fa fa-book-open" /> So sánh{' '}
+                            <i className={`${styles['fa']} ${styles['fa-book-open']}`} /> So sánh{' '}
                           </a>
                           <Link to={`/search?keyword=${product.category}`} className="text-primary btn-link">
                             #{product.category}
