@@ -10,10 +10,14 @@ import CartFooter from './components/CartTable/CartFooter'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { isAuthenticated } from '../../services/makeApiRequest'
 import { _getMyCart, _selectItems } from '../../redux/actions/cartActions'
 
 const Cart = (props) => {
+  const history = useHistory()
+  const { state: selected } = history.location
+  console.log(selected)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(_getMyCart())
@@ -41,8 +45,7 @@ const Cart = (props) => {
     } = item
 
     const shopDisabled = shopDelete || !shopActive
-    const sizeDisabled = !sizes.includes(size)
-    const productDisabled = shopDisabled || productDelete || !sizeDisabled
+    const productDisabled = shopDisabled || productDelete
 
     return {
       key: { cartItemId, shopId, quantity, price },
@@ -56,7 +59,6 @@ const Cart = (props) => {
       shopDisabled,
       size,
       sizes,
-      sizeDisabled,
       quantity,
       price
     }
@@ -81,7 +83,7 @@ const Cart = (props) => {
                       }
                     }}
                     expandable={{
-                      rowExpandable: (record) => !(record.shopDisabled || record.productDisabled || !record.quantity),
+                      rowExpandable: (record) => !(record.shopDisabled || record.productDisabled),
                       expandedRowRender: (record) => <CartItemEditor {...record} />,
                       expandRowByClick: true
                     }}

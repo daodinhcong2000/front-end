@@ -64,9 +64,9 @@ const ShopItem = (props) => {
           </div>
         </div>
 
-        <div className={`${styles['add-to-cart']}`}>
+        {/* <div className={`${styles['add-to-cart']}`}>
           <button className={`${styles['default-btn']}`}>Thêm vào giỏ</button>
-        </div>
+        </div> */}
       </div>
     </div>
   )

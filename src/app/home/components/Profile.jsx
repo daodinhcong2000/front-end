@@ -1,13 +1,13 @@
-import { Tabs, Col, Row, Spin, Form, Input, Button, message as Message } from 'antd'
-import Header from './components/Header'
+import { Tabs, Col, Modal, Spin, Form, Input, Button, message as Message } from 'antd'
+import Header from './Header'
 
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
-import hashPassword from '../../helpers/validating/hashPassword'
-import { changePassword, changeInformation } from '../../services/api/customerApi'
-import { _logout } from '../../redux/actions/userActions'
+import hashPassword from '../../../helpers/validating/hashPassword'
+import { changePassword, changeInformation } from '../../../services/api/customerApi'
+import { _logout } from '../../../redux/actions/userActions'
 
 const User = (props) => {
   const history = useHistory()
@@ -15,6 +15,14 @@ const User = (props) => {
   const user = useSelector((state) => state.user)
   const { loading, username, firstName, lastName, email, phoneNumber, address, fullName } = user
   const [tab, setTab] = useState('info')
+
+  const [visible, setVisible] = useState(false)
+  const showModal = (e) => {
+    setVisible(true)
+  }
+  const closeModal = (e) => {
+    setVisible(false)
+  }
 
   const initialPassword = {
     oldPassword: '',
@@ -38,6 +46,7 @@ const User = (props) => {
   const [infoSuggest, setInfoSuggest] = useState(initialInfo)
   const [changingInfo, setChangingInfo] = useState(false)
   const [changedInfo, setChangedInfo] = useState(false)
+
   useEffect(() => {
     if (username) {
       setInfoPayload({
@@ -58,7 +67,6 @@ const User = (props) => {
       phoneNumber !== infoPayload.phoneNumber ||
       email !== infoPayload.email ||
       address !== infoPayload.address
-    console.log(changed)
     setChangedInfo(changed)
   }, [infoPayload])
 
@@ -113,7 +121,7 @@ const User = (props) => {
             Message.success('Đổi thông tin thành công!')
             setChangingInfo(false)
             setTimeout(() => {
-              window.location.href = '/'
+              window.location.reload()
             }, 1000)
           })
           .catch((e) => {
@@ -200,6 +208,7 @@ const User = (props) => {
           })
           .catch((e) => {
             Message.error('Mật khẩu cũ không chính xác')
+            setChangingPassword(false)
           })
       }
     }
@@ -207,16 +216,12 @@ const User = (props) => {
 
   return (
     <>
-      <Header />
+      <Button type="text" style={{ fontWeight: 'bold' }} onClick={showModal}>
+        {fullName}
+      </Button>
 
-      <section class="section-pagetop bg">
-        <div class="container">
-          <h2 class="title-page">{fullName}</h2>
-        </div>
-      </section>
-
-      <Spin spinning={loading}>
-        <Col span={10} offset={1}>
+      <Modal visible={visible} title={fullName} onCancel={closeModal} closeable={true} footer={null}>
+        <Spin spinning={loading}>
           <Tabs defaultActiveKey={tab} onChange={handleChangeTab}>
             <Tabs.TabPane tab="Thông tin cơ bản" key="info">
               <Spin spinning={changingInfo}>
@@ -343,8 +348,8 @@ const User = (props) => {
               </Spin>
             </Tabs.TabPane>
           </Tabs>
-        </Col>
-      </Spin>
+        </Spin>
+      </Modal>
     </>
   )
 }

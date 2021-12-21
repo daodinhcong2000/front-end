@@ -124,7 +124,6 @@ const AddProduct = () => {
   const deleteFile = (e) => {
     const s = images.filter((image, index) => index !== e)
     setImages(s)
-    console.log(s)
   }
   return (
     <div>

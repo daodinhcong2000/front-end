@@ -47,22 +47,20 @@ const Shop = (props) => {
       getShopProducts(shopId, '', pagination.page, pagination.pageSize)
         .then((res) => {
           const { data } = res.data
-          console.log(data)
           const { products, total } = data
           setTotal(total)
           setProducts(products)
           setLoading(false)
         })
         .catch((e) => {
-          console.log(e)
-          // const { status, data } = e.response
-          // if (status >= 500) {
-          //   Message.error('Lỗi hệ thống, vui lòng thử lại sau!')
-          // } else {
-          //   const { message } = data
-          //   Message.error(message)
-          // }
-          // setLoading(false)
+          const { status, data } = e.response
+          if (status >= 500) {
+            Message.error('Lỗi hệ thống, vui lòng thử lại sau!')
+          } else {
+            const { message } = data
+            Message.error(message)
+          }
+          setLoading(false)
         })
     }
   }, [shop.name, pagination.page, pagination.pageSize])
@@ -84,24 +82,38 @@ const Shop = (props) => {
 
                     <div className="row">
                       <div className="col">Địa chỉ: {shop.address}</div>
-                      <div className="col">Hotline: {shop.seller.phoneNumber}</div>
-                      <div className="col">Email: {shop.email}</div>
+                      <div className="col">Tham gia: {timeToNow(shop.createdAt)}</div>
                     </div>
 
                     <div className="row">
-                      <div className="col"></div>
-                      <div className="col"></div>
-                      <div className="col">Tham gia: {timeToNow(shop.createdAt)}</div>
+                      <div className="col">Hotline: {shop.seller.phoneNumber}</div>
+                      <div className="col">Email: {shop.email}</div>
                     </div>
                   </div>
                 </section>
               )}
 
+              <div className={`${styles['row']}`}>
+                {products.map((product) => {
+                  const { _id: productId, name, images, price, sizes, sold, views } = product
+                  const props = {
+                    productId,
+                    name,
+                    thumbnail: images[0],
+                    price,
+                    sizes,
+                    sold,
+                    views
+                  }
+                  return <ShopItem {...props} />
+                })}
+              </div>
+
               <Pagination
                 total={total}
-                showTotal={(total, range) => `${range[0]}-${range[1]} / ${total} sản phẩm`}
-                defaultPageSize={pagination.pageSize}
-                defaultCurrent={pagination.page}
+                showTotal={(total, range) => `${range[0]} - ${range[1]} / ${total} sản phẩm`}
+                defaultPageSize={20}
+                defaultCurrent={1}
                 showSizeChanger
                 pageSizeOptions={[20, 40, 100]}
                 onChange={(page, pageSize) => {
@@ -119,23 +131,6 @@ const Shop = (props) => {
                 }}
                 style={{ margin: '1em', textAlign: 'center' }}
               />
-
-              <div className={`${styles['row']}`}>
-                {products.map((product) => {
-                  console.log(product)
-                  const { _id: productId, name, images, price, sizes, sold, views } = product
-                  const props = {
-                    productId,
-                    name,
-                    thumbnail: images[0],
-                    price,
-                    sizes,
-                    sold,
-                    views
-                  }
-                  return <ShopItem {...props} />
-                })}
-              </div>
             </Spin>
           </div>
         </section>

@@ -54,8 +54,6 @@ const CartFooter = (props) => {
       shopItems.push(tmp)
     })
 
-    console.log(shopItems)
-
     return shopItems
   }
 
@@ -75,7 +73,6 @@ const CartFooter = (props) => {
       const shops = orderShops(selectedItems)
       orderMultipleShops(shops, address)
         .then((res) => {
-          console.log(res)
           dispatch(_getMyCart())
           history.push('/order', ORDER_STATUSES.WAITING_FOR_SELLER_CONFIRM)
         })

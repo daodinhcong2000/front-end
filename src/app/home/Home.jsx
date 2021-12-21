@@ -7,14 +7,34 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { _search } from '../../redux/actions/searchActions'
+import { searchProducts } from '../../services/api/userApi'
 
 const Home = (props) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { items = [], keyword, page, limit, sort, searching } = useSelector((state) => state.search)
+  const [loading, setLoading] = useState(false)
+  const [news, setNews] = useState([])
+  const [populars, setPopulars] = useState([])
+  const [sells, setSells] = useState([])
 
-  useEffect(() => {
-    dispatch(_search(keyword.trim(), page, limit, sort))
+  useEffect(async () => {
+    setLoading(true)
+
+    const getNews = await searchProducts({ search: '', page: 1, limit: 12, sort: '-createdAt' })
+    const { products: news } = getNews.data.data
+    console.log(news)
+    setNews(news)
+
+    const getPopulars = await searchProducts({ search: '', page: 1, limit: 12, sort: '-views' })
+    const { products: populars } = getPopulars.data.data
+    setPopulars(populars)
+
+    const getSells = await searchProducts({ search: '', page: 1, limit: 12, sort: '-sold' })
+    const { products: sells } = getSells.data.data
+    setSells(sells)
+
+    setLoading(false)
   }, [])
 
   return (
@@ -36,17 +56,49 @@ const Home = (props) => {
       <section className="section-name padding-y-sm">
         <div className="container">
           <header className="section-heading">
-            <Link to={`/search/?keyword=`}>
-              <button className="btn btn-outline-primary float-right">Thêm</button>
-            </Link>
-            <h3 className="section-title">Sản phẩm phổ biến</h3>
+            <h3 className="section-title">Sản phẩm mới</h3>
           </header>
 
-          <Spin spinning={searching} size="large">
+          <Spin spinning={loading}>
             <div className="row">
-              {items.slice(0, 12).map((item, index) => {
-                return <ProductItem key={index} {...item} />
-              })}
+              {news.length &&
+                news.map((item, index) => {
+                  return <ProductItem key={index} {...item} />
+                })}
+            </div>
+          </Spin>
+        </div>
+      </section>
+
+      <section className="section-name padding-y-sm">
+        <div className="container">
+          <header className="section-heading">
+            <h3 className="section-title">Tìm kiếm nhiều nhất</h3>
+          </header>
+
+          <Spin spinning={loading}>
+            <div className="row">
+              {populars.length &&
+                populars.map((item, index) => {
+                  return <ProductItem key={index} {...item} />
+                })}
+            </div>
+          </Spin>
+        </div>
+      </section>
+
+      <section className="section-name padding-y-sm">
+        <div className="container">
+          <header className="section-heading">
+            <h3 className="section-title">Bán chạy</h3>
+          </header>
+
+          <Spin spinning={loading}>
+            <div className="row">
+              {sells.length &&
+                sells.map((item, index) => {
+                  return <ProductItem key={index} {...item} />
+                })}
             </div>
           </Spin>
         </div>
