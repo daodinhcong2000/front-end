@@ -16,7 +16,6 @@ const { TabPane } = Tabs
 const { Title } = Typography
 const Order = (props) => {
   const history = useHistory()
-  console.log({ props, history })
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
   const [status, setStatus] = useState(history.location.state || '')

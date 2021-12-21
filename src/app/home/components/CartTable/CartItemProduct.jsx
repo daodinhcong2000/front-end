@@ -15,9 +15,14 @@ const CartItemProduct = (props) => {
     shopDisabled,
     quantity,
     size,
-    sizeDisabled,
+    sizes,
     price
   } = props
+
+  const filter = sizes.filter((i) => i.name === size)
+  const sizeDisabled = filter.length === 0
+  const { numberInStock } = sizeDisabled ? {} : filter[0]
+
   return (
     <figure className={`${styles['itemside']}`} style={{ width: '100%' }}>
       {/* Thumbnail */}
@@ -63,11 +68,15 @@ const CartItemProduct = (props) => {
               {shopDisabled ? (
                 <span className={`${styles['text-danger']}`}>Gian hàng hiện không hoạt động</span>
               ) : sizeDisabled ? (
-                <span className={`${styles['text-danger']}`}>Loại hàng này không còn được sử dụng</span>
+                <span className={`${styles['text-danger']}`}>Loại hàng này không còn được bày bán</span>
               ) : productDisabled ? (
                 <span className={`${styles['text-danger']}`}>Sản phẩm không còn được bày bán</span>
+              ) : !numberInStock ? (
+                <span className={`${styles['text-warning']}`}>Sản phẩm hiện đang hết hàng</span>
               ) : (
-                !quantity && <span className={`${styles['text-warning']}`}>Sản phẩm hiện đang hết hàng</span>
+                numberInStock < quantity && (
+                  <span className={`${styles['text-warning']}`}>Trong kho chỉ còn {numberInStock} sản phẩm</span>
+                )
               )}
             </div>
 

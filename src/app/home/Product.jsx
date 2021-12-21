@@ -9,7 +9,7 @@ import { ToastProvider } from '../../contexts/ToastProvider'
 
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useHistory } from 'react-router-dom'
 
 import numberSeparator from '../../helpers/validating/numberSeparator'
 import { getOneProduct } from '../../services/api/userApi'
@@ -17,6 +17,7 @@ import { addToCart } from '../../services/api/customerApi'
 import { _getMyCart } from '../../redux/actions/cartActions'
 
 const Product = (props) => {
+  const history = useHistory()
   const dispatch = useDispatch()
   const { productId } = useParams()
   const [product, setProduct] = useState({})
@@ -84,7 +85,36 @@ const Product = (props) => {
     }
   }
 
-  const handleBuy = (e) => {}
+  const handleBuy = (e) => {
+    setLoading(true)
+    if (!targetSize) {
+      Message.error('Vui lòng chọn size!')
+      setLoading(false)
+    } else if (!quantity) {
+      Message.error('Vui lòng nhập số lượng muốn mua!')
+      setLoading(false)
+    } else {
+      addToCart({ product: productId, size: targetSize, quantity })
+        .then((res) => {
+          const { data } = res.data
+          Message.success(`Thêm ${quantity} sản phẩm vào giỏ thành công!`)
+          setLoading(false)
+          setQuantity(1)
+          history.push('/cart', data)
+        })
+        .catch((e) => {
+          const { status, data } = e.response
+          if (status >= 500) {
+            Message.error('Lỗi hệ thống, vui lòng thử lại sau!')
+          } else {
+            const { message } = data
+            Message.error(message)
+          }
+
+          setLoading(false)
+        })
+    }
+  }
 
   return (
     <>
@@ -99,9 +129,9 @@ const Product = (props) => {
                   <div className="row">
                     {/* Images */}
                     <aside className="col-md-6">
-                      <article className="gallery-wrap">
-                        <div className="card img-big-wrap">
-                          <img className="card img-big-wrap" src={targetImage || product.images[0]} />
+                      <article className="gallery-wrap" style={{ textAlign: 'center' }}>
+                        <div className="img-big-wrap">
+                          <img className="card img-wrap" src={targetImage || product.images[0]} />
                         </div>
 
                         <div className="thumbs-wrap">

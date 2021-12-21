@@ -10,6 +10,7 @@ import {
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 import ForgotForm from './ForgotForm'
+import Profile from './Profile'
 
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -111,9 +112,7 @@ const UserMenu = (props) => {
   const menu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="self" icon={<UserOutlined />}>
-        <Button type="text" style={{ fontWeight: 'bold' }}>
-          <Link to="/self">{fullName}</Link>
-        </Button>
+        <Profile />
       </Menu.Item>
 
       <Menu.Item key="bought" icon={<ShoppingCartOutlined />}>
