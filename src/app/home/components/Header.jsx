@@ -221,9 +221,10 @@ const Header = (props) => {
   const {} = useSelector((state) => state.cart)
   useEffect(() => {}, [])
 
+  const { sort, limit } = useSelector((state) => state.search)
   const handleSearchClick = (e) => {
     history.push(`/search/?keyword=${keyword.trim()}`)
-    dispatch(_search(keyword.trim(), 1, 9, '-sold'))
+    dispatch(_search(keyword.trim(), 1, limit, sort))
   }
 
   const handlePressEnter = (e) => {

@@ -1,4 +1,4 @@
-import { Spin } from 'antd'
+import { Spin, message as Message } from 'antd'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import ProductItem from './components/ProductItem'
@@ -13,28 +13,68 @@ const Home = (props) => {
   const history = useHistory()
   const dispatch = useDispatch()
   const { items = [], keyword, page, limit, sort, searching } = useSelector((state) => state.search)
-  const [loading, setLoading] = useState(false)
+  const [loadingNews, setLoadingNews] = useState(false)
   const [news, setNews] = useState([])
+  const [loadingPopulars, setLoadingPopulars] = useState(false)
   const [populars, setPopulars] = useState([])
+  const [loadingSells, setLoadingSells] = useState(false)
   const [sells, setSells] = useState([])
 
-  useEffect(async () => {
-    setLoading(true)
+  useEffect(() => {
+    setLoadingNews(true)
+    setLoadingPopulars(true)
+    setLoadingSells(true)
 
-    const getNews = await searchProducts({ search: '', page: 1, limit: 12, sort: '-createdAt' })
-    const { products: news } = getNews.data.data
-    console.log(news)
-    setNews(news)
+    searchProducts({ search: '', page: 1, limit: 12, sort: '-createdAt' })
+      .then((res) => {
+        const { products: news } = res.data.data
+        setNews(news)
+        setLoadingNews(false)
+      })
+      .catch((e) => {
+        const { status, data } = e.response
+        if (status >= 500) {
+          Message.error('Lỗi hệ thống, vui lòng thử lại sau')
+        } else {
+          const { message } = data
+          Message.error(message)
+        }
+        setLoadingNews(false)
+      })
 
-    const getPopulars = await searchProducts({ search: '', page: 1, limit: 12, sort: '-views' })
-    const { products: populars } = getPopulars.data.data
-    setPopulars(populars)
+    searchProducts({ search: '', page: 1, limit: 12, sort: '-views' })
+      .then((res) => {
+        const { products: populars } = res.data.data
+        setPopulars(populars)
+        setLoadingPopulars(false)
+      })
+      .catch((e) => {
+        const { status, data } = e.response
+        if (status >= 500) {
+          Message.error('Lỗi hệ thống, vui lòng thử lại sau')
+        } else {
+          const { message } = data
+          Message.error(message)
+        }
+        setLoadingPopulars(false)
+      })
 
-    const getSells = await searchProducts({ search: '', page: 1, limit: 12, sort: '-sold' })
-    const { products: sells } = getSells.data.data
-    setSells(sells)
-
-    setLoading(false)
+    searchProducts({ search: '', page: 1, limit: 12, sort: '-sold' })
+      .then((res) => {
+        const { products: sells } = res.data.data
+        setSells(sells)
+        setLoadingSells(false)
+      })
+      .catch((e) => {
+        const { status, data } = e.response
+        if (status >= 500) {
+          Message.error('Lỗi hệ thống, vui lòng thử lại sau')
+        } else {
+          const { message } = data
+          Message.error(message)
+        }
+        setLoadingSells(false)
+      })
   }, [])
 
   return (
@@ -59,7 +99,7 @@ const Home = (props) => {
             <h3 className="section-title">Sản phẩm mới</h3>
           </header>
 
-          <Spin spinning={loading}>
+          <Spin spinning={loadingNews}>
             <div className="row">
               {news.length &&
                 news.map((item, index) => {
@@ -76,7 +116,7 @@ const Home = (props) => {
             <h3 className="section-title">Tìm kiếm nhiều nhất</h3>
           </header>
 
-          <Spin spinning={loading}>
+          <Spin spinning={loadingPopulars}>
             <div className="row">
               {populars.length &&
                 populars.map((item, index) => {
@@ -93,7 +133,7 @@ const Home = (props) => {
             <h3 className="section-title">Bán chạy</h3>
           </header>
 
-          <Spin spinning={loading}>
+          <Spin spinning={loadingSells}>
             <div className="row">
               {sells.length &&
                 sells.map((item, index) => {

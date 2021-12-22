@@ -113,7 +113,7 @@ const Shop = (props) => {
                 total={total}
                 showTotal={(total, range) => `${range[0]} - ${range[1]} / ${total} sản phẩm`}
                 defaultPageSize={20}
-                defaultCurrent={1}
+                current={pagination.page}
                 showSizeChanger
                 pageSizeOptions={[20, 40, 100]}
                 onChange={(page, pageSize) => {
