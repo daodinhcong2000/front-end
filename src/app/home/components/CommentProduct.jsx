@@ -18,7 +18,7 @@ const CommentProduct = ({ productId }) => {
   const [loadingbtn, setLoadingBtn] = useState(false)
   const [rating, setRating] = useState()
   const [commentText, setCommentText] = useState('')
-  const [commentId, setCommentId] = useState()
+  const [commentId, setCommentId] = useState(null)
   const [newComment, setNewComment] = useState({
     product: productId,
     comment: '',

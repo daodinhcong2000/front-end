@@ -30,11 +30,11 @@ const Order = (props) => {
     confirmOrder(orderId)
       .then((respone) => {
         message.success(respone.data.message)
-        setLoading(true)
+        setLoading(false)
       })
       .catch((err) => {
         message.error(err.response.data.message)
-        setLoading(true)
+        setLoading(false)
       })
   }
 
@@ -42,11 +42,11 @@ const Order = (props) => {
     cancelOrder(orderId)
       .then((respone) => {
         message.success(respone.data.message)
-        setLoading(true)
+        setLoading(false)
       })
       .catch((err) => {
         message.error(err.response.data.message)
-        setLoading(true)
+        setLoading(false)
       })
   }
   const getBadge = (status) => {
@@ -114,8 +114,8 @@ const Order = (props) => {
                 <main className="col-md-12">
                   {orders.map((order, i) => {
                     return (
-                      <>
-                        <OrderItem key={i} shopName={order.shop.name} itemData={order.items} />
+                      <div key={i}>
+                        <OrderItem shopName={order.shop.name} itemData={order.items} />
                         <div className="mb-3">
                           <CRow>
                             <CCol xs={8}>
@@ -144,7 +144,9 @@ const Order = (props) => {
                                 <CButton
                                   color="success"
                                   shape="rounded-pill"
+                                  loading={true}
                                   onClick={() => {
+                                    setLoading(true)
                                     confirmOd(order._id)
                                   }}
                                 >
@@ -156,7 +158,7 @@ const Order = (props) => {
                             )}
                           </CRow>
                         </div>
-                      </>
+                      </div>
                     )
                   })}
                 </main>
