@@ -187,13 +187,14 @@ const GridView = (props) => {
         <Pagination
           total={total}
           showTotal={(total, range) => `${range[0]}-${range[1]} / ${total} sản phẩm`}
-          defaultPageSize={limit}
-          defaultCurrent={page}
+          pageSize={limit}
+          current={page}
           showSizeChanger
           pageSizeOptions={[20, 40, 100]}
           onChange={(page, pageSize) => {
             dispatch(_search(keyword, page, pageSize, sort))
           }}
+          style={{ textAlign: 'center' }}
         />
       </main>
     </>
