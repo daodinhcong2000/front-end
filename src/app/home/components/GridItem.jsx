@@ -4,15 +4,22 @@ import numberSeparator from '../../../helpers/validating/numberSeparator'
 import { Link } from 'react-router-dom'
 
 const GridItem = (props) => {
-  const { _id: productId, images = [], name, price, createdAt } = props
+  console.log(props)
+  const { _id: productId, images = [], name, price, originalPrice, createdAt } = props
   const created = new Date(createdAt).getTime()
+  const isNew = Date.now() - created <= 7 * 24 * 60 * 60 * 1000
+  const sale = 100 - Math.floor((price / originalPrice) * 100)
 
   return (
     <>
       <div className={`${styles['col-md-3']}`}>
         <figure className={`${styles['card']} ${styles['card-product-grid']}`}>
           <div className={`${styles['img-wrap']}`}>
-            {Date.now() - created <= 7 * 24 * 60 * 60 * 1000 && <span className="badge badge-danger"> NEW </span>}
+            {isNew ? (
+              <span className="badge badge-danger"> NEW </span>
+            ) : (
+              sale > 10 && <span className="badge badge-danger"> SALE {sale}% </span>
+            )}
             <img src={images[0]} />
             <Link className={`${styles['btn-overlay']}`} to={`/product/${productId}`}>
               <i className={`${styles['fa']} ${styles['fa-search-plus']}`} /> Xem sản phẩm
@@ -40,8 +47,13 @@ const GridItem = (props) => {
               </div>
               <div className={`${styles['price-wrap']} ${styles['mt-2']}`}>
                 <span className={`${styles['price']}`} style={{ color: 'red' }}>
-                  ₫ {numberSeparator(price)}
+                  {numberSeparator(price)}₫{' '}
                 </span>
+                {originalPrice !== price && (
+                  <span className={`${styles['old-price']}`} style={{ color: 'gray' }}>
+                    <del>{numberSeparator(originalPrice)}₫</del>
+                  </span>
+                )}
               </div>
             </div>
           </figcaption>

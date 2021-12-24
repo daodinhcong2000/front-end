@@ -6,6 +6,8 @@ import numberSeparator from '../../../helpers/validating/numberSeparator'
 const ListItem = (props) => {
   const { _id: productId, name, rating, description, images = [], price = 0, originalPrice = 0, createdAt } = props
   const created = new Date(createdAt).getTime()
+  const isNew = Date.now() - created <= 7 * 24 * 60 * 60 * 1000
+  const sale = 100 - Math.floor((price / originalPrice) * 100)
 
   return (
     <>
@@ -13,7 +15,11 @@ const ListItem = (props) => {
         <div className={`${styles['row']} ${styles['no-gutters']}`}>
           <aside className={`${styles['col-md-3']}`}>
             <div className={`${styles['img-wrap']}`}>
-              {Date.now() - created <= 7 * 24 * 60 * 60 * 1000 && <span className="badge badge-danger"> NEW </span>}
+              {isNew ? (
+                <span className="badge badge-danger"> NEW </span>
+              ) : (
+                sale > 10 && <span className="badge badge-danger"> SALE {sale}% </span>
+              )}
               <img src={images[0]} />
             </div>
           </aside>
