@@ -72,7 +72,7 @@ const ListItem = (props) => {
                   <del className={`${styles['price-old']}`}>₫ {numberSeparator(originalPrice)}</del>
                 )}
               </div>
-              <p className={`${styles['text-success']}`}>Miễn phí giao hàng</p>
+              {/* <p className={`${styles['text-success']}`}>Thời gian giao hàng từ 5-10 ngày</p> */}
               <br />
               <p>
                 <Link to={`/product/${productId}`}>
