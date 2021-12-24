@@ -8,7 +8,7 @@ const StatisticSeller = React.lazy(() => import('./views/statistics/StatisticSel
 const StatisticShop = React.lazy(() => import('./views/statistics/StatisticShop'))
 
 const routes = [
-  { path: '/admin', name: 'Tổng quan', exact: true, component: Dashboard },
+  { path: '/admin', name: 'Trang quản lý', exact: true, component: Dashboard },
   { path: '/admin/manage-users', name: 'Quản lý người dùng', component: ListUsersDetail },
   { path: '/admin/list-shops', name: 'Danh sách cửa hàng', component: ListShop },
   { path: '/admin/statistic-customer', name: 'Chi tiêu khách hàng', component: StatisticCustomer },

@@ -15,7 +15,7 @@ const WaitingOrder = React.lazy(() => import('./views/orders/WaitingOrder'))
 const Statistic = React.lazy(() => import('./views/statistic/Statistic'))
 
 const routes = [
-  { path: '/seller', name: 'Tổng quan', exact: true, component: Dashboard },
+  { path: '/seller', name: 'Kênh bán hàng', exact: true, component: Dashboard },
   { path: '/seller/add-product', name: 'Thêm sản phẩm', component: AddProduct },
   { path: '/seller/change-product', name: 'Sửa sản phẩm', component: ChangeProduct },
   { path: '/seller/delete-product', name: 'Xóa sản phẩm', component: DeleteProduct },

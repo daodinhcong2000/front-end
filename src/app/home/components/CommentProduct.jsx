@@ -108,23 +108,31 @@ const CommentProduct = ({ productId }) => {
       {comment.map((cmt, index) => {
         return (
           <div key={index}>
+            {console.log('commentId', commentId)}
+            {console.log('cmt.author._id', cmt.author._id)}
             <Comment
-              actions={commentId != null ? actions : []}
-              author={
+              actions={commentId === cmt._id ? actions : []}
+              author={[
                 <a>
                   {cmt.author.lastName} {cmt.author.firstName}{' '}
                 </a>
-              }
+              ]}
               avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="avt accommerce" />}
-              content={<p>{cmt.comment}</p>}
+              content={[
+                <div>
+                  <Tooltip key="comment-basic-rate" title="Đánh giá">
+                    <a>
+                      <Rate disabled value={cmt.rating} style={{ fontSize: 15 }} />
+                    </a>
+                  </Tooltip>
+                </div>,
+                <div>
+                  <p>{cmt.comment}</p>
+                </div>
+              ]}
               datetime={[
                 <Tooltip title={'Đánh giá lần cuối'}>
                   <span>{moment(cmt.updatedAt).format('DD/MM/YYYY')}</span>
-                </Tooltip>,
-                <Tooltip key="comment-basic-rate" title="Đánh giá">
-                  <span>
-                    <Rate disabled value={cmt.rating} />
-                  </span>
                 </Tooltip>
               ]}
             />
