@@ -86,7 +86,7 @@ const Home = (props) => {
           <div className="row">
             <div className="col-md-12">
               <article className="banner-wrap">
-                <img src="assets/images/2.jpg" className="w-100 rounded" />
+                <img src="assets/images/1.png" className="w-100 rounded" />
               </article>
             </div>
           </div>

@@ -3,7 +3,7 @@ import styles from './css_modules/css/all.module.css'
 import { Spin, message as Message, Pagination } from 'antd'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import ShopItem from './components/ShopItem'
+import ProductItem from './components/ProductItem'
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -75,37 +75,25 @@ const Shop = (props) => {
             <Spin spinning={loading}>
               {Object.keys(shop).length && (
                 <section class="section-pagetop bg">
-                  <div class="container" style={{ textAlign: 'center' }}>
-                    <h2 class="title-page" style={{ fontWeight: 'bolder' }}>
-                      {shop.name}
-                    </h2>
-
-                    <div className="row">
-                      <div className="col">Địa chỉ: {shop.address}</div>
-                      <div className="col">Tham gia: {timeToNow(shop.createdAt)}</div>
+                  <div class="container row" style={{ textAlign: 'center' }}>
+                    <div className="col">
+                      <h1 class="title-page" style={{ fontWeight: 'bolder' }}>
+                        <i className={`${styles['fa']} ${styles['fa-store']}`} /> {shop.name}
+                      </h1>
                     </div>
 
-                    <div className="row">
-                      <div className="col">Hotline: {shop.seller.phoneNumber}</div>
-                      <div className="col">Email: {shop.email}</div>
+                    <div className="col">
+                      <div className="row">Địa chỉ: {shop.address}</div>
+                      <div className="row">Hotline: {shop.seller.phoneNumber}</div>
+                      <div className="row">Email: {shop.email}</div>
                     </div>
                   </div>
                 </section>
               )}
 
-              <div className={`${styles['row']}`}>
-                {products.map((product) => {
-                  const { _id: productId, name, images, price, sizes, sold, views } = product
-                  const props = {
-                    productId,
-                    name,
-                    thumbnail: images[0],
-                    price,
-                    sizes,
-                    sold,
-                    views
-                  }
-                  return <ShopItem {...props} />
+              <div className={`${styles['row']}`} style={{ marginTop: '1rem' }}>
+                {products.map((product, index) => {
+                  return <ProductItem key={index} {...product} />
                 })}
               </div>
 

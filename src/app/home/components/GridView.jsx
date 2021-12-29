@@ -36,10 +36,10 @@ const GridView = (props) => {
               size="large"
               shape="round"
               style={{ marginRight: '1rem' }}
-              onClick={(e) => handleSortChange('createAt')}
+              onClick={(e) => handleSortChange('createdAt')}
             >
               Mới
-              {sort.includes('createAt') ? (
+              {sort.includes('createdAt') ? (
                 sort.includes('-') ? (
                   <>
                     {' '}

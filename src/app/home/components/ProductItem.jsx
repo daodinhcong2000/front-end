@@ -1,10 +1,8 @@
 import styles from '../css_modules/css/all.module.css'
 
 import { Link } from 'react-router-dom'
-import Loading from 'react-loading'
 
 import numberSeparator from '../../../helpers/validating/numberSeparator'
-import CommentProduct from './CommentProduct'
 
 const ProductItem = (props) => {
   const { _id, images, name, price, originalPrice, sold, views } = props
