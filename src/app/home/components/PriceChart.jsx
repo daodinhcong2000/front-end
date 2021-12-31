@@ -11,7 +11,7 @@ const PriceChart = ({ productId }) => {
 
   useEffect(() => {
     if (productId != '') {
-      getFlexPrice(productId, { from: moment().subtract(7, 'day'), to: moment() }).then((respone) => {
+      getFlexPrice(productId, { from: moment().subtract(30, 'day'), to: moment() }).then((respone) => {
         setStatistics(respone.data.data)
       })
     }
