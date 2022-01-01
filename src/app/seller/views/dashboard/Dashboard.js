@@ -18,7 +18,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getUserInformation().then((respone) => {
-      getRevenue(respone.data.data._id, { from: moment().subtract(7, 'day'), to: moment() }).then((respone) => {
+      getRevenue(respone.data.data._id, { from: moment().subtract(30, 'day'), to: moment() }).then((respone) => {
         setTotalAmount(respone.data.data.totalAmount)
         setOrderCount(respone.data.data.orderCount)
         setStatistics(respone.data.data.statistics)

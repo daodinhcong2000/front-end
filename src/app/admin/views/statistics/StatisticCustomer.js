@@ -27,7 +27,7 @@ const StatisticCustomer = () => {
 
   useEffect(() => {
     if (userId != '' && userId != 1) {
-      getRevenueCustomer(userId, { from: moment().subtract(7, 'day'), to: moment() }).then((respone) => {
+      getRevenueCustomer(userId, { from: moment().subtract(30, 'day'), to: moment() }).then((respone) => {
         setTotalAmount(respone.data.data.totalAmount)
         setOrderCount(respone.data.data.orderCount)
         setStatistics(respone.data.data.statistics)

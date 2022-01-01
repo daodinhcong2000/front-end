@@ -165,8 +165,6 @@ const Chart = ({ statistics, totalAmount, orderCount, title }) => {
         </CCardBody>
         <CCardFooter></CCardFooter>
       </CCard>
-
-      <WidgetsDropdown />
     </>
   )
 }
