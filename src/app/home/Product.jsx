@@ -15,6 +15,8 @@ import numberSeparator from '../../helpers/validating/numberSeparator'
 import { getOneProduct } from '../../services/api/userApi'
 import { addToCart } from '../../services/api/customerApi'
 import { _getMyCart } from '../../redux/actions/cartActions'
+import { _showLogForm } from '../../redux/actions/logFormActions'
+import { isAuthenticated } from '../../services/makeApiRequest'
 
 const Product = (props) => {
   const history = useHistory()
@@ -63,6 +65,9 @@ const Product = (props) => {
     } else if (!quantity) {
       Message.error('Vui lòng nhập số lượng muốn mua!')
       setLoading(false)
+    } else if (!isAuthenticated()) {
+      dispatch(_showLogForm())
+      setLoading(false)
     } else {
       addToCart({ product: productId, size: targetSize, quantity })
         .then((res) => {
@@ -92,6 +97,9 @@ const Product = (props) => {
       setLoading(false)
     } else if (!quantity) {
       Message.error('Vui lòng nhập số lượng muốn mua!')
+      setLoading(false)
+    } else if (!isAuthenticated()) {
+      dispatch(_showLogForm())
       setLoading(false)
     } else {
       addToCart({ product: productId, size: targetSize, quantity })
