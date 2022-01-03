@@ -64,9 +64,9 @@ const CartFooter = (props) => {
   const handleOrder = (e) => {
     if (selectedItems.length === 0) {
       Message.error('Chọn ít nhất một món hàng!')
+    } else if (!address) {
+      Message.error('Vui lòng nhập địa chỉ nhận hàng!')
     } else if (orderShops(selectedItems).length > 1) {
-      Message.warning(`Mua hàng của ${orderShops(selectedItems).length} cửa hàng`)
-
       dispatch({
         type: 'LOAD_CART'
       })
