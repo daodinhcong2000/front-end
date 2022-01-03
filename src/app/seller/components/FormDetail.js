@@ -29,12 +29,17 @@ const FormDetail = (recvData) => {
     price: recvData.data.price,
     originalPrice: recvData.data.originalPrice
   })
+  const [dataUpdate, setDataUpdate] = useState({})
   const [sizes, setSizes] = useState(data.sizes)
   const [imageUrls, setImageUrls] = useState(data.images)
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    if (data.price == recvData.data.price) {
+      delete data.price
+    }
+    data.images = imageUrls
     setLoading(true)
     updateProduct(recvData.data.shop._id, recvData.data.idProduct, data)
       .then((respone) => {
